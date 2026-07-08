@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Monarch Training & Placements</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+<script>
+const glow = document.querySelector('.cursor-glow');
+
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+
+let currentX = mouseX;
+let currentY = mouseY;
+
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+});
+
+function animateGlow(){
+
+    currentX += (mouseX - currentX) * 0.08;
+    currentY += (mouseY - currentY) * 0.08;
+
+    glow.style.left = currentX + 'px';
+    glow.style.top = currentY + 'px';
+
+    requestAnimationFrame(animateGlow);
+}
+
+animateGlow();
+</script>
+<body>
+
+<div class="cursor-glow"></div>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
+    <img src="./images/logo.png" >
+
+    <div class="logo-text">
+    </div>
+</div>
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="training.html">Training</a></li>
+        <li><a href="roadmap.html">Roadmap</a></li>
+        <li><a href="placement-support.html">Placements</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <!-- Mobile only -->
+        <li class="mobile-enroll">
+            <a href="contact.html">Enroll Now</a>
+        </li>
+    </ul>
+
+    <a href="contact.html" class="enroll-btn">
+        Enroll Now
+    </a>
+    <div class="menu-toggle">
+    ☰
+</div>
+
+</nav>
+
+<!-- HERO SECTION -->
+
+<section class="hero">
+
+    <div class="glow-circle"></div>
+
+    <div class="hero-content">
+
+        <span class="subtitle">
+            MONARCH TRAINING & PLACEMENTS
+        </span>
+
+        <h1>
+            Train for What <br>
+            Companies Hire For
+        </h1>
+
+        <p>
+            3 Months of Industry-Focused Training,
+            Interview Preparation and Placement Support.
+            Get trained based on current company requirements
+            and become placement-ready.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="training.html" class="primary-btn">
+                Explore Program
+            </a>
+
+            <a href="contact.html" class="secondary-btn">
+                Enroll Today
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+<div class="admission-banner">
+
+    <div class="banner-glow"></div>
+
+    <div class="banner-badge">
+        🔥 ADMISSIONS OPEN 2026
+    </div>
+
+    <h3>
+        Limited Seats Available
+    </h3>
+
+    <p>
+        Only <span class="highlight">25 Seats Left</span>
+        for the upcoming batch.
+        Secure your place before registrations close.
+    </p>
+
+    <div class="live-indicator">
+        <span></span>
+        Registrations Active Now
+    </div>
+
+    <a href="contact.html" class="banner-btn">
+         Claim Your Seat Now
+    </a>
+
+</div>
+<!-- STATS -->
+
+<section class="stats">
+
+    <div class="stat-card">
+        <h2>500+</h2>
+        <p>Students Trained</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>100+</h2>
+        <p>Hiring Partners</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>95%</h2>
+        <p>Placement Support</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>3</h2>
+        <p>MonthIndustry Program</p>
+    </div>
+
+</section>
+
+<section class="why-monarch">
+
+    <h2>Why Choose Monarch?</h2>
+
+    <p>
+        At Monarch Training & Placements, we focus on bridging the gap
+        between education and employment through industry-focused training,
+        practical learning and placement support. Our programs are designed
+        to help students and job seekers develop technical expertise,
+        communication skills and professional confidence required to succeed
+        in today’s competitive job market. With expert guidance, hands-on
+        learning and career-oriented preparation, we empower individuals to
+        become industry-ready professionals and achieve long-term career success.
+    </p>
+
+</section>
+
+<section class="training-modules">
+
+    <h2>What You Will Learn</h2>
+
+    <div class="modules-grid">
+
+        <div class="module-box">
+            <h3>Aptitude Training</h3>
+            <p>Logical Reasoning, Quantitative Aptitude and Problem Solving.</p>
+        </div>
+
+        <div class="module-box">
+            <h3>Technical Skills</h3>
+            <p>Programming Fundamentals, Projects and Industry Technologies.</p>
+        </div>
+
+        <div class="module-box">
+            <h3>Communication Skills</h3>
+            <p>Professional Communication and Confidence Building.</p>
+        </div>
+
+        <div class="module-box">
+            <h3>Resume Building</h3>
+            <p>Resume Creation and LinkedIn Profile Optimization.</p>
+        </div>
+
+        <div class="module-box">
+            <h3>Mock Interviews</h3>
+            <p>Technical and HR Interview Preparation Sessions.</p>
+        </div>
+
+        <div class="module-box">
+            <h3>Placement Support</h3>
+            <p>Career Guidance, Job Alerts and Application Support.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- CTA -->
+
+<section class="cta">
+
+    <div class="cta-circle"></div>
+
+    <div class="cta-content">
+
+        <h2>
+            Ready To Start Your Career?
+        </h2>
+
+        <p>
+            Join Monarch Training & Placements and
+            become industry-ready through structured
+            training, interview preparation and placement support.
+        </p>
+
+        <a href="contact.html" class="cta-btn">
+            Enroll Now
+        </a>
+
+    </div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+
+    <h3>
+        Monarch Training & Placements
+    </h3>
+
+    <p>
+        Bridging the gap between education and employment.
+    </p>
+
+    <p>
+        Email:
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=hr@monarchsoftwares.com" target="_blank">
+            hr@monarchsoftwares.com
+        </a>
+    </p>
+
+    <p class="social-links">
+        <a href="https://www.linkedin.com/company/monarch-placements/" target="_blank">
+            LinkedIn
+        </a>
+        |
+        <a href="https://www.instagram.com/monarchplacements?igsh=MWZpbWgyeWJ4cno0NA==" target="_blank">
+            Instagram
+        </a>
+    </p>
+
+    <p>
+        © 2026 Monarch Softwares.
+        All Rights Reserved.
+    </p>
+
+</footer>
+<script src="script.js"></script>
+
+</body>
+</html>
