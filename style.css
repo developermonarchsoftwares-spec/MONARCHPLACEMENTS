@@ -40,6 +40,7 @@ display:flex;
 list-style:none;
 gap:35px;
 }
+
 .nav-links a{
 text-decoration:none;
 color:#cfcfcf;
@@ -942,7 +943,7 @@ line-height:1.8;
     border-radius:50%;
 
     background:#ffffff;
-    border:1px solid rgba(0, 0, 0, 0.15);
+    border:1px solid rgba(123,44,255,.15);
 
     color:#000000;
 
@@ -2318,6 +2319,8 @@ body::after{
     overflow:hidden;
     border:1px solid #1f1f1f;
 }
+
+
 /* ===== UNIVERSAL BLUE CARD EFFECT ===== */
 
 .feature-card,
@@ -2577,7 +2580,6 @@ footer a:hover{
     width:100%;
 }
 }
-
 @media(max-width:768px){
 
 footer{
@@ -3952,6 +3954,23 @@ body{
     background:#111111 !important;
 
     transform:translateY(-5px);
+}
+@media(max-width:768px){
+
+    .circle{
+
+        width:45px !important;
+        height:45px !important;
+
+        font-size:16px !important;
+    }
+
+    .left .circle,
+    .right .circle{
+
+        left:10px !important;
+    }
+
 }
 @media(max-width:768px){
 
