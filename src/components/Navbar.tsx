@@ -56,7 +56,7 @@ export default function Navbar() {
             <img
               src="/logo.png"
               alt="Monarch Placements Logo"
-              className="h-8 md:h-9 w-auto object-contain mix-blend-screen brightness-125 group-hover:opacity-85 transition-all duration-300"
+              className="h-12 md:h-14 w-auto object-contain mix-blend-screen brightness-125 group-hover:opacity-85 transition-all duration-300"
             />
           </Link>
 
