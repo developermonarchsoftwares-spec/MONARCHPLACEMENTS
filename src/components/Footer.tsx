@@ -15,7 +15,7 @@ export default function Footer() {
               <img
                 src="/logo.png"
                 alt="Monarch Placements Logo"
-                className="h-8 w-auto object-contain mix-blend-screen brightness-125 group-hover:opacity-85 transition-all duration-300"
+                className="h-8 w-auto object-contain brightness-0 invert group-hover:opacity-80 transition-all duration-300"
               />
             </Link>
             <p className="text-xs text-white/60 font-light leading-relaxed max-w-xs">
