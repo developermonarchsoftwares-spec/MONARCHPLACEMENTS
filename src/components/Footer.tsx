@@ -11,14 +11,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 mb-16">
           {/* Brand Info */}
           <div className="flex flex-col gap-4">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="w-8 h-8 flex items-center justify-center border border-white/10 rounded bg-white/5">
-                <span className="text-white font-display font-bold text-xs tracking-wider">M</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-white font-display font-bold text-xs tracking-widest leading-none">MONARCH</span>
-                <span className="text-[9px] text-white/50 tracking-wider font-light mt-0.5">Training & Placements</span>
-              </div>
+            <Link href="/" className="flex items-center group">
+              <img
+                src="/logo.png"
+                alt="Monarch Placements Logo"
+                className="h-8 w-auto object-contain mix-blend-screen brightness-125 group-hover:opacity-85 transition-all duration-300"
+              />
             </Link>
             <p className="text-xs text-white/60 font-light leading-relaxed max-w-xs">
               Bridging the gap between education and employment.

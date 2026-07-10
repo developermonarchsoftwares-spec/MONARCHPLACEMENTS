@@ -52,15 +52,12 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative w-9 h-9 flex items-center justify-center border border-white/10 rounded bg-white/5 group-hover:border-white/30 transition-colors">
-              <span className="text-white font-display font-bold text-sm tracking-wider">M</span>
-              <div className="absolute inset-0 border border-white/20 scale-75 group-hover:scale-95 transition-transform duration-500 rounded" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-white font-display font-bold text-sm tracking-widest leading-none">MONARCH</span>
-              <span className="text-[10px] text-white/50 tracking-wider font-light mt-0.5">Training & Placements</span>
-            </div>
+          <Link href="/" className="flex items-center group">
+            <img
+              src="/logo.png"
+              alt="Monarch Placements Logo"
+              className="h-8 md:h-9 w-auto object-contain mix-blend-screen brightness-125 group-hover:opacity-85 transition-all duration-300"
+            />
           </Link>
 
           {/* Desktop Navigation */}
