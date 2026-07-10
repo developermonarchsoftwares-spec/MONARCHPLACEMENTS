@@ -84,7 +84,7 @@ export default function Footer() {
 
         {/* Footer Bottom */}
         <div className="flex flex-col sm:flex-row justify-between items-center pt-8 border-t border-white/5 text-[10px] text-white/40 tracking-wider">
-          <p>© 2026 Monarch Softwares. All Rights Reserved.</p>
+          <p>© 2026 <a href="https://www.monarchsoftwares.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors underline decoration-white/10 underline-offset-2">Monarch Softwares</a>. All Rights Reserved.</p>
           <div className="flex gap-6 mt-4 sm:mt-0">
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
