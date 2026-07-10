@@ -4,7 +4,9 @@ import React from 'react'
 import Link from 'next/link'
 import { CheckCircle2, Award, Users, Briefcase } from 'lucide-react'
 import Hero from '@/components/Hero'
-import GridScan from '@/components/GridScan'
+import dynamic from 'next/dynamic'
+
+const GridScan = dynamic(() => import('@/components/GridScan'), { ssr: false })
 
 export default function Training() {
   const learningSteps = [

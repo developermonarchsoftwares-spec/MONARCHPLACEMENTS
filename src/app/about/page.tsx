@@ -4,7 +4,9 @@ import React from 'react'
 import Link from 'next/link'
 import { Target, Eye, Quote } from 'lucide-react'
 import Hero from '@/components/Hero'
-import Lightfall from '@/components/Lightfall'
+import dynamic from 'next/dynamic'
+
+const Lightfall = dynamic(() => import('@/components/Lightfall'), { ssr: false })
 
 export default function About() {
   const showcases = [

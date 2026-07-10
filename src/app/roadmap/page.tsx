@@ -4,7 +4,9 @@ import React from 'react'
 import Link from 'next/link'
 import { Calendar } from 'lucide-react'
 import Hero from '@/components/Hero'
-import MagicRings from '@/components/MagicRings'
+import dynamic from 'next/dynamic'
+
+const MagicRings = dynamic(() => import('@/components/MagicRings'), { ssr: false })
 
 export default function Roadmap() {
   const months = [

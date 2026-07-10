@@ -4,7 +4,9 @@ import React, { useRef } from 'react'
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react'
 import confetti from 'canvas-confetti'
 import Hero from '@/components/Hero'
-import FloatingLines from '@/components/FloatingLines'
+import dynamic from 'next/dynamic'
+
+const FloatingLines = dynamic(() => import('@/components/FloatingLines'), { ssr: false })
 
 export default function Contact() {
   const formRef = useRef<HTMLDivElement>(null)

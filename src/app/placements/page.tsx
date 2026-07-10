@@ -4,7 +4,9 @@ import React from 'react'
 import Link from 'next/link'
 import { CheckCircle, Award, Users, Briefcase } from 'lucide-react'
 import Hero from '@/components/Hero'
-import Ferrofluid from '@/components/Ferrofluid'
+import dynamic from 'next/dynamic'
+
+const Ferrofluid = dynamic(() => import('@/components/Ferrofluid'), { ssr: false })
 
 export default function Placements() {
   const steps = [
