@@ -74,14 +74,10 @@ export default function Hero({
             >
               <Link
                 href={primaryCtaLink}
-                className="group relative flex items-center justify-center p-[3px] rounded-lg text-sm text-white font-medium select-none cursor-pointer h-[50px] w-auto"
-                style={{
-                  backgroundImage: 'linear-gradient(144deg, rgb(175, 64, 255), rgb(91, 66, 243) 50%, rgb(0, 221, 235))',
-                  boxShadow: 'rgba(151, 65, 252, 0.2) 0px 15px 30px -5px',
-                  boxSizing: 'border-box'
-                }}
+                className="group relative flex items-center justify-center p-[1.5px] rounded-lg text-sm text-white font-medium select-none cursor-pointer h-[50px] w-auto border border-white/80 hover:border-white transition-colors duration-300"
+                style={{ boxSizing: 'border-box' }}
               >
-                <span className="bg-[#05062d] group-hover:bg-transparent px-6 py-4 rounded-[6px] h-full w-full flex items-center justify-center gap-2 transition-all duration-300">
+                <span className="bg-[#05062d] group-hover:bg-white/5 px-6 py-4 rounded-[6px] h-full w-full flex items-center justify-center gap-2 transition-all duration-300">
                   {primaryCtaText}
                 </span>
               </Link>
