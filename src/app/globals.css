@@ -1,0 +1,223 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+  
+  --color-black-card: #0a0a0a;
+  --color-black-elevated: #121212;
+  --color-black-border: #1f1f1f;
+  
+  --color-white-muted: #a3a3a3;
+  --color-white-dim: #737373;
+  
+  --shadow-glow-sm: 0 0 10px rgba(255, 255, 255, 0.05);
+  --shadow-glow-md: 0 0 20px rgba(255, 255, 255, 0.1);
+  --shadow-glow-lg: 0 0 35px rgba(255, 255, 255, 0.15);
+  --shadow-glow-white: 0 0 15px rgba(255, 255, 255, 0.3);
+  
+  --font-sans: var(--font-inter), sans-serif;
+  --font-display: var(--font-sora), sans-serif;
+
+  --animate-scaleIn: scaleIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fadeInLeft: fadeInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fadeInRight: fadeInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fadeInUp: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fadeIn: fadeIn 0.8s ease-out forwards;
+  --animate-marquee: marquee 25s linear infinite;
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+}
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+}
+
+body {
+  background-color: #000000;
+  color: #ffffff;
+  font-family: var(--font-inter), sans-serif;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sora), sans-serif;
+}
+
+/* Custom utilities */
+.text-glow {
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+}
+
+.glass-card {
+  background: rgba(10, 10, 10, 0.75);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.glass-card-hover {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card-hover:hover {
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 35px rgba(255, 255, 255, 0.03) !important;
+  transform: translateY(-6px) scale(1.015);
+}
+
+.border-glow-white {
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+}
+
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px), 
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Keyframes & Animations */
+@keyframes gridMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 60px 60px; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-grid-move {
+  animation: gridMove 20s linear infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 8s ease-in-out infinite 2s;
+}
+
+/* Hide scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: #222;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #444;
+}
+
+/* Animation delays */
+.animation-delay-200 {
+  animation-delay: 200ms;
+  animation-fill-mode: both;
+}
+.animation-delay-300 {
+  animation-delay: 300ms;
+  animation-fill-mode: both;
+}
+.animation-delay-400 {
+  animation-delay: 400ms;
+  animation-fill-mode: both;
+}
+.animation-delay-500 {
+  animation-delay: 500ms;
+  animation-fill-mode: both;
+}
+.animation-delay-600 {
+  animation-delay: 600ms;
+  animation-fill-mode: both;
+}
+
+/* Fallback infinite marquee animation rules */
+@keyframes marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+.animate-marquee {
+  display: flex !important;
+  animation: marquee 25s linear infinite !important;
+}
