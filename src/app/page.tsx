@@ -213,14 +213,14 @@ export default function Home() {
       {/* 1. ENTERPRISE HERO WITH 3D GLOBE */}
       <section className="relative min-h-screen flex flex-col justify-center items-center pt-28 pb-16 px-6 max-w-7xl mx-auto overflow-hidden">
         {/* Interactive Spline 3D Scene with Dark Gradient Masks to preserve text legibility */}
-        <div className="spline-container absolute inset-0 -z-10 overflow-hidden bg-black">
+        <div className="spline-container absolute inset-0 -z-10 overflow-hidden bg-black pointer-events-none">
           <iframe
             src="https://my.spline.design/nexbotrobotcharacterconcept-kLwr8f6hgKgaa5gmU6oB00Si"
             frameBorder="0"
             width="100%"
             height="100%"
             id="aura-spline"
-            className="w-full h-full scale-[1.02] origin-center opacity-90"
+            className="w-full h-full scale-[1.02] origin-center opacity-90 pointer-events-none"
           ></iframe>
           {/* Black ambient masks to protect text contrast and blend iframe edges */}
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/20 to-transparent pointer-events-none" />
