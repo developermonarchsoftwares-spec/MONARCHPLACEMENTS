@@ -37,6 +37,7 @@ export default function Contact() {
         }),
       })
       const result = await res.json()
+      console.log('Web3Forms response:', result)
       if (result.success) {
         setStatus('success')
         form.reset()
@@ -47,9 +48,11 @@ export default function Contact() {
           colors: ['#ffffff', '#888888', '#333333'],
         })
       } else {
+        console.error('Web3Forms error:', result)
         setStatus('error')
       }
-    } catch {
+    } catch (err) {
+      console.error('Fetch error:', err)
       setStatus('error')
     }
   }
@@ -120,6 +123,12 @@ export default function Contact() {
               className="space-y-6"
             >
               {/* Web3Forms hidden fields */}
+
+              {status === 'error' && (
+                <div className="px-4 py-3 border border-red-500/30 bg-red-500/10 rounded text-xs text-red-400 font-light">
+                  Something went wrong. Please try again or contact us directly at <a href="mailto:hr@monarchplacements.in" className="underline">hr@monarchplacements.in</a>
+                </div>
+              )}
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
