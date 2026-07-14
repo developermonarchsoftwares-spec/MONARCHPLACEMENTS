@@ -73,7 +73,7 @@ export default function Footer() {
           <div className="flex flex-col gap-4">
             <h4 className="text-xs uppercase tracking-widest font-semibold text-white/95">Contact</h4>
             <div className="flex flex-col gap-2 text-xs text-white/60 leading-relaxed font-light">
-              <a href="mailto:hr@monarchsoftwares.com" className="hover:text-white transition-colors w-fit">hr@monarchsoftwares.com</a>
+              <a href="mailto:hr@monarchplacements.in" className="hover:text-white transition-colors w-fit">hr@monarchplacements.in</a>
               <a href="tel:+916385753874" className="hover:text-white transition-colors w-fit">+91 63857 53874</a>
               <address className="not-italic mt-1 text-white/50">Monarch Softwares, Kovilpalayam, Coimbatore, India</address>
             </div>

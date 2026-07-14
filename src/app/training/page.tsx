@@ -44,9 +44,9 @@ export default function Training() {
 
   const outcomes = [
     {
-      stat: '100+',
+      stat: '50+',
       label: 'Students Trained',
-      desc: '100+ students transformed into industry-ready professionals through our comprehensive training programs',
+      desc: '50+ students transformed into industry-ready professionals through our comprehensive training programs',
       icon: <Users className="w-5 h-5 text-white/80" />
     },
     {

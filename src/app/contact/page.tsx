@@ -75,15 +75,16 @@ export default function Contact() {
             <h2 className="text-lg uppercase tracking-widest font-bold text-white mb-6">Send a Message</h2>
             
             <form 
-              action="https://formsubmit.co/placements.monarch@gmail.com" 
+              action="https://formsubmit.co/hr@monarchplacements.in" 
               method="POST" 
               onSubmit={handleFormSubmit}
               className="space-y-6"
             >
               {/* FormSubmit configurations */}
-              <input type="hidden" name="_subject" value="New Student Enrollment" />
+              <input type="hidden" name="_subject" value="New Student Enrollment - Monarch Placements" />
               <input type="hidden" name="_captcha" value="false" />
               <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_cc" value="placements.monarch@gmail.com" />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
@@ -187,7 +188,7 @@ export default function Contact() {
                   <div className="w-8 h-8 rounded border border-white/10 bg-white/5 flex items-center justify-center">
                     <Mail className="w-3.5 h-3.5 text-white/70" />
                   </div>
-                  <a href="mailto:hr@monarchsoftwares.com" className="text-white/80 hover:text-white transition-colors">hr@monarchsoftwares.com</a>
+                  <a href="mailto:hr@monarchplacements.in" className="text-white/80 hover:text-white transition-colors">hr@monarchplacements.in</a>
                 </div>
 
                 <div className="flex items-center gap-4 text-xs">
