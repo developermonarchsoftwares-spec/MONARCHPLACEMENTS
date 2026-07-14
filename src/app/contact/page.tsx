@@ -84,7 +84,7 @@ export default function Contact() {
               <input type="hidden" name="_subject" value="New Student Enrollment - Monarch Placements" />
               <input type="hidden" name="_captcha" value="false" />
               <input type="hidden" name="_template" value="table" />
-              <input type="hidden" name="_cc" value="hr@monarchplacements.in" />
+              <input type="hidden" name="_next" value="https://monarchplacements.in/contact" />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
