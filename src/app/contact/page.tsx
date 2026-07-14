@@ -1,7 +1,7 @@
 "use client"
 
-import React, { useRef } from 'react'
-import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react'
+import React, { useRef, useState } from 'react'
+import { Phone, Mail, MapPin, Clock, Send, CheckCircle2 } from 'lucide-react'
 import confetti from 'canvas-confetti'
 import Hero from '@/components/Hero'
 import dynamic from 'next/dynamic'
@@ -10,20 +10,48 @@ const FloatingLines = dynamic(() => import('@/components/FloatingLines'), { ssr:
 
 export default function Contact() {
   const formRef = useRef<HTMLDivElement>(null)
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
 
   const handleScrollToForm = (e: React.MouseEvent) => {
     e.preventDefault()
     formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
-  const handleFormSubmit = () => {
-    // Fire confetti when form starts sending
-    confetti({
-      particleCount: 150,
-      spread: 70,
-      origin: { y: 0.6 },
-      colors: ['#ffffff', '#888888', '#333333']
-    })
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setStatus('sending')
+
+    const form = e.currentTarget
+    const data = new FormData(form)
+    const json = Object.fromEntries(data.entries())
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: '4bf1d586-25ec-4be4-8df7-fbbba4d6cb78',
+          subject: 'New Student Enrollment - Monarch Placements',
+          from_name: 'Monarch Placements Website',
+          ...json,
+        }),
+      })
+      const result = await res.json()
+      if (result.success) {
+        setStatus('success')
+        form.reset()
+        confetti({
+          particleCount: 150,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#ffffff', '#888888', '#333333'],
+        })
+      } else {
+        setStatus('error')
+      }
+    } catch {
+      setStatus('error')
+    }
   }
 
   return (
@@ -73,18 +101,25 @@ export default function Contact() {
           {/* Left Form */}
           <div className="lg:col-span-7 glass-card rounded p-8 border-glow-white">
             <h2 className="text-lg uppercase tracking-widest font-bold text-white mb-6">Send a Message</h2>
-            
-            <form 
-              action="https://formsubmit.co/placements.monarch@gmail.com" 
-              method="POST" 
+
+            {status === 'success' ? (
+              <div className="flex flex-col items-center justify-center py-16 gap-4 text-center">
+                <CheckCircle2 className="w-12 h-12 text-white/70" />
+                <h3 className="text-sm uppercase tracking-widest font-semibold text-white">Enrollment Received!</h3>
+                <p className="text-xs text-white/50 font-light max-w-xs leading-relaxed">We&apos;ve received your details and will reach out to you shortly.</p>
+                <button
+                  onClick={() => setStatus('idle')}
+                  className="mt-4 px-6 py-2.5 border border-white/20 text-xs uppercase tracking-widest text-white/70 hover:text-white hover:border-white/40 transition-all rounded"
+                >
+                  Send Another
+                </button>
+              </div>
+            ) : (
+            <form
               onSubmit={handleFormSubmit}
               className="space-y-6"
             >
-              {/* FormSubmit configurations */}
-              <input type="hidden" name="_subject" value="New Student Enrollment - Monarch Placements" />
-              <input type="hidden" name="_captcha" value="false" />
-              <input type="hidden" name="_template" value="table" />
-              <input type="hidden" name="_next" value="https://monarchplacements.in/contact" />
+              {/* Web3Forms hidden fields */}
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
@@ -158,14 +193,16 @@ export default function Contact() {
                 />
               </div>
 
-              <button
-                type="submit"
-                className="w-full py-4 border border-white bg-white text-black text-xs uppercase tracking-widest font-semibold hover:bg-black hover:text-white transition-all duration-500 rounded flex items-center justify-center gap-2"
-              >
-                <span>Enroll Now</span>
-                <Send className="w-3.5 h-3.5" />
-              </button>
-            </form>
+                <button
+                  type="submit"
+                  disabled={status === 'sending'}
+                  className="w-full py-4 border border-white bg-white text-black text-xs uppercase tracking-widest font-semibold hover:bg-black hover:text-white transition-all duration-500 rounded flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  <span>{status === 'sending' ? 'Sending...' : 'Enroll Now'}</span>
+                  <Send className="w-3.5 h-3.5" />
+                </button>
+              </form>
+            )}
           </div>
 
           {/* Right Info Details */}
