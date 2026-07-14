@@ -75,7 +75,7 @@ export default function Contact() {
             <h2 className="text-lg uppercase tracking-widest font-bold text-white mb-6">Send a Message</h2>
             
             <form 
-              action="https://formsubmit.co/hr@monarchplacements.in" 
+              action="https://formsubmit.co/placements.monarch@gmail.com" 
               method="POST" 
               onSubmit={handleFormSubmit}
               className="space-y-6"
@@ -84,7 +84,7 @@ export default function Contact() {
               <input type="hidden" name="_subject" value="New Student Enrollment - Monarch Placements" />
               <input type="hidden" name="_captcha" value="false" />
               <input type="hidden" name="_template" value="table" />
-              <input type="hidden" name="_cc" value="placements.monarch@gmail.com" />
+              <input type="hidden" name="_cc" value="hr@monarchplacements.in" />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
