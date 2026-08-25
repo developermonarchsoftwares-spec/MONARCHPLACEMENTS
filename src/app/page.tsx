@@ -288,16 +288,10 @@ export default function Home() {
               <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
               <span>ADMISSIONS OPEN 2026</span>
             </div>
-            <div className="flex items-center gap-2 px-3 py-1 border border-emerald-500/20 bg-emerald-500/5 rounded-full text-[9px] tracking-widest uppercase text-emerald-400 font-semibold">
-              <span>LIMITED TIME OFFER: 100% REFUND POLICY</span>
-            </div>
           </div>
           <h3 className="text-xl md:text-2xl font-display font-bold uppercase text-white mb-2">Limited Seats Available</h3>
           <p className="text-xs text-white/60 font-light max-w-xl mb-3">
             Only <span className="text-white font-medium underline decoration-white/20 decoration-2 underline-offset-4">{seatsLeft}</span> Seats Left for the upcoming batch. Secure your place before registrations close.
-          </p>
-          <p className="text-xs text-emerald-400 font-medium mb-6 uppercase tracking-wider">
-            ★ NOT PLACED IN 3 MONTHS? GET YOUR MONEY REFUNDED ★
           </p>
 
           <div className="flex items-center gap-2 mb-8 text-[10px] tracking-wider text-white/40 uppercase font-light">

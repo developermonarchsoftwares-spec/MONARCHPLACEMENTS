@@ -202,9 +202,6 @@ export default function Placements() {
           <p className="text-xs text-white/60 font-light max-w-xl mx-auto mb-3">
             Join Monarch Placements and become interview-ready with dedicated placement support.
           </p>
-          <p className="text-xs text-emerald-400 font-semibold mb-8 uppercase tracking-wider animate-pulse">
-            ★ Limited Time Offer: Not placed in 3 months? Get your money refunded ★
-          </p>
           <Link
             href="/contact"
             className="px-8 py-3.5 border border-white bg-white text-black text-xs uppercase tracking-widest font-semibold hover:bg-black hover:text-white transition-all duration-500 rounded inline-block"
