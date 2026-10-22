@@ -48,9 +48,11 @@ export default function Footer() {
             <h4 className="text-xs uppercase tracking-widest font-semibold text-white/95">Quick Links</h4>
             <div className="flex flex-col gap-2">
               <Link href="/" className="text-xs text-white/60 hover:text-white transition-colors w-fit">Home</Link>
+              <Link href="/internships" className="text-xs text-white/60 hover:text-white transition-colors w-fit">Internships</Link>
               <Link href="/training" className="text-xs text-white/60 hover:text-white transition-colors w-fit">Training</Link>
-              <Link href="/roadmap" className="text-xs text-white/60 hover:text-white transition-colors w-fit">Roadmap</Link>
+              <Link href="/college-partnerships" className="text-xs text-white/60 hover:text-white transition-colors w-fit">College Partnerships</Link>
               <Link href="/placements" className="text-xs text-white/60 hover:text-white transition-colors w-fit">Placements</Link>
+              <Link href="/roadmap" className="text-xs text-white/60 hover:text-white transition-colors w-fit">Roadmap</Link>
               <Link href="/about" className="text-xs text-white/60 hover:text-white transition-colors w-fit">About Us</Link>
               <Link href="/contact" className="text-xs text-white/60 hover:text-white transition-colors w-fit">Contact</Link>
             </div>
@@ -60,11 +62,11 @@ export default function Footer() {
           <div className="flex flex-col gap-4">
             <h4 className="text-xs uppercase tracking-widest font-semibold text-white/95">Programs</h4>
             <div className="flex flex-col gap-2">
-              <Link href="/training" className="text-xs text-white/60 hover:text-white transition-colors w-fit">Aptitude Training</Link>
-              <Link href="/training" className="text-xs text-white/60 hover:text-white transition-colors w-fit">Technical Skills</Link>
-              <Link href="/training" className="text-xs text-white/60 hover:text-white transition-colors w-fit">Communication</Link>
-              <Link href="/training" className="text-xs text-white/60 hover:text-white transition-colors w-fit">Resume Building</Link>
-              <Link href="/training" className="text-xs text-white/60 hover:text-white transition-colors w-fit">Mock Interviews</Link>
+              <Link href="/internships" className="text-xs text-white/60 hover:text-white transition-colors w-fit">Project Internships (15d - 6m)</Link>
+              <Link href="/training" className="text-xs text-white/60 hover:text-white transition-colors w-fit">3-Month Training Program</Link>
+              <Link href="/college-partnerships" className="text-xs text-white/60 hover:text-white transition-colors w-fit">College Bootcamps & Workshops</Link>
+              <Link href="/training" className="text-xs text-white/60 hover:text-white transition-colors w-fit">Technical & Aptitude Skills</Link>
+              <Link href="/training" className="text-xs text-white/60 hover:text-white transition-colors w-fit">Mock Interviews & Resume</Link>
               <Link href="/placements" className="text-xs text-white/60 hover:text-white transition-colors w-fit">Placement Support</Link>
             </div>
           </div>

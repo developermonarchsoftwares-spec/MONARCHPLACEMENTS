@@ -1,0 +1,91 @@
+/* Transparent liquid glass surface shared by every card on the site */
+.glass-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 22px 28px 24px 28px;
+  background: linear-gradient(142deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.01) 32%, rgba(255, 255, 255, 0.008) 64%, rgba(255, 255, 255, 0.04) 100%);
+  -webkit-backdrop-filter: blur(4px) saturate(130%);
+  backdrop-filter: blur(4px) saturate(130%);
+  border: 0;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.34),
+    inset 1px 0 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.07),
+    inset 0 0 42px rgba(255, 255, 255, 0.015),
+    0 24px 50px -24px rgba(0, 0, 0, 0.5);
+}
+
+/* Silver edge streaks: gradient ring clipped to a 1px border, kept under the content */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  padding: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.05) 24%, rgba(255, 255, 255, 0) 52%, rgba(255, 255, 255, 0.05) 76%, rgba(255, 255, 255, 0.38) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: 0.65;
+  transition: opacity 0.45s ease;
+}
+
+/* Static lens highlight */
+.glass-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 60% at 12% -10%, rgba(255, 255, 255, 0.1), transparent 60%);
+  opacity: 0.55;
+  transition: opacity 0.45s ease;
+}
+
+.glass-card:hover::before {
+  opacity: 1;
+}
+
+.glass-card:hover::after {
+  opacity: 1;
+}
+
+.glass-card-hover:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 1px 0 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 52px rgba(255, 255, 255, 0.045),
+    0 30px 60px -24px rgba(0, 0, 0, 0.55) !important;
+  transform: translateY(-6px) scale(1.015);
+}
+
+.glass-card.border-glow-white {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.34),
+    inset 1px 0 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.07),
+    0 0 15px rgba(255, 255, 255, 0.06);
+}
+
+/* Browsers without backdrop-filter get a gently tinted surface instead */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-card {
+    background:
+      linear-gradient(142deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.015) 40%, rgba(255, 255, 255, 0.05)),
+      rgba(14, 14, 16, 0.6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-card::before,
+  .glass-card::after {
+    transition: none;
+  }
+}
+

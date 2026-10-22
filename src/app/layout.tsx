@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Sora, Inter } from 'next/font/google'
 import './globals.css'
+import './glass.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import BackgroundEffects from '@/components/BackgroundEffects'
@@ -15,7 +16,7 @@ const sora = Sora({
 const inter = Inter({
   variable: '--font-inter',
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
 })
 
 export const metadata: Metadata = {

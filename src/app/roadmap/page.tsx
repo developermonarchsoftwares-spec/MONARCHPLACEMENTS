@@ -1,5 +1,6 @@
 "use client"
 
+import RevealGrid from '@/components/RevealGrid'
 import React from 'react'
 import Link from 'next/link'
 import { Calendar } from 'lucide-react'
@@ -105,7 +106,7 @@ export default function Roadmap() {
             <h2 className="text-2xl md:text-4xl font-display font-bold uppercase text-white">Training Timeline</h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <RevealGrid hoverLift className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {months.map((month, idx) => (
               <div 
                 key={idx}
@@ -138,7 +139,7 @@ export default function Roadmap() {
                 </div>
               </div>
             ))}
-          </div>
+          </RevealGrid>
         </div>
       </section>
 

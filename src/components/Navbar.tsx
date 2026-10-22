@@ -34,9 +34,11 @@ export default function Navbar() {
 
   const links = [
     { name: 'Home', path: '/' },
+    { name: 'Internships', path: '/internships' },
     { name: 'Training', path: '/training' },
-    { name: 'Roadmap', path: '/roadmap' },
+    { name: 'Colleges', path: '/college-partnerships' },
     { name: 'Placements', path: '/placements' },
+    { name: 'Roadmap', path: '/roadmap' },
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' }
   ]
@@ -61,7 +63,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-3.5 lg:gap-6 xl:gap-8">
             {links.map((link) => {
               const isActive = pathname === link.path
               return (

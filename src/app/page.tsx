@@ -3,12 +3,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { motion, useInView } from 'framer-motion'
-import { Award, Users, BookOpen, Briefcase } from 'lucide-react'
+import { Award, Users, BookOpen, Briefcase, GraduationCap, Building2, CheckCircle2, ArrowRight } from 'lucide-react'
 import SpotlightCard from '@/components/SpotlightCard'
 import Hero from '@/components/Hero'
 import dynamic from 'next/dynamic'
+import { trackEvent } from '@/lib/analytics'
+import RevealGrid from '@/components/RevealGrid'
 
-const ThreeGlobe = dynamic(() => import('@/components/ThreeGlobe'), { ssr: false })
 const CardSwap = dynamic(() => import('@/components/CardSwap'), { ssr: false })
 const Card = dynamic(() => import('@/components/CardSwap').then(mod => mod.Card), { ssr: false })
 
@@ -22,11 +23,11 @@ function Counter({ target, suffix = "" }: { target: number, suffix?: string }) {
     if (!isInView) return
     let start = 0
     const end = target
-    const duration = 2000 // ms
-    const incrementTime = Math.max(Math.floor(duration / end), 15)
+    const duration = 1800 // ms
+    const incrementTime = Math.max(Math.floor(duration / end), 20)
     
     const timer = setInterval(() => {
-      start += Math.ceil(end / 100)
+      start += Math.ceil(end / 80)
       if (start >= end) {
         setCount(end)
         clearInterval(timer)
@@ -46,7 +47,6 @@ function Counter({ target, suffix = "" }: { target: number, suffix?: string }) {
 }
 
 export default function Home() {
-  const [seatsLeft, setSeatsLeft] = useState(25)
   const [loadSpline, setLoadSpline] = useState(false)
 
   useEffect(() => {
@@ -54,13 +54,6 @@ export default function Home() {
       setLoadSpline(true)
     }, 1500)
     return () => clearTimeout(timer)
-  }, [])
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSeatsLeft((prev) => (prev > 7 ? prev - 1 : prev))
-    }, 45000)
-    return () => clearInterval(interval)
   }, [])
 
   const containerVariants = {
@@ -77,67 +70,68 @@ export default function Home() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' as const } },
   }
 
+  // Verified, genuine credibility statistics
   const stats = [
     {
-      target: 50,
-      suffix: '+',
-      label: 'Students Trained',
-      desc: '50+ students transformed into industry-ready professionals through our comprehensive training programs',
+      target: 100,
+      suffix: '%',
+      label: 'Practical Training',
+      desc: 'Hands-on assignments, production-grade projects, and mentor-led technical sessions.',
       icon: <Users className="w-5 h-5 text-white/80" />
     },
     {
-      target: 100,
-      suffix: '+',
-      label: 'Hiring Partners',
-      desc: '100+ top companies partner with us for campus recruitment and hiring',
+      target: 5,
+      suffix: ' Tracks',
+      label: 'Flexible Durations',
+      desc: 'Project internships ranging from 15 days to 6 months with verified certificate eligibility.',
       icon: <Award className="w-5 h-5 text-white/80" />
-    },
-    {
-      target: 95,
-      suffix: '%',
-      label: 'Placement Rate',
-      desc: "95% of our students secure placements within 3 months of program completion",
-      icon: <Briefcase className="w-5 h-5 text-white/80" />
     },
     {
       target: 3,
       suffix: ' Months',
-      label: 'Month Program',
-      desc: 'Intensive 3-month industry-focused curriculum designed for rapid skill development',
+      label: 'Flagship Training',
+      desc: 'Structured curriculum spanning aptitude, programming, system concepts, and interview practice.',
       icon: <BookOpen className="w-5 h-5 text-white/80" />
+    },
+    {
+      target: 1,
+      suffix: '-on-1',
+      label: 'Career Guidance',
+      desc: 'Individual resume review, mock interviews, and career counseling for placement readiness.',
+      icon: <Briefcase className="w-5 h-5 text-white/80" />
     }
   ]
 
   const features = [
     {
       title: 'Industry-Aligned Curriculum',
-      brief: 'Curriculum designed with hiring partners to match current job requirements',
-      detail: 'Our curriculum is co-created with 100+ hiring partners to ensure every skill taught matches what companies are actively hiring for right now.'
+      brief: 'Curriculum structured according to current engineering and recruitment standards',
+      detail: 'Our curriculum focuses on modern technologies, practical problem solving, and workplace standards actively sought across software development teams.'
     },
     {
       title: 'Expert Mentors',
-      brief: 'Learn from industry veterans with 10+ years at top tech companies',
-      detail: 'Our mentors are senior engineers and hiring managers from FAANG and top product companies who bring real-world experience to every session.'
+      brief: 'Learn from experienced developers and industry professionals',
+      detail: 'Our trainers and mentors bring real-world software engineering experience to guide students through code reviews, system design, and best practices.'
     },
     {
       title: 'Real Projects',
-      brief: 'Build 3+ production-grade projects for your portfolio',
-      detail: 'Work on end-to-end projects that simulate real workplace scenarios. Build a portfolio that proves you can deliver production-ready code.'
+      brief: 'Build production-grade projects for your technical portfolio',
+      detail: 'Work on end-to-end applications that simulate real workplace requirements, giving you demonstrable code and deployment experience.'
     },
     {
       title: 'Mock Interviews',
-      brief: 'Weekly mock interviews with hiring managers from partner companies',
-      detail: 'Practice with real hiring managers from our partner companies. Get detailed feedback on technical and behavioral rounds before the real thing.'
+      brief: 'Technical problem-solving and HR behavioral preparation',
+      detail: 'Practice structured technical problem-solving rounds, coding assessments, and behavioral questions with comprehensive feedback reports.'
     },
     {
       title: 'Resume & LinkedIn',
-      brief: 'Professional resume building and LinkedIn optimization sessions',
-      detail: 'Get your resume reviewed by recruiters. Optimize your LinkedIn profile to attract hiring managers. Stand out in applicant tracking systems.'
+      brief: 'Professional resume building and LinkedIn optimization',
+      detail: 'Craft ATS-compliant resumes and optimize your technical profile to effectively highlight projects, technical skills, and accomplishments.'
     },
     {
-      title: 'Placement Support',
-      brief: 'Dedicated placement support until you land your dream role',
-      detail: "We don't just train you—we stay with you until you're placed. Unlimited interview opportunities, referral network access, and career counseling."
+      title: 'Placement Assistance',
+      brief: 'Career guidance, opportunity alerts, and interview preparation',
+      detail: 'Comprehensive support including job search guidance, referral opportunities, interview debriefs, and ongoing career counseling.'
     }
   ]
 
@@ -198,19 +192,19 @@ export default function Home() {
         'Technical Round Practice',
         'System Design Mock',
         'HR/Behavioral Rounds',
-        'FAANG-Style Interviews',
+        'Coding Round Drills',
         'Detailed Feedback Reports'
       ]
     },
     {
       title: 'Placement Support',
-      desc: 'Career Guidance, Job Alerts and Application Support',
+      desc: 'Career Guidance, Opportunity Alerts and Application Review',
       tag: 'Ongoing',
       bullets: [
-        'Job Referral Network',
-        'Weekly Job Alerts',
-        'Application Tracking',
-        'Salary Negotiation'
+        'Recruitment Drives Guidance',
+        'Weekly Opportunity Alerts',
+        'Application & Portfolio Review',
+        'Interview Debrief Sessions'
       ]
     }
   ]
@@ -221,7 +215,7 @@ export default function Home() {
 
   return (
     <div className="relative z-10 w-full overflow-hidden">
-      {/* 1. ENTERPRISE HERO WITH 3D GLOBE */}
+      {/* 1. ENTERPRISE HERO WITH 3D SPLINE SCENE */}
       <section className="relative min-h-screen flex flex-col justify-center items-center pt-28 pb-16 px-6 max-w-7xl mx-auto overflow-hidden">
         {/* Interactive Spline 3D Scene with Dark Gradient Masks to preserve text legibility */}
         <div className="spline-container absolute inset-0 -z-10 overflow-hidden bg-black pointer-events-none">
@@ -243,17 +237,17 @@ export default function Home() {
         <Hero
           title={
             <>
-              Train for What <br className="hidden md:inline" />{" "}
+              Learn Skills. <br className="hidden md:inline" />{" "}
               <span className="text-glow font-bold">
-                Companies Hire For
+                Build Projects. Get Industry-Ready.
               </span>
             </>
           }
-          description="3 Months of Industry-Focused Training, Interview Preparation and Placement Support. Get trained based on current company requirements and become placement-ready."
-          primaryCtaText="Explore Program"
-          primaryCtaLink="/training"
-          secondaryCtaText="Enroll Today"
-          secondaryCtaLink="/contact"
+          description="Practical training, project-based internships, and career guidance designed to help students connect what they learn with what the industry expects."
+          primaryCtaText="Explore Internships"
+          primaryCtaLink="/internships"
+          secondaryCtaText="College Partnerships"
+          secondaryCtaLink="/college-partnerships"
           bgText=""
         />
 
@@ -280,38 +274,152 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* 2. ADMISSION BANNER */}
+      {/* 2. ADMISSION & BATCH NOTICE */}
       <section className="px-6 py-12 border-t border-b border-white/5 bg-gradient-to-b from-black via-white/[0.01] to-black relative">
         <div className="max-w-4xl mx-auto text-center relative z-10 flex flex-col items-center">
           <div className="flex flex-wrap items-center justify-center gap-3 mb-4">
             <div className="flex items-center gap-2 px-3 py-1 border border-white/10 bg-white/5 rounded-full text-[9px] tracking-widest uppercase text-white/70">
               <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-              <span>ADMISSIONS OPEN 2026</span>
+              <span>UPCOMING COHORTS • 2026</span>
             </div>
           </div>
-          <h3 className="text-xl md:text-2xl font-display font-bold uppercase text-white mb-2">Limited Seats Available</h3>
-          <p className="text-xs text-white/60 font-light max-w-xl mb-3">
-            Only <span className="text-white font-medium underline decoration-white/20 decoration-2 underline-offset-4">{seatsLeft}</span> Seats Left for the upcoming batch. Secure your place before registrations close.
+          <h3 className="text-xl md:text-2xl font-display font-bold uppercase text-white mb-2">Hands-on Technical Training & Internships</h3>
+          <p className="text-xs text-white/60 font-light max-w-xl mb-4 leading-relaxed">
+            Weekday and weekend batch admissions are actively enrolling across Full-Stack, Python, and AI tracks. Reserve your batch or consult our academic team.
           </p>
 
-          <div className="flex items-center gap-2 mb-8 text-[10px] tracking-wider text-white/40 uppercase font-light">
+          <div className="flex items-center gap-2 mb-6 text-[10px] tracking-wider text-white/40 uppercase font-light">
             <span className="w-2 h-2 rounded-full border border-white/20 flex items-center justify-center">
               <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
             </span>
-            <span>Registrations Active Now</span>
+            <span>Online, Offline (Coimbatore), & Hybrid Formats Available</span>
           </div>
 
-          <Link
-            href="/contact"
-            className="px-6 py-3 border border-white text-xs uppercase tracking-widest text-black bg-white hover:bg-black hover:text-white transition-all duration-300 font-medium rounded"
-          >
-            Claim Your Seat Now
-          </Link>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Link
+              href="/internships"
+              onClick={() => trackEvent('internship_cta_click', { source: 'banner' })}
+              className="px-6 py-3 border border-white text-xs uppercase tracking-widest text-black bg-white hover:bg-black hover:text-white transition-all duration-300 font-medium rounded"
+            >
+              View Internship Tracks
+            </Link>
+            <Link
+              href="/contact"
+              className="px-6 py-3 border border-white/20 text-xs uppercase tracking-widest text-white hover:border-white transition-all duration-300 font-medium rounded"
+            >
+              Enquire for Schedule
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* 3. WHY MONARCH */}
-      <section className="py-24 px-6 max-w-7xl mx-auto relative">
+      {/* 3. TWO AUDIENCE PATHWAYS: STUDENTS VS COLLEGES */}
+      <section className="py-20 px-6 max-w-7xl mx-auto relative">
+        <div className="text-center mb-12">
+          <span className="text-xs tracking-widest uppercase text-white/40 mb-2 block">TAILORED PATHWAYS</span>
+          <h2 className="text-2xl md:text-4xl font-display font-bold uppercase text-white">Choose Your Journey</h2>
+          <p className="text-xs text-white/50 max-w-xl mx-auto mt-2 font-light">
+            Dedicated programs designed for aspiring professionals and institutional partners.
+          </p>
+        </div>
+
+        <RevealGrid className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Pathway 1: For Students */}
+          <SpotlightCard className="p-8 flex flex-col justify-between border border-white/10 hover:border-white/30 transition-all group">
+            <div>
+              <div className="w-12 h-12 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center mb-6 text-white group-hover:scale-105 transition-transform">
+                <GraduationCap className="w-6 h-6" />
+              </div>
+              <span className="text-[10px] uppercase tracking-widest text-white/40 font-mono">For Students & Graduates</span>
+              <h3 className="text-xl font-display font-bold text-white mt-1 mb-3">Project Internships & Training</h3>
+              <p className="text-xs text-white/60 font-light leading-relaxed mb-6">
+                Connect academic learning with real industry standards. Gain hands-on project experience, mentorship from software engineers, and placement preparation.
+              </p>
+              <ul className="space-y-2 mb-8 text-xs text-white/70 font-light">
+                <li className="flex items-center gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-white/50 shrink-0" />
+                  <span>Flexible durations: 15 Days, 1M, 2M, 3M, or 6M</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-white/50 shrink-0" />
+                  <span>Production-grade portfolio project deliverables</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-white/50 shrink-0" />
+                  <span>Aptitude, technical coding, and mock HR interviews</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-white/50 shrink-0" />
+                  <span>Verified internship & course completion certification</span>
+                </li>
+              </ul>
+            </div>
+            <div className="flex flex-wrap gap-3 pt-4 border-t border-white/5">
+              <Link
+                href="/internships"
+                className="px-5 py-2.5 bg-white text-black text-xs uppercase tracking-widest font-medium rounded hover:bg-white/90 transition-all flex items-center gap-2"
+              >
+                Explore Internships <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+              <Link
+                href="/training"
+                className="px-5 py-2.5 border border-white/20 text-white text-xs uppercase tracking-widest font-medium rounded hover:border-white transition-all"
+              >
+                3-Month Program
+              </Link>
+            </div>
+          </SpotlightCard>
+
+          {/* Pathway 2: For Colleges */}
+          <SpotlightCard className="p-8 flex flex-col justify-between border border-white/10 hover:border-white/30 transition-all group">
+            <div>
+              <div className="w-12 h-12 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center mb-6 text-white group-hover:scale-105 transition-transform">
+                <Building2 className="w-6 h-6" />
+              </div>
+              <span className="text-[10px] uppercase tracking-widest text-white/40 font-mono">For Colleges & Institutions</span>
+              <h3 className="text-xl font-display font-bold text-white mt-1 mb-3">Institutional Training & Workshops</h3>
+              <p className="text-xs text-white/60 font-light leading-relaxed mb-6">
+                Partner with Monarch to elevate student technical capabilities through customized campus bootcamps, departmental workshops, and industry guest lectures.
+              </p>
+              <ul className="space-y-2 mb-8 text-xs text-white/70 font-light">
+                <li className="flex items-center gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-white/50 shrink-0" />
+                  <span>Department-level technical training & short courses</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-white/50 shrink-0" />
+                  <span>Hands-on campus workshops & technical bootcamps</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-white/50 shrink-0" />
+                  <span>Industry guest lectures by experienced tech practitioners</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-white/50 shrink-0" />
+                  <span>Tailored syllabi aligned with institutional schedules</span>
+                </li>
+              </ul>
+            </div>
+            <div className="flex flex-wrap gap-3 pt-4 border-t border-white/5">
+              <Link
+                href="/college-partnerships"
+                className="px-5 py-2.5 bg-white text-black text-xs uppercase tracking-widest font-medium rounded hover:bg-white/90 transition-all flex items-center gap-2"
+              >
+                College Partnerships <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+              <Link
+                href="/college-partnerships#proposal"
+                className="px-5 py-2.5 border border-white/20 text-white text-xs uppercase tracking-widest font-medium rounded hover:border-white transition-all"
+              >
+                Request Proposal
+              </Link>
+            </div>
+          </SpotlightCard>
+        </RevealGrid>
+      </section>
+
+      {/* 4. WHY MONARCH (PRESERVED CARDSWAP COMPONENT) */}
+      <section className="py-24 px-6 max-w-7xl mx-auto relative border-t border-white/5">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Left Text */}
           <div className="lg:col-span-5 flex flex-col justify-center">
@@ -321,7 +429,7 @@ export default function Home() {
             </h2>
             <div className="space-y-6 text-xs text-white/60 font-light leading-relaxed">
               <p>At Monarch Training & Placements, we focus on bridging the gap between education and employment through industry-focused training, practical learning and placement support. Our programs are designed to help students and job seekers develop technical expertise, communication skills and professional confidence required to succeed in today&apos;s competitive job market.</p>
-              <p>With expert guidance, hands-on learning and career-oriented preparation, we empower individuals to become industry-ready professionals and achieve long-term career success.</p>
+              <p>With structured guidance, hands-on learning and career-oriented preparation, we empower individuals to become industry-ready professionals and achieve long-term career success.</p>
             </div>
           </div>
 
@@ -361,7 +469,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. CURRICULUM */}
+      {/* 5. CURRICULUM */}
       <section className="py-24 border-t border-white/5 bg-black/40">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -369,7 +477,7 @@ export default function Home() {
             <h2 className="text-3xl md:text-5xl font-display font-bold uppercase text-white">What You Will Learn</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <RevealGrid className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {modules.map((mod, idx) => (
               <SpotlightCard 
                 key={idx}
@@ -396,15 +504,18 @@ export default function Home() {
                 </div>
               </SpotlightCard>
             ))}
-          </div>
+          </RevealGrid>
         </div>
       </section>
 
-      {/* 5. PARTNER COMPANIES */}
+      {/* 6. TARGET TECH STANDARDS MARQUEE */}
       <section className="py-24 border-t border-white/5 overflow-hidden relative">
-        <div className="max-w-7xl mx-auto px-6 mb-12 text-center">
-          <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">HIRING PARTNERS</span>
-          <h2 className="text-2xl md:text-3xl font-display font-bold uppercase text-white">Trusted by Industry Leaders</h2>
+        <div className="max-w-7xl mx-auto px-6 mb-8 text-center">
+          <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">TARGET RECRUITMENT STANDARDS</span>
+          <h2 className="text-2xl md:text-3xl font-display font-bold uppercase text-white">Prepared for Modern Enterprise Stacks</h2>
+          <p className="text-xs text-white/50 max-w-xl mx-auto mt-2 font-light">
+            Training and projects aligned with technical interview rounds and requirements at leading technology enterprises.
+          </p>
         </div>
 
         {/* Typographic Infinite Scrolling Marquee */}
@@ -428,19 +539,59 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 6. CTA SECTION */}
+      {/* 7. TRANSPARENCY & TRUST SECTION */}
+      <section className="py-20 px-6 max-w-7xl mx-auto border-t border-white/5">
+        <div className="text-center mb-12">
+          <span className="text-xs tracking-widest uppercase text-white/40 mb-2 block">TRANSPARENCY & INTEGRITY</span>
+          <h2 className="text-2xl md:text-3xl font-display font-bold uppercase text-white">Our Placement & Training Commitment</h2>
+          <p className="text-xs text-white/50 max-w-2xl mx-auto mt-2 font-light leading-relaxed">
+            We believe in honest communication regarding what we provide, what we require from students, and how recruitment works.
+          </p>
+        </div>
+
+        <RevealGrid hoverLift className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="glass-card p-6 rounded border border-white/10">
+            <h4 className="text-xs uppercase tracking-widest font-semibold text-white mb-2">1. Hands-on Training vs Employment</h4>
+            <p className="text-xs text-white/60 font-light leading-relaxed">
+              We provide practical training, real project guidance, and intensive mock interviews. While we provide placement assistance and recruiter connection opportunities, hiring decisions rest solely with company recruiters based on candidate merit.
+            </p>
+          </div>
+          <div className="glass-card p-6 rounded border border-white/10">
+            <h4 className="text-xs uppercase tracking-widest font-semibold text-white mb-2">2. Genuine Project Deliverables</h4>
+            <p className="text-xs text-white/60 font-light leading-relaxed">
+              Every internship candidate is required to complete code deliverables and submit working repositories. Certificate eligibility requires meeting attendance benchmarks and completing approved evaluation projects.
+            </p>
+          </div>
+          <div className="glass-card p-6 rounded border border-white/10">
+            <h4 className="text-xs uppercase tracking-widest font-semibold text-white mb-2">3. Institutional Collaboration</h4>
+            <p className="text-xs text-white/60 font-light leading-relaxed">
+              We collaborate closely with colleges and academic departments to deliver syllabus-aligned technical workshops, bootcamps, and faculty-approved project evaluation.
+            </p>
+          </div>
+        </RevealGrid>
+      </section>
+
+      {/* 8. CTA SECTION */}
       <section className="py-24 border-t border-white/5 relative overflow-hidden bg-black flex flex-col justify-center items-center">
         <div className="max-w-3xl mx-auto text-center px-6 relative z-10">
-          <h2 className="text-3xl md:text-5xl font-display font-bold uppercase text-glow text-white mb-6 leading-tight">Ready To Start Your Career?</h2>
+          <h2 className="text-3xl md:text-5xl font-display font-bold uppercase text-glow text-white mb-6 leading-tight">Ready To Build Your Tech Career?</h2>
           <p className="text-xs md:text-sm text-white/60 font-light leading-relaxed max-w-xl mx-auto mb-10">
-            Join Monarch Training & Placements and become industry-ready through structured training, interview preparation and placement support.
+            Join Monarch Training & Placements to master practical coding, develop production projects, and prepare thoroughly for industry recruitment.
           </p>
-          <Link
-            href="/contact"
-            className="px-8 py-3.5 border border-white bg-white text-black text-xs uppercase tracking-widest font-semibold hover:bg-black hover:text-white transition-all duration-500 rounded inline-block"
-          >
-            Enroll Now
-          </Link>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Link
+              href="/internships"
+              className="px-8 py-3.5 border border-white bg-white text-black text-xs uppercase tracking-widest font-semibold hover:bg-black hover:text-white transition-all duration-500 rounded inline-block"
+            >
+              Explore Internships
+            </Link>
+            <Link
+              href="/college-partnerships"
+              className="px-8 py-3.5 border border-white/20 bg-transparent text-white text-xs uppercase tracking-widest font-semibold hover:border-white transition-all duration-500 rounded inline-block"
+            >
+              College Partnerships
+            </Link>
+          </div>
         </div>
       </section>
     </div>

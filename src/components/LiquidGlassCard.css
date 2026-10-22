@@ -1,0 +1,148 @@
+.lg-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  /* Slightly uneven corners so the edge reads as poured glass, not a template box */
+  border-radius: 30px 40px 32px 38px;
+  background:
+    linear-gradient(142deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.01) 32%, rgba(255, 255, 255, 0.008) 64%, rgba(255, 255, 255, 0.04) 100%);
+  -webkit-backdrop-filter: blur(4px) saturate(130%);
+  backdrop-filter: blur(4px) saturate(130%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.34),
+    inset 1px 0 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.07),
+    inset 0 0 42px rgba(255, 255, 255, 0.015),
+    inset 0 -30px 50px -30px rgba(255, 255, 255, 0.06),
+    0 24px 50px -24px rgba(0, 0, 0, 0.5);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease, background-color 0.45s ease;
+}
+
+/* Silver edge streaks: a gradient ring clipped to a 1px border */
+.lg-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(255, 255, 255, 0.05) 24%,
+    rgba(255, 255, 255, 0) 52%,
+    rgba(255, 255, 255, 0.05) 76%,
+    rgba(255, 255, 255, 0.38) 100%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: 0.65;
+  transition: opacity 0.45s ease;
+}
+
+/* Soft static lens highlight */
+.lg-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 60% at 12% -10%, rgba(255, 255, 255, 0.1), transparent 60%);
+  opacity: 0.55;
+  transition: opacity 0.45s ease;
+}
+
+.lg-card > .lg-content {
+  position: relative;
+  z-index: 3;
+  height: 100%;
+}
+
+.lg-card:hover,
+.lg-card[data-selected='true'] {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 1px 0 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 52px rgba(255, 255, 255, 0.045),
+    inset 0 -30px 50px -30px rgba(255, 255, 255, 0.09),
+    0 30px 60px -24px rgba(0, 0, 0, 0.55);
+}
+
+.lg-card:hover {
+  transform: translateY(-3px);
+}
+
+.lg-card:hover::before,
+.lg-card[data-selected='true']::before {
+  opacity: 1;
+}
+
+.lg-card:hover::after {
+  opacity: 1;
+}
+
+.lg-card[data-selected='true']::after {
+  opacity: 0.8;
+}
+
+/* Inner glass inset (deliverable box) */
+.lg-inset {
+  border-radius: 14px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.008));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+/* Glass action button */
+.lg-btn {
+  position: relative;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.lg-btn:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.06));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.22), 0 0 18px rgba(255, 255, 255, 0.08);
+}
+
+.lg-btn:active {
+  transform: scale(0.99);
+}
+
+.lg-btn--selected {
+  background: linear-gradient(180deg, #ffffff, #d9d9dc);
+  color: #000;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 0 22px rgba(255, 255, 255, 0.12);
+}
+
+.lg-btn--selected:hover {
+  background: linear-gradient(180deg, #ffffff, #ececef);
+}
+
+/* Browsers without backdrop-filter: fall back to a more opaque smoked surface */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .lg-card {
+    background:
+      linear-gradient(142deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.015) 40%, rgba(255, 255, 255, 0.05)),
+      rgba(14, 14, 16, 0.6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lg-card,
+  .lg-card::before,
+  .lg-card::after,
+  .lg-btn {
+    transition: none;
+  }
+
+  .lg-card:hover {
+    transform: none;
+  }
+}

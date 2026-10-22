@@ -1,8 +1,9 @@
 "use client"
 
+import RevealGrid from '@/components/RevealGrid'
 import React from 'react'
 import Link from 'next/link'
-import { CheckCircle, Award, Users, Briefcase } from 'lucide-react'
+import { CheckCircle, Award, Users, Briefcase, FileCheck, ShieldCheck, HelpCircle } from 'lucide-react'
 import Hero from '@/components/Hero'
 import dynamic from 'next/dynamic'
 
@@ -12,53 +13,53 @@ export default function Placements() {
   const steps = [
     {
       num: '01',
-      title: 'Career Guidance',
-      desc: 'We help candidates understand their strengths, interests, and career goals through personalized mentoring sessions.'
+      title: 'Career Assessment',
+      desc: 'We evaluate candidates to understand technical strengths, problem-solving skills, and career interests through personalized advising sessions.'
     },
     {
       num: '02',
       title: 'ATS Resume Building',
-      desc: 'Build professional resumes optimized for applicant tracking systems and recruiter expectations.'
+      desc: 'Build professional resumes tailored for applicant tracking systems with structured project highlights and GitHub repository links.'
     },
     {
       num: '03',
-      title: 'Mock Interviews',
-      desc: 'Practice technical and HR interviews with industry professionals to build confidence and reduce anxiety.'
+      title: 'Mock Technical & HR Drills',
+      desc: 'Practice technical problem-solving and HR behavioral rounds with industry professionals to build confidence and reduce interview anxiety.'
     },
     {
       num: '04',
-      title: 'Placement Drives',
-      desc: 'Participate in exclusive placement drives and connection opportunities organized for our students.'
+      title: 'Opportunity Alerts & Drives',
+      desc: 'Receive curated notifications regarding campus and off-campus recruitment opportunities, hiring patterns, and domain tests.'
     },
     {
       num: '05',
-      title: 'Interview Feedback',
-      desc: 'Receive continuous performance reviews and structured improvements following each interview session.'
+      title: 'Structured Interview Debriefs',
+      desc: 'Receive continuous performance reviews and structured improvements following each interview session to refine your approach.'
     },
     {
       num: '06',
-      title: 'Continuous Support',
-      desc: 'Get mentorship and guidance until you land your dream job, even after completing the program.'
+      title: 'Career Guidance',
+      desc: 'Ongoing mentorship on technical growth, salary benchmarks, and workplace onboarding throughout your hiring preparation.'
     }
   ]
 
   const stats = [
     {
-      num: '50+',
-      label: 'Students Trained',
-      desc: '50+ students transformed into industry-ready professionals through our comprehensive training programs',
+      num: '100%',
+      label: 'Practical Preparation',
+      desc: 'Hands-on coding drills, real workplace project portfolio, and behavioral coaching.',
       icon: <Users className="w-5 h-5 text-white/80" />
     },
     {
-      num: '100+',
-      label: 'Hiring Partners',
-      desc: '100+ top companies partner with us for campus recruitment and hiring',
+      num: '6',
+      label: 'Support Pillars',
+      desc: 'Resume building, technical drills, HR simulation, company alerts, debriefs, and mentoring.',
       icon: <Award className="w-5 h-5 text-white/80" />
     },
     {
-      num: '95%',
-      label: 'Placement Rate',
-      desc: '95% of our students secure placements within 3 months of program completion',
+      num: '1-on-1',
+      label: 'Mentor Reviews',
+      desc: 'Personalized feedback reports and actionable debriefs following technical mock sessions.',
       icon: <Briefcase className="w-5 h-5 text-white/80" />
     }
   ]
@@ -100,7 +101,7 @@ export default function Placements() {
               </span>
             </>
           }
-          description="We guide candidates through every stage of the recruitment process and help them confidently pursue career opportunities."
+          description="We guide candidates through every stage of the recruitment process and help them confidently prepare for career opportunities."
           primaryCtaText="Explore Program"
           primaryCtaLink="/training"
           secondaryCtaText="Contact Us"
@@ -117,27 +118,26 @@ export default function Placements() {
             <h2 className="text-2xl md:text-4xl font-display font-bold uppercase text-white">Our Placement Support</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <RevealGrid hoverLift className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {steps.map((step, idx) => (
               <div 
                 key={idx}
-                className="glass-card glass-card-hover rounded p-6 flex flex-col justify-between border-glow-white relative group overflow-hidden"
+                className="glass-card glass-card-hover rounded p-6 border border-white/5 flex flex-col justify-between group cursor-default"
               >
-                {/* Number Watermark */}
-                <div className="absolute right-4 top-4 text-white/[0.02] font-display font-bold text-5xl group-hover:text-white/[0.04] transition-colors">
-                  {step.num}
-                </div>
-
                 <div>
-                  <div className="flex items-center gap-2 mb-4">
-                    <CheckCircle className="w-4 h-4 text-white/60" />
-                    <h3 className="text-xs uppercase tracking-widest font-semibold text-white/95">{step.title}</h3>
+                  <div className="flex justify-between items-center mb-6">
+                    <span className="text-[10px] text-white/30 font-display tracking-widest">STEP</span>
+                    <span className="text-xs font-display font-bold text-white/40 group-hover:text-white transition-colors">{step.num}</span>
+                  </div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <CheckCircle className="w-3.5 h-3.5 text-white/40 group-hover:text-white transition-colors" />
+                    <h3 className="text-xs uppercase tracking-widest font-semibold text-white/90">{step.title}</h3>
                   </div>
                   <p className="text-xs text-white/50 font-light leading-relaxed">{step.desc}</p>
                 </div>
               </div>
             ))}
-          </div>
+          </RevealGrid>
         </div>
       </section>
 
@@ -145,11 +145,11 @@ export default function Placements() {
       <section className="py-24 border-t border-white/5 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">OUR IMPACT</span>
-            <h2 className="text-2xl md:text-3xl font-display font-bold uppercase text-white">Our Impact</h2>
+            <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">PREPARATION STANDARDS</span>
+            <h2 className="text-2xl md:text-3xl font-display font-bold uppercase text-white">Rigorous Career Readiness</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <RevealGrid hoverLift className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {stats.map((stat, idx) => (
               <div 
                 key={idx}
@@ -163,6 +163,38 @@ export default function Placements() {
                 <p className="text-xs text-white/40 font-light leading-relaxed">{stat.desc}</p>
               </div>
             ))}
+          </RevealGrid>
+        </div>
+      </section>
+
+      {/* Trust & Transparency: Assistance vs Guarantee */}
+      <section className="py-20 px-6 max-w-5xl mx-auto border-t border-white/5">
+        <div className="glass-card p-8 rounded border border-white/15">
+          <div className="flex items-center gap-2 mb-4 text-white">
+            <ShieldCheck className="w-5 h-5 text-white/80" />
+            <h3 className="text-sm uppercase tracking-widest font-bold">Understanding Placement Assistance & Transparency</h3>
+          </div>
+          <div className="space-y-4 text-xs text-white/70 font-light leading-relaxed">
+            <p>
+              At Monarch Training & Placements, we are committed to complete transparency regarding our career services. We provide comprehensive interview preparation, ATS-compliant resume building, coding problem-solving drills, and recruitment opportunity alerts.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4 pt-2">
+              <div className="p-4 bg-white/[0.02] border border-white/10 rounded">
+                <span className="text-[10px] uppercase tracking-wider text-white font-mono block mb-1">What We Guarantee</span>
+                <p className="text-[11px] text-white/60">
+                  High-quality, hands-on instruction, real project portfolio builds, verified certificates upon completion, individual feedback on mock interviews, and dedicated career guidance.
+                </p>
+              </div>
+              <div className="p-4 bg-white/[0.02] border border-white/10 rounded">
+                <span className="text-[10px] uppercase tracking-wider text-white font-mono block mb-1">What We Do Not Guarantee</span>
+                <p className="text-[11px] text-white/60">
+                  We do not promise guaranteed jobs or fabricated hiring claims. Employment offers are strictly decided by recruiting companies based on individual merit, academic criteria, and technical interview performance.
+                </p>
+              </div>
+            </div>
+            <p className="text-[11px] text-white/50 italic">
+              Our aim is to empower students with the technical depth and professional confidence required to compete effectively in modern tech hiring rounds.
+            </p>
           </div>
         </div>
       </section>
@@ -170,8 +202,8 @@ export default function Placements() {
       {/* Companies Marquee */}
       <section className="py-24 border-t border-white/5 overflow-hidden relative">
         <div className="max-w-7xl mx-auto px-6 mb-12 text-center">
-          <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">HIRING PARTNERS</span>
-          <h2 className="text-2xl md:text-3xl font-display font-bold uppercase text-white">Companies We Prepare You For</h2>
+          <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">TARGET RECRUITMENT PROFILES</span>
+          <h2 className="text-2xl md:text-3xl font-display font-bold uppercase text-white">Target Tech Profiles</h2>
         </div>
 
         <div className="w-full flex flex-col gap-6 relative">
@@ -199,15 +231,23 @@ export default function Placements() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-3xl mx-auto text-center px-6 relative z-10">
           <h2 className="text-2xl md:text-4xl font-display font-bold uppercase text-white mb-4">Your Career Journey Starts Here</h2>
-          <p className="text-xs text-white/60 font-light max-w-xl mx-auto mb-3">
-            Join Monarch Placements and become interview-ready with dedicated placement support.
+          <p className="text-xs text-white/60 font-light max-w-xl mx-auto mb-8">
+            Join Monarch Placements and become interview-ready through structured training, production project builds, and mock interview coaching.
           </p>
-          <Link
-            href="/contact"
-            className="px-8 py-3.5 border border-white bg-white text-black text-xs uppercase tracking-widest font-semibold hover:bg-black hover:text-white transition-all duration-500 rounded inline-block"
-          >
-            Enroll Now
-          </Link>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Link
+              href="/internships"
+              className="px-8 py-3.5 border border-white bg-white text-black text-xs uppercase tracking-widest font-semibold hover:bg-black hover:text-white transition-all duration-500 rounded inline-block"
+            >
+              Explore Internships
+            </Link>
+            <Link
+              href="/contact"
+              className="px-8 py-3.5 border border-white/20 bg-transparent text-white text-xs uppercase tracking-widest font-semibold hover:border-white transition-all duration-500 rounded inline-block"
+            >
+              Enquire Today
+            </Link>
+          </div>
         </div>
       </section>
     </div>

@@ -40,7 +40,7 @@ export default function SpotlightCard({
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`relative overflow-hidden rounded-xl border border-white/5 bg-neutral-950/60 transition-all duration-300 cubic-bezier(0.16, 1, 0.3, 1) hover:border-white/15 hover:-translate-y-1.5 hover:scale-[1.01] hover:shadow-[0_20px_50px_rgba(255,255,255,0.03)] ${className}`}
+      className={`glass-card transition-all duration-300 cubic-bezier(0.16, 1, 0.3, 1) hover:-translate-y-1.5 hover:scale-[1.01] ${className}`}
     >
       {/* Light glow overlay */}
       <div

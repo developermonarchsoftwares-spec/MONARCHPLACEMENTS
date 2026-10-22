@@ -1,5 +1,6 @@
 "use client"
 
+import RevealGrid from '@/components/RevealGrid'
 import React from 'react'
 import Link from 'next/link'
 import { CheckCircle2, Award, Users, Briefcase } from 'lucide-react'
@@ -44,21 +45,21 @@ export default function Training() {
 
   const outcomes = [
     {
-      stat: '50+',
-      label: 'Students Trained',
-      desc: '50+ students transformed into industry-ready professionals through our comprehensive training programs',
+      stat: '160+',
+      label: 'Learning Hours',
+      desc: 'Structured technical instruction, aptitude drills, and supervised live coding laboratory sessions.',
       icon: <Users className="w-5 h-5 text-white/80" />
     },
     {
-      stat: '50+',
-      label: 'Partner Companies',
-      desc: '50+ top companies partner with us for campus recruitment and hiring',
+      stat: '3',
+      label: 'Production Capstones',
+      desc: 'Individual full-stack projects constructed, tested, and deployed to your public technical portfolio.',
       icon: <Award className="w-5 h-5 text-white/80" />
     },
     {
-      stat: '95%',
-      label: 'Placement Assistance',
-      desc: '95% of our students secure placements within 3 months of program completion',
+      stat: '1-on-1',
+      label: 'Mock Interviews',
+      desc: 'Individual technical and behavioral interview preparation drills with detailed feedback reports.',
       icon: <Briefcase className="w-5 h-5 text-white/80" />
     }
   ]
@@ -160,7 +161,7 @@ export default function Training() {
             <h2 className="text-2xl md:text-3xl font-display font-bold uppercase text-white">Program Outcomes</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <RevealGrid hoverLift className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {outcomes.map((out, idx) => (
               <div 
                 key={idx}
@@ -174,7 +175,7 @@ export default function Training() {
                 <p className="text-xs text-white/40 font-light leading-relaxed">{out.desc}</p>
               </div>
             ))}
-          </div>
+          </RevealGrid>
         </div>
       </section>
 
