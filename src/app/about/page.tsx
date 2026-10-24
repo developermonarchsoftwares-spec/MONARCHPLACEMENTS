@@ -90,7 +90,7 @@ export default function About() {
       </section>
 
       {/* Showcase Cards with Modern High-End Layout */}
-      <section className="py-24 px-6 max-w-7xl mx-auto">
+      <section className="py-24 max-w-7xl mx-auto px-6">
         <div className="flex flex-col gap-16">
           {showcases.map((show, idx) => (
             <div
@@ -136,8 +136,8 @@ export default function About() {
       </section>
 
       {/* Mission & Vision Section */}
-      <section className="py-24 border-t border-white/5 bg-black/40 px-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+      <section className="py-24 border-t border-white/5 bg-black/40">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Mission */}
           <div className="glass-card glass-card-hover rounded p-8 relative overflow-hidden group border-glow-white">
             <div className="absolute -right-4 -bottom-4 text-white/[0.02] font-display font-bold text-8xl pointer-events-none group-hover:text-white/[0.04] transition-colors duration-500">

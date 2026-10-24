@@ -30,7 +30,7 @@ export default function Hero({
 }: HeroProps) {
   return (
     <section
-      className="relative z-10 w-full max-w-7xl mx-auto pt-36 pb-16 px-6 min-h-screen flex items-center overflow-hidden"
+      className="relative z-10 max-w-7xl mx-auto px-6 pt-36 pb-16 min-h-screen flex items-center overflow-hidden"
     >
       {/* Background layers */}
       <div className="absolute inset-0 overflow-hidden -z-10">

@@ -28,9 +28,32 @@ export interface CollegeEnquiry {
   status: 'pending' | 'reviewed' | 'proposal_sent'
 }
 
+export interface HiringRequirement {
+  id: string
+  companyName: string
+  contactPerson: string
+  designation?: string
+  officialEmail: string
+  phoneNumber: string
+  jobTitle: string
+  numberOfOpenings: number
+  requiredSkills: string
+  candidatePreference: 'Fresher' | 'Experienced' | 'Both'
+  experienceRange?: string
+  workLocation: string
+  workMode: 'On-site' | 'Hybrid' | 'Remote'
+  joiningTimeline: string
+  jobDescription?: string
+  additionalRequirements?: string
+  consent: boolean
+  submittedAt: string
+  status: 'pending' | 'reviewed' | 'contacted'
+}
+
 const DATA_DIR = path.join(process.cwd(), 'data')
 const INTERNSHIPS_FILE = path.join(DATA_DIR, 'internships.json')
 const COLLEGE_ENQUIRIES_FILE = path.join(DATA_DIR, 'college_enquiries.json')
+const HIRING_REQUIREMENTS_FILE = path.join(DATA_DIR, 'hiring_requirements.json')
 
 async function ensureDataDir() {
   try {
@@ -170,4 +193,56 @@ export async function saveCollegeEnquiry(
 
 export async function getCollegeEnquiries(): Promise<CollegeEnquiry[]> {
   return readJsonFile<CollegeEnquiry>(COLLEGE_ENQUIRIES_FILE)
+}
+
+export async function saveHiringRequirement(
+  input: Omit<HiringRequirement, 'id' | 'submittedAt' | 'status'>
+): Promise<{ success: boolean; id?: string; error?: string }> {
+  try {
+    const existing = await readJsonFile<HiringRequirement>(HIRING_REQUIREMENTS_FILE)
+
+    // Duplicate check: same email and job title within 15 minutes
+    const now = Date.now()
+    const isRecentDuplicate = existing.some(item => {
+      if (
+        item.officialEmail.toLowerCase() === input.officialEmail.toLowerCase() &&
+        item.jobTitle.toLowerCase() === input.jobTitle.toLowerCase()
+      ) {
+        const diffMinutes = (now - new Date(item.submittedAt).getTime()) / (1000 * 60)
+        return diffMinutes < 15
+      }
+      return false
+    })
+
+    if (isRecentDuplicate) {
+      return {
+        success: false,
+        error: 'A hiring requirement for this role and email was recently received. Our technical recruitment team will contact you shortly.',
+      }
+    }
+
+    const newRecord: HiringRequirement = {
+      ...input,
+      id: `HIR-${Date.now()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`,
+      submittedAt: new Date().toISOString(),
+      status: 'pending',
+    }
+
+    existing.unshift(newRecord)
+    await writeJsonFile(HIRING_REQUIREMENTS_FILE, existing)
+
+    // Forward notification server-side
+    await forwardNotification(`New IT Hiring Requirement: ${input.companyName} (${input.jobTitle} - ${input.numberOfOpenings} openings)`, {
+      ...newRecord,
+    })
+
+    return { success: true, id: newRecord.id }
+  } catch (err: unknown) {
+    console.error('Error saving hiring requirement:', err)
+    return { success: false, error: 'Database persistence error. Please try again.' }
+  }
+}
+
+export async function getHiringRequirements(): Promise<HiringRequirement[]> {
+  return readJsonFile<HiringRequirement>(HIRING_REQUIREMENTS_FILE)
 }

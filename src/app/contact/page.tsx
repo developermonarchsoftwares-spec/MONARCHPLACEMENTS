@@ -98,8 +98,8 @@ export default function Contact() {
       </div>
 
       {/* Form & Details Section */}
-      <section ref={formRef} id="contactForm" className="py-16 px-6 border-t border-white/5 bg-gradient-to-b from-black via-white/[0.01] to-black">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <section ref={formRef} id="contactForm" className="py-16 border-t border-white/5 bg-gradient-to-b from-black via-white/[0.01] to-black">
+        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
           {/* Left Form */}
           <div className="lg:col-span-7 glass-card rounded p-8 border-glow-white">

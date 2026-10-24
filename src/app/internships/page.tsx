@@ -17,8 +17,6 @@ import {
   AlertCircle,
   ChevronLeft,
   ChevronRight,
-  ArrowUpRight,
-  X,
   Database,
   BrainCircuit,
   Server,
@@ -27,6 +25,7 @@ import {
 import confetti from 'canvas-confetti'
 import Hero from '@/components/Hero'
 import LiquidGlassCard from '@/components/LiquidGlassCard'
+import DomainDetailsModal from '@/components/DomainDetailsModal'
 import EditorialInternshipExperience from '@/components/EditorialInternshipExperience'
 import dynamic from 'next/dynamic'
 import { trackEvent } from '@/lib/analytics'
@@ -58,26 +57,6 @@ export default function InternshipsPage() {
   // Domain Details Modal State
   const [selectedDomainModal, setSelectedDomainModal] = useState<DomainItem | null>(null)
   const modalTriggerRef = useRef<HTMLButtonElement | null>(null)
-
-  useEffect(() => {
-    if (!selectedDomainModal) return
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setSelectedDomainModal(null)
-        modalTriggerRef.current?.focus()
-      }
-    }
-
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    window.addEventListener('keydown', handleKeyDown)
-
-    return () => {
-      document.body.style.overflow = previousOverflow
-      window.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [selectedDomainModal])
 
   const handleApplyFromModal = (dom: DomainItem) => {
     setSelectedDomainModal(null)
@@ -732,7 +711,7 @@ export default function InternshipsPage() {
         </div>
 
         {/* Five Domain Cards: Single Horizontal Row with Styled Icons */}
-        <RevealGrid hoverLift itemClassName="shrink-0 lg:shrink" className="flex overflow-x-auto no-scrollbar gap-4 pb-4 lg:grid lg:grid-cols-5 lg:gap-5 select-none">
+        <RevealGrid hoverLift itemClassName="shrink-0 lg:shrink" className="flex overflow-x-auto lg:overflow-visible no-scrollbar gap-4 px-1 pt-4 pb-4 lg:grid lg:grid-cols-5 lg:gap-5 select-none">
           {domains.map((dom) => {
             const IconComponent = dom.icon
             return (
@@ -780,167 +759,18 @@ export default function InternshipsPage() {
         </RevealGrid>
       </section>
 
-      {/* COMPACT STATIC DOMAIN DETAILS OVERLAY MODAL */}
+      {/* DOMAIN DETAILS MODAL (shared by every domain) */}
       <AnimatePresence>
         {selectedDomainModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-            {/* Dark Translucent Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.18 }}
-              onClick={() => {
-                setSelectedDomainModal(null)
-                modalTriggerRef.current?.focus()
-              }}
-              className="absolute inset-0 bg-black/80 backdrop-blur-md"
-              aria-hidden="true"
-            />
-
-            {/* Compact Static Modal Panel */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: 10 }}
-              transition={{ duration: 0.2, ease: 'easeOut' }}
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="domain-modal-title"
-              onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-[880px] bg-[#0c0c0e]/95 border border-white/15 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.9),0_0_20px_rgba(255,255,255,0.06)] p-6 sm:p-7 md:p-8 z-10 max-h-[92vh] overflow-y-auto md:overflow-visible no-scrollbar"
-            >
-              {/* Header */}
-              <div className="flex items-start justify-between gap-4 pb-4 border-b border-white/10">
-                <div>
-                  <div className="flex items-center gap-2.5 mb-1.5">
-                    <span className="text-[11px] font-mono text-white/80 font-semibold tracking-wider">
-                      {selectedDomainModal.num}
-                    </span>
-                    <span className="w-1 h-1 rounded-full bg-white/30" />
-                    <span className="text-[10px] uppercase tracking-widest text-white/50 font-mono">
-                      {selectedDomainModal.category}
-                    </span>
-                  </div>
-                  <h3 id="domain-modal-title" className="text-xl sm:text-2xl font-display font-bold text-white tracking-wide">
-                    {selectedDomainModal.name}
-                  </h3>
-                  <p className="text-xs text-white/60 font-light mt-1 max-w-xl leading-relaxed">
-                    {selectedDomainModal.overview}
-                  </p>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedDomainModal(null)
-                    modalTriggerRef.current?.focus()
-                  }}
-                  aria-label="Close modal"
-                  className="p-1.5 rounded-full border border-white/15 bg-white/5 hover:bg-white/20 text-white/70 hover:text-white transition-all cursor-pointer shrink-0"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-
-              {/* Two-Column Clean Compact Layout */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 pt-5">
-                {/* Left Column: Tech Badges & Program Highlights */}
-                <div className="md:col-span-5 flex flex-col justify-between space-y-4">
-                  <div className="space-y-4">
-                    {/* Core Technologies */}
-                    <div>
-                      <span className="text-[10px] uppercase tracking-widest text-white/40 block mb-2 font-mono">
-                        Core Technologies
-                      </span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {selectedDomainModal.techBadges.map((badge, bIdx) => (
-                          <span
-                            key={bIdx}
-                            className="px-2.5 py-0.5 text-[10px] font-mono text-white/80 bg-white/5 border border-white/10 rounded"
-                          >
-                            {badge}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Program Highlights */}
-                    <div>
-                      <span className="text-[10px] uppercase tracking-widest text-white/40 block mb-2 font-mono">
-                        Program Highlights
-                      </span>
-                      <div className="space-y-2 p-3 bg-white/[0.02] border border-white/10 rounded-lg text-xs">
-                        <div className="flex items-center justify-between text-white/80">
-                          <span className="text-white/40 text-[11px]">Duration</span>
-                          <span className="font-mono text-[11px] text-white">15 Days – 6 Months</span>
-                        </div>
-                        <div className="flex items-center justify-between text-white/80">
-                          <span className="text-white/40 text-[11px]">Learning Mode</span>
-                          <span className="text-[11px] text-white">Online / Hybrid / Offline</span>
-                        </div>
-                        <div className="flex items-start justify-between gap-2 text-white/80">
-                          <span className="text-white/40 text-[11px] shrink-0">Outcome</span>
-                          <span className="text-[11px] text-right text-white/90 line-clamp-1">{selectedDomainModal.outcome}</span>
-                        </div>
-                        <div className="flex items-center justify-between text-white/80">
-                          <span className="text-white/40 text-[11px]">Certificate</span>
-                          <span className="text-[11px] text-emerald-400/90 font-medium">Verified Academic Credential</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Primary Action Button */}
-                  <div className="pt-2">
-                    <button
-                      type="button"
-                      onClick={() => handleApplyFromModal(selectedDomainModal)}
-                      className="w-full py-2.5 px-4 border border-white bg-white text-black hover:bg-black hover:text-white text-xs uppercase tracking-widest font-semibold transition-all duration-300 rounded-lg flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_15px_rgba(255,255,255,0.15)] group/btn"
-                    >
-                      <span>Apply for This Track</span>
-                      <ArrowUpRight className="w-4 h-4 transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Right Column: Key Syllabus (5 concise rows) */}
-                <div className="md:col-span-7 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-[10px] uppercase tracking-widest text-white/40 font-mono">
-                        Key Curriculum Syllabus
-                      </span>
-                      <span className="text-[10px] font-mono text-white/30">
-                        5 Core Modules
-                      </span>
-                    </div>
-
-                    <div className="space-y-2">
-                      {selectedDomainModal.keyModules.map((item, mIdx) => (
-                        <div
-                          key={mIdx}
-                          className="flex items-center justify-between p-2.5 rounded-lg border border-white/10 bg-white/[0.02] hover:border-white/30 hover:bg-white/[0.04] transition-colors"
-                        >
-                          <div className="flex items-center gap-3">
-                            <span className="text-[10px] font-mono text-white/70 font-semibold w-5">
-                              0{mIdx + 1}
-                            </span>
-                            <span className="text-xs font-medium text-white/90">
-                              {item.title}
-                            </span>
-                          </div>
-                          <span className="text-[10px] font-mono text-white/40 hidden sm:inline">
-                            {item.topic}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+          <DomainDetailsModal
+            key={selectedDomainModal.id}
+            domain={selectedDomainModal}
+            onClose={() => {
+              setSelectedDomainModal(null)
+              modalTriggerRef.current?.focus()
+            }}
+            onApply={() => handleApplyFromModal(selectedDomainModal)}
+          />
         )}
       </AnimatePresence>
 
@@ -1223,9 +1053,9 @@ export default function InternshipsPage() {
       {/* 7. FREQUENTLY ASKED QUESTIONS */}
       <section className="py-20 px-6 max-w-5xl mx-auto border-t border-white/5">
         <div className="text-center mb-12">
-          <span className="text-xs tracking-widest uppercase text-white/40 mb-2 block">INTERNSHIP FAQS</span>
-          <h2 className="text-2xl md:text-3xl font-display font-bold uppercase text-white">Common Questions</h2>
-        </div>
+            <span className="text-xs tracking-widest uppercase text-white/40 mb-2 block">INTERNSHIP FAQS</span>
+            <h2 className="text-2xl md:text-3xl font-display font-bold uppercase text-white">Common Questions</h2>
+          </div>
 
         <div className="space-y-4">
           {[

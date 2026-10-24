@@ -37,6 +37,7 @@ export default function Navbar() {
     { name: 'Internships', path: '/internships' },
     { name: 'Training', path: '/training' },
     { name: 'Colleges', path: '/college-partnerships' },
+    { name: 'IT Staffing', path: '/it-staffing' },
     { name: 'Placements', path: '/placements' },
     { name: 'Roadmap', path: '/roadmap' },
     { name: 'About', path: '/about' },
@@ -63,7 +64,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-3.5 lg:gap-6 xl:gap-8">
+          <nav className="hidden md:flex items-center gap-2 lg:gap-4 xl:gap-6">
             {links.map((link) => {
               const isActive = pathname === link.path
               return (

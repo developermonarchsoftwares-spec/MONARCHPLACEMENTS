@@ -11,6 +11,8 @@ type AnalyticsEvent =
   | 'whatsapp_click'
   | 'email_enquiry_click'
   | 'college_proposal_request'
+  | 'hiring_form_submission'
+  | 'hiring_cta_click'
   | 'page_view'
 
 export function trackEvent(eventName: AnalyticsEvent, metadata?: Record<string, string | number | boolean>) {

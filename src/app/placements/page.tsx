@@ -111,8 +111,8 @@ export default function Placements() {
       </div>
 
       {/* Placement Process Journey */}
-      <section className="py-24 border-t border-white/5 bg-gradient-to-b from-black via-white/[0.01] to-black px-6">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-24 border-t border-white/5 bg-gradient-to-b from-black via-white/[0.01] to-black">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">OUR PROCESS</span>
             <h2 className="text-2xl md:text-4xl font-display font-bold uppercase text-white">Our Placement Support</h2>
@@ -142,14 +142,14 @@ export default function Placements() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-24 border-t border-white/5 px-6">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-24 border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">PREPARATION STANDARDS</span>
             <h2 className="text-2xl md:text-3xl font-display font-bold uppercase text-white">Rigorous Career Readiness</h2>
           </div>
 
-          <RevealGrid hoverLift className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <RevealGrid hoverLift className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {stats.map((stat, idx) => (
               <div 
                 key={idx}
