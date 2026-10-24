@@ -247,7 +247,7 @@ export default function CollegePartnershipsPage() {
                 </div>
               </div>
 
-              <button
+              <button suppressHydrationWarning
                 onClick={() => scrollToProposal(srv.title)}
                 className="w-full py-2.5 border border-white/20 bg-white/5 text-white hover:bg-white hover:text-black transition-all rounded text-xs uppercase tracking-widest font-medium"
               >
@@ -275,7 +275,7 @@ export default function CollegePartnershipsPage() {
           </div>
 
           <div className="flex flex-wrap gap-4">
-            <button
+            <button suppressHydrationWarning
               onClick={() => setShowProposalModal(true)}
               className="px-6 py-3.5 bg-white text-black text-xs uppercase tracking-widest font-semibold hover:bg-white/90 transition-all rounded flex items-center gap-2"
             >
@@ -313,7 +313,7 @@ export default function CollegePartnershipsPage() {
                   {serverMessage || 'Thank you for your institutional enquiry. Our academic partnership team will review your requirements and share a formal proposal along with custom curriculum options within 1 to 2 business days.'}
                 </p>
                 <div className="mt-6 flex flex-wrap gap-4 justify-center">
-                  <button
+                  <button suppressHydrationWarning
                     onClick={() => {
                       setStatus('idle')
                       setFormData({
@@ -331,7 +331,7 @@ export default function CollegePartnershipsPage() {
                   >
                     Submit Another Request
                   </button>
-                  <button
+                  <button suppressHydrationWarning
                     onClick={() => setShowProposalModal(true)}
                     className="px-6 py-2.5 bg-white text-black text-xs uppercase tracking-widest font-medium rounded hover:bg-white/90 transition-all"
                   >
@@ -354,7 +354,7 @@ export default function CollegePartnershipsPage() {
                     <label className="text-[10px] uppercase tracking-widest text-white/60 font-semibold" htmlFor="contactPerson">
                       Contact Person & Designation <span className="text-white">*</span>
                     </label>
-                    <input
+                    <input suppressHydrationWarning
                       id="contactPerson"
                       type="text"
                       required
@@ -376,7 +376,7 @@ export default function CollegePartnershipsPage() {
                     <label className="text-[10px] uppercase tracking-widest text-white/60 font-semibold" htmlFor="collegeName">
                       College / Institution Name <span className="text-white">*</span>
                     </label>
-                    <input
+                    <input suppressHydrationWarning
                       id="collegeName"
                       type="text"
                       required
@@ -400,7 +400,7 @@ export default function CollegePartnershipsPage() {
                     <label className="text-[10px] uppercase tracking-widest text-white/60 font-semibold" htmlFor="officialEmail">
                       Official / Institution Email <span className="text-white">*</span>
                     </label>
-                    <input
+                    <input suppressHydrationWarning
                       id="officialEmail"
                       type="email"
                       required
@@ -422,7 +422,7 @@ export default function CollegePartnershipsPage() {
                     <label className="text-[10px] uppercase tracking-widest text-white/60 font-semibold" htmlFor="contactNumber">
                       Contact Number <span className="text-white">*</span>
                     </label>
-                    <input
+                    <input suppressHydrationWarning
                       id="contactNumber"
                       type="tel"
                       required
@@ -446,7 +446,7 @@ export default function CollegePartnershipsPage() {
                     <label className="text-[10px] uppercase tracking-widest text-white/60 font-semibold" htmlFor="department">
                       Department / Faculty <span className="text-white">*</span>
                     </label>
-                    <input
+                    <input suppressHydrationWarning
                       id="department"
                       type="text"
                       required
@@ -468,7 +468,7 @@ export default function CollegePartnershipsPage() {
                     <label className="text-[10px] uppercase tracking-widest text-white/60 font-semibold" htmlFor="trainingProgram">
                       Interested Training Program <span className="text-white">*</span>
                     </label>
-                    <select
+                    <select suppressHydrationWarning
                       id="trainingProgram"
                       required
                       value={formData.trainingProgram}
@@ -490,7 +490,7 @@ export default function CollegePartnershipsPage() {
                   <label className="text-[10px] uppercase tracking-widest text-white/60 font-semibold" htmlFor="preferredSchedule">
                     Preferred Schedule or Duration <span className="text-white">*</span>
                   </label>
-                  <select
+                  <select suppressHydrationWarning
                     id="preferredSchedule"
                     required
                     value={formData.preferredSchedule}
@@ -510,7 +510,7 @@ export default function CollegePartnershipsPage() {
                   <label className="text-[10px] uppercase tracking-widest text-white/60 font-semibold" htmlFor="additionalRequirements">
                     Additional Details / Expected Student Count
                   </label>
-                  <textarea
+                  <textarea suppressHydrationWarning
                     id="additionalRequirements"
                     rows={3}
                     placeholder="e.g. Expected batch size ~120 students; focus on Full-Stack MERN and cloud deployment basics."
@@ -524,7 +524,7 @@ export default function CollegePartnershipsPage() {
                   <p className="text-[10px] text-white/40 font-light">
                     Official proposals are prepared with transparent pricing & syllabi upon verification.
                   </p>
-                  <button
+                  <button suppressHydrationWarning
                     type="submit"
                     disabled={status === 'submitting'}
                     className="w-full sm:w-auto px-8 py-3.5 bg-white text-black text-xs uppercase tracking-widest font-semibold hover:bg-white/90 disabled:opacity-50 transition-all rounded flex items-center justify-center gap-2"
@@ -569,14 +569,14 @@ export default function CollegePartnershipsPage() {
                   <h3 className="text-lg font-display font-bold text-white mt-0.5">Monarch Academic Training Proposal Structure</h3>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button
+                  <button suppressHydrationWarning
                     onClick={handlePrintProposal}
                     className="p-2 border border-white/20 rounded hover:bg-white/10 text-white transition-colors"
                     title="Print Proposal"
                   >
                     <Printer className="w-4 h-4" />
                   </button>
-                  <button
+                  <button suppressHydrationWarning
                     onClick={() => setShowProposalModal(false)}
                     className="p-2 border border-white/20 rounded hover:bg-white/10 text-white transition-colors"
                     title="Close"
@@ -630,7 +630,7 @@ export default function CollegePartnershipsPage() {
                 <span className="text-[10px] text-white/40">
                   Monarch Softwares • Kovilpalayam, Coimbatore • hr@monarchplacements.in
                 </span>
-                <button
+                <button suppressHydrationWarning
                   onClick={() => {
                     setShowProposalModal(false)
                     scrollToProposal()

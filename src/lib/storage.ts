@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises'
+import os from 'node:os'
 import path from 'node:path'
 
 export interface InternshipApplication {
@@ -50,7 +51,12 @@ export interface HiringRequirement {
   status: 'pending' | 'reviewed' | 'contacted'
 }
 
-const DATA_DIR = path.join(process.cwd(), 'data')
+// Vercel's deployment filesystem is read-only, so the JSON files only live in /tmp there and
+// are not a durable record. On Vercel the email notification is what delivers a submission.
+const IS_SERVERLESS = Boolean(process.env.VERCEL)
+const DATA_DIR = IS_SERVERLESS ? path.join(os.tmpdir(), 'monarch-data') : path.join(process.cwd(), 'data')
+const DELIVERY_ERROR =
+  'We could not record your submission right now. Please try again in a moment or contact us directly at hr@monarchplacements.in.'
 const INTERNSHIPS_FILE = path.join(DATA_DIR, 'internships.json')
 const COLLEGE_ENQUIRIES_FILE = path.join(DATA_DIR, 'college_enquiries.json')
 const HIRING_REQUIREMENTS_FILE = path.join(DATA_DIR, 'hiring_requirements.json')
@@ -78,11 +84,11 @@ async function writeJsonFile<T>(filePath: string, data: T[]): Promise<void> {
   await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf-8')
 }
 
-// Optional server-side notification forwarder
-async function forwardNotification(subject: string, payload: Record<string, unknown>) {
+// Server-side notification forwarder. Resolves true only when the email service accepted it.
+async function forwardNotification(subject: string, payload: Record<string, unknown>): Promise<boolean> {
   try {
     const apiKey = process.env.WEB3FORMS_ACCESS_KEY || '4bf1d586-25ec-4be4-8df7-fbbba4d6cb78'
-    await fetch('https://api.web3forms.com/submit', {
+    const res = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({
@@ -92,9 +98,29 @@ async function forwardNotification(subject: string, payload: Record<string, unkn
         ...payload,
       }),
     })
+    return res.ok
   } catch (err) {
     console.error('Failed to forward email notification:', err)
+    return false
   }
+}
+
+// A submission counts as received when the email went out, or (locally only) when it was saved to disk.
+async function persistAndNotify<T>(
+  filePath: string,
+  records: T[],
+  subject: string,
+  payload: Record<string, unknown>
+): Promise<boolean> {
+  let saved = false
+  try {
+    await writeJsonFile(filePath, records)
+    saved = true
+  } catch (err) {
+    console.error('Could not write submission file:', err)
+  }
+  const notified = await forwardNotification(subject, payload)
+  return notified || (saved && !IS_SERVERLESS)
 }
 
 export async function saveInternshipApplication(
@@ -128,12 +154,10 @@ export async function saveInternshipApplication(
     }
 
     existing.unshift(newRecord)
-    await writeJsonFile(INTERNSHIPS_FILE, existing)
-
-    // Forward notification server-side
-    await forwardNotification(`New Internship Application: ${input.fullName} (${input.preferredDomain} - ${input.preferredDuration})`, {
-      ...newRecord,
-    })
+    const delivered = await persistAndNotify(INTERNSHIPS_FILE, existing, `New Internship Application: ${input.fullName} (${input.preferredDomain} - ${input.preferredDuration})`, { ...newRecord })
+    if (!delivered) {
+      return { success: false, error: DELIVERY_ERROR }
+    }
 
     return { success: true, id: newRecord.id }
   } catch (err: unknown) {
@@ -177,12 +201,10 @@ export async function saveCollegeEnquiry(
     }
 
     existing.unshift(newRecord)
-    await writeJsonFile(COLLEGE_ENQUIRIES_FILE, existing)
-
-    // Forward notification server-side
-    await forwardNotification(`New College Partnership Request: ${input.collegeName} (${input.trainingProgram})`, {
-      ...newRecord,
-    })
+    const delivered = await persistAndNotify(COLLEGE_ENQUIRIES_FILE, existing, `New College Partnership Request: ${input.collegeName} (${input.trainingProgram})`, { ...newRecord })
+    if (!delivered) {
+      return { success: false, error: DELIVERY_ERROR }
+    }
 
     return { success: true, id: newRecord.id }
   } catch (err: unknown) {
@@ -229,12 +251,10 @@ export async function saveHiringRequirement(
     }
 
     existing.unshift(newRecord)
-    await writeJsonFile(HIRING_REQUIREMENTS_FILE, existing)
-
-    // Forward notification server-side
-    await forwardNotification(`New IT Hiring Requirement: ${input.companyName} (${input.jobTitle} - ${input.numberOfOpenings} openings)`, {
-      ...newRecord,
-    })
+    const delivered = await persistAndNotify(HIRING_REQUIREMENTS_FILE, existing, `New IT Hiring Requirement: ${input.companyName} (${input.jobTitle} - ${input.numberOfOpenings} openings)`, { ...newRecord })
+    if (!delivered) {
+      return { success: false, error: DELIVERY_ERROR }
+    }
 
     return { success: true, id: newRecord.id }
   } catch (err: unknown) {

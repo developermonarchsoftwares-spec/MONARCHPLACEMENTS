@@ -587,7 +587,7 @@ export default function InternshipsPage() {
         {/* Carousel Outer Wrapper with Left and Right Circular Arrows - Full Width */}
         <div className="relative flex items-center justify-between w-full px-2 sm:px-4 md:px-6">
           {/* Circular Left Arrow Button outside the card track */}
-          <button
+          <button suppressHydrationWarning
             type="button"
             onClick={() => scrollByCard('left')}
             disabled={!canScrollLeft}
@@ -660,7 +660,7 @@ export default function InternshipsPage() {
                       </p>
                     </div>
 
-                    <button
+                    <button suppressHydrationWarning
                       onClick={(e) => {
                         if (hasDragged.current) {
                           e.preventDefault()
@@ -684,7 +684,7 @@ export default function InternshipsPage() {
           </div>
 
           {/* Circular Right Arrow Button outside the card track */}
-          <button
+          <button suppressHydrationWarning
             type="button"
             onClick={() => scrollByCard('right')}
             disabled={!canScrollRight}
@@ -741,7 +741,7 @@ export default function InternshipsPage() {
                 </div>
 
                 <div className="mt-5 pt-3 border-t border-white/10">
-                  <button
+                  <button suppressHydrationWarning
                     type="button"
                     onClick={(e) => {
                       modalTriggerRef.current = e.currentTarget
@@ -831,7 +831,7 @@ export default function InternshipsPage() {
                   {serverMessage || 'Your internship application has been stored in our system. An academic coordinator will contact you via WhatsApp or email within 24 to 48 business hours with batch schedules and onboarding instructions.'}
                 </p>
                 <div className="mt-6 flex flex-wrap gap-4 justify-center">
-                  <button
+                  <button suppressHydrationWarning
                     onClick={() => {
                       setStatus('idle')
                       setFormData({
@@ -871,7 +871,7 @@ export default function InternshipsPage() {
                     <label className="text-[10px] uppercase tracking-widest text-white/60 font-semibold" htmlFor="fullName">
                       Full Name <span className="text-white">*</span>
                     </label>
-                    <input
+                    <input suppressHydrationWarning
                       id="fullName"
                       type="text"
                       required
@@ -893,7 +893,7 @@ export default function InternshipsPage() {
                     <label className="text-[10px] uppercase tracking-widest text-white/60 font-semibold" htmlFor="contactNumber">
                       WhatsApp / Contact Number <span className="text-white">*</span>
                     </label>
-                    <input
+                    <input suppressHydrationWarning
                       id="contactNumber"
                       type="tel"
                       required
@@ -917,7 +917,7 @@ export default function InternshipsPage() {
                     <label className="text-[10px] uppercase tracking-widest text-white/60 font-semibold" htmlFor="email">
                       Email Address <span className="text-white">*</span>
                     </label>
-                    <input
+                    <input suppressHydrationWarning
                       id="email"
                       type="email"
                       required
@@ -939,7 +939,7 @@ export default function InternshipsPage() {
                     <label className="text-[10px] uppercase tracking-widest text-white/60 font-semibold" htmlFor="collegeName">
                       College / Institution Name <span className="text-white">*</span>
                     </label>
-                    <input
+                    <input suppressHydrationWarning
                       id="collegeName"
                       type="text"
                       required
@@ -962,7 +962,7 @@ export default function InternshipsPage() {
                   <label className="text-[10px] uppercase tracking-widest text-white/60 font-semibold" htmlFor="courseAndYear">
                     Course and Year of Study <span className="text-white">*</span>
                   </label>
-                  <input
+                  <input suppressHydrationWarning
                     id="courseAndYear"
                     type="text"
                     required
@@ -985,7 +985,7 @@ export default function InternshipsPage() {
                     <label className="text-[10px] uppercase tracking-widest text-white/60 font-semibold" htmlFor="preferredDomain">
                       Preferred Domain <span className="text-white">*</span>
                     </label>
-                    <select
+                    <select suppressHydrationWarning
                       id="preferredDomain"
                       required
                       value={formData.preferredDomain}
@@ -1005,7 +1005,7 @@ export default function InternshipsPage() {
                     <label className="text-[10px] uppercase tracking-widest text-white/60 font-semibold" htmlFor="preferredDuration">
                       Preferred Duration <span className="text-white">*</span>
                     </label>
-                    <select
+                    <select suppressHydrationWarning
                       id="preferredDuration"
                       required
                       value={formData.preferredDuration}
@@ -1026,7 +1026,7 @@ export default function InternshipsPage() {
                   <p className="text-[10px] text-white/40 font-light">
                     No documents or payment required for this initial application.
                   </p>
-                  <button
+                  <button suppressHydrationWarning
                     type="submit"
                     disabled={status === 'submitting'}
                     className="w-full sm:w-auto px-8 py-3.5 border border-white bg-white text-black hover:bg-black hover:text-white text-xs uppercase tracking-widest font-semibold disabled:opacity-50 transition-all duration-300 rounded flex items-center justify-center gap-2 cursor-pointer"

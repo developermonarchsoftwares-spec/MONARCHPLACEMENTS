@@ -110,7 +110,7 @@ export default function Contact() {
                 <CheckCircle2 className="w-12 h-12 text-white/70" />
                 <h3 className="text-sm uppercase tracking-widest font-semibold text-white">Enrollment Received!</h3>
                 <p className="text-xs text-white/50 font-light max-w-xs leading-relaxed">We&apos;ve received your details and will reach out to you shortly.</p>
-                <button
+                <button suppressHydrationWarning
                   onClick={() => setStatus('idle')}
                   className="mt-4 px-6 py-2.5 border border-white/20 text-xs uppercase tracking-widest text-white/70 hover:text-white hover:border-white/40 transition-all rounded"
                 >
@@ -133,7 +133,7 @@ export default function Contact() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
                   <label className="text-[9px] uppercase tracking-widest text-white/50 font-semibold" htmlFor="name">Full Name</label>
-                  <input
+                  <input suppressHydrationWarning
                     type="text"
                     id="name"
                     name="name"
@@ -145,7 +145,7 @@ export default function Contact() {
 
                 <div className="flex flex-col gap-2">
                   <label className="text-[9px] uppercase tracking-widest text-white/50 font-semibold" htmlFor="email">Email Address</label>
-                  <input
+                  <input suppressHydrationWarning
                     type="email"
                     id="email"
                     name="email"
@@ -159,7 +159,7 @@ export default function Contact() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
                   <label className="text-[9px] uppercase tracking-widest text-white/50 font-semibold" htmlFor="phone">Phone Number</label>
-                  <input
+                  <input suppressHydrationWarning
                     type="tel"
                     id="phone"
                     name="phone"
@@ -171,7 +171,7 @@ export default function Contact() {
 
                 <div className="flex flex-col gap-2">
                   <label className="text-[9px] uppercase tracking-widest text-white/50 font-semibold" htmlFor="course">Select Course</label>
-                  <select
+                  <select suppressHydrationWarning
                     id="course"
                     name="course"
                     required
@@ -192,7 +192,7 @@ export default function Contact() {
 
               <div className="flex flex-col gap-2">
                 <label className="text-[9px] uppercase tracking-widest text-white/50 font-semibold" htmlFor="message">Your Message</label>
-                <textarea
+                <textarea suppressHydrationWarning
                   id="message"
                   name="message"
                   required
@@ -202,7 +202,7 @@ export default function Contact() {
                 />
               </div>
 
-                <button
+                <button suppressHydrationWarning
                   type="submit"
                   disabled={status === 'sending'}
                   className="w-full py-4 border border-white bg-white text-black text-xs uppercase tracking-widest font-semibold hover:bg-black hover:text-white transition-all duration-500 rounded flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"

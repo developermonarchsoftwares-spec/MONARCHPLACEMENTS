@@ -3,6 +3,7 @@
 import React, { useState, useRef } from 'react'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
+import { motion, useReducedMotion } from 'framer-motion'
 import { 
   ArrowRight, 
   ArrowUpRight, 
@@ -115,6 +116,67 @@ const TARGET_AUDIENCES = [
     icon: <Users className="w-5 h-5 text-white/80" />,
   },
 ]
+
+// Shared layout for the four services. Odd services carry the large number on the left,
+// even services mirror it to the far right. The number is decorative, so it is hidden from
+// assistive technology and sits outside the reading order of the content.
+const serviceStagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } },
+}
+
+const serviceItem = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' as const } },
+}
+
+function ServiceSection({
+  number,
+  flip = false,
+  main,
+  aside,
+}: {
+  number: string
+  flip?: boolean
+  main: React.ReactNode[]
+  aside: React.ReactNode[]
+}) {
+  const reduceMotion = useReducedMotion()
+
+  return (
+    <motion.article
+      variants={serviceStagger}
+      initial={reduceMotion ? false : 'hidden'}
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.15 }}
+      className="flex flex-col gap-6 py-12 md:py-16 lg:flex-row lg:items-center lg:gap-10 xl:gap-14"
+    >
+      <motion.div
+        variants={serviceItem}
+        aria-hidden="true"
+        className={`select-none whitespace-nowrap font-display font-bold leading-none text-white/[0.07] text-6xl sm:text-7xl lg:w-40 lg:shrink-0 lg:text-center lg:text-8xl xl:w-56 xl:text-[11rem] ${flip ? 'lg:order-last' : ''}`}
+      >
+        {number}
+      </motion.div>
+
+      <motion.div variants={serviceStagger} className="space-y-5 lg:flex-1">
+        {main.map((node, i) => (
+          <motion.div key={i} variants={serviceItem}>
+            {node}
+          </motion.div>
+        ))}
+      </motion.div>
+
+      <motion.div variants={serviceStagger} className="space-y-5 lg:w-[36%] lg:shrink-0">
+        {aside.map((node, i) => (
+          <motion.div key={i} variants={serviceItem}>
+            {node}
+          </motion.div>
+        ))}
+      </motion.div>
+    </motion.article>
+  )
+}
 
 export default function ITStaffingPage() {
   const formRef = useRef<HTMLDivElement>(null)
@@ -367,7 +429,7 @@ export default function ITStaffingPage() {
         ref={solutionsRef}
         className="py-24 px-6 max-w-7xl mx-auto border-t border-white/5 scroll-mt-24"
       >
-        <div className="text-center mb-16">
+        <div className="text-center mb-14">
           <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">COLLABORATIVE HIRING</span>
           <h2 className="text-3xl md:text-5xl font-display font-bold uppercase text-white">
             IT Hiring Solutions
@@ -377,197 +439,176 @@ export default function ITStaffingPage() {
           </p>
         </div>
 
-        {/* 4 Differentiated Services */}
-        <div className="space-y-10">
+        {/* Four services: one shared layout, number on the left for odd and on the right for even */}
+        <div className="divide-y divide-white/10 border-y border-white/10">
           {/* Service 01: IT Staff Augmentation */}
-          <div className="glass-card rounded p-8 md:p-10 border border-white/10 group">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              <div className="lg:col-span-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="px-2.5 py-0.5 border border-white/15 bg-white/5 rounded text-[9px] uppercase tracking-widest text-white/70 font-mono">
-                    Service 01
-                  </span>
-                </div>
-                <h3 className="text-xl md:text-2xl font-display font-bold text-white mb-3">
-                  IT Staff Augmentation
-                </h3>
-                <p className="text-xs text-white/60 font-light leading-relaxed mb-6">
-                  Strengthen your existing team with suitable IT professionals based on your project requirements, technical needs, and preferred timelines. We help businesses identify candidates for short-term projects, ongoing development work, and growing technical teams.
-                </p>
+          <ServiceSection
+            number="01"
+            main={[
+              <p key="label" className="text-xs tracking-widest uppercase text-white/40">Service 01</p>,
+              <h3 key="title" className="text-xl font-display font-bold text-white md:text-2xl">IT Staff Augmentation</h3>,
+              <p key="desc" className="text-xs md:text-sm font-light leading-relaxed text-white/60">
+                Strengthen your existing team with suitable IT professionals based on your project requirements, technical needs, and preferred timelines. We help businesses identify candidates for short-term projects, ongoing development work, and growing technical teams.
+              </p>,
+              <button
+                key="cta"
+                type="button"
+                suppressHydrationWarning
+                onClick={() => scrollToForm('IT Staff Augmentation')}
+                className="inline-flex items-center gap-2 rounded border border-white/20 bg-white/5 px-5 py-2.5 text-xs font-medium uppercase tracking-widest text-white transition-all hover:bg-white hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+              >
+                <span>Request Staff Augmentation</span>
+                <ArrowRight className="h-3.5 w-3.5" />
+              </button>,
+            ]}
+            aside={[
+              <h4 key="head" className="text-xs uppercase tracking-widest font-semibold text-white">Included Capabilities</h4>,
+              <ul key="list" className="space-y-3">
+                {[
+                  'Technical talent sourcing',
+                  'Project-based staffing support',
+                  'Fresher and experienced candidates',
+                  'Skills-based candidate matching',
+                  'Immediate and planned hiring support',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-xs font-light leading-relaxed text-white/70">
+                    <CheckCircle2 className="mt-1 h-3.5 w-3.5 shrink-0 text-white/40" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>,
+              <p key="note" className="border-l border-white/15 pl-4 text-xs font-light leading-relaxed text-white/50">
+                <span className="font-medium text-white/80">Notice on Availability:</span> Sourcing timelines and candidate readiness are aligned with role criteria and active talent pipelines. We tailor sourcing transparently to individual specifications.
+              </p>,
+            ]}
+          />
+
+          {/* Service 02: Fresher & Experienced Talent Sourcing */}
+          <ServiceSection
+            number="02"
+            flip
+            main={[
+              <p key="label" className="text-xs tracking-widest uppercase text-white/40">Service 02</p>,
+              <h3 key="title" className="text-xl font-display font-bold text-white md:text-2xl">Fresher & Experienced Talent Sourcing</h3>,
+              <p key="desc" className="text-xs md:text-sm font-light leading-relaxed text-white/60">
+                Access candidates across multiple IT domains, from entry-level talent to professionals with relevant industry experience. We work to match candidate skills, experience, and career interests with your company&apos;s requirements.
+              </p>,
+              <p key="note" className="border-l border-white/15 pl-4 text-xs font-light leading-relaxed text-white/50">
+                <span className="font-medium text-white/80">Important Note:</span> Candidate availability depends on the role, required skills, experience, and current talent pool. These represent technical domain competencies rather than pre-confirmed vacancies.
+              </p>,
+            ]}
+            aside={[
+              <h4 key="head" className="text-xs uppercase tracking-widest font-semibold text-white">Supported Technical Specialisations</h4>,
+              <ul key="list" className="grid grid-cols-1 gap-x-8 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+                {ROLE_CATEGORIES.map((role) => (
+                  <li key={role.name} className="border-b border-white/10">
+                    <button
+                      type="button"
+                      onClick={() => scrollToForm(role.name)}
+                      className="group/role flex w-full items-start justify-between gap-3 py-3.5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                    >
+                      <span>
+                        <span className="block text-xs font-display font-bold text-white">{role.name}</span>
+                        <span className="mt-1 block text-[11px] font-light leading-relaxed text-white/50">{role.desc}</span>
+                      </span>
+                      <ArrowUpRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-white/30 transition-colors group-hover/role:text-white" />
+                    </button>
+                  </li>
+                ))}
+              </ul>,
+            ]}
+          />
+
+          {/* Service 03: Requirement-Based Hiring & Training */}
+          <ServiceSection
+            number="03"
+            main={[
+              <p key="label" className="text-xs tracking-widest uppercase text-white/40">Service 03</p>,
+              <h3 key="title" className="text-xl font-display font-bold leading-snug text-white md:text-2xl">
+                Can&apos;t find candidates with the exact skills your team needs?
+              </h3>,
+              <p key="sub" className="text-xs font-semibold uppercase tracking-widest text-white/80">
+                Requirement-Based Hiring & Training Coordination
+              </p>,
+              <p key="desc" className="text-xs md:text-sm font-light leading-relaxed text-white/60">
+                Share your job description, technical requirements, and hiring timeline. Monarch Placements can help identify suitable candidates and, where feasible, coordinate focused training to address relevant skill gaps before candidates are presented for consideration.
+              </p>,
+              <p key="note" className="border-l border-white/15 pl-4 text-xs font-light leading-relaxed text-white/50">
+                <span className="font-medium text-white/80">Training Terms:</span> Training plans and timelines are agreed according to the role, feasibility, and candidate readiness. Training coordination is conditional and structured per mutual agreement, not automatic or guaranteed.
+              </p>,
+            ]}
+            aside={[
+              <ol key="steps">
+                {[
+                  { step: '01', name: 'Understand', text: 'Review the job description, skills, experience, and hiring timeline.' },
+                  { step: '02', name: 'Source', text: 'Identify candidates who match the requirements.' },
+                  { step: '03', name: 'Assess', text: 'Screen candidates against the agreed role criteria.' },
+                  { step: '04', name: 'Train', text: 'Coordinate requirement-based training where needed and agreed.' },
+                  { step: '05', name: 'Present', text: 'Share suitable profiles for review and interviews.' },
+                  { step: '06', name: 'Support', text: 'Coordinate interview scheduling and hiring communication.' },
+                ].map((item) => (
+                  <li key={item.step} className="flex gap-5 border-b border-white/10 py-4 first:pt-0 last:border-b-0">
+                    <span className="w-6 shrink-0 text-xs font-display font-bold text-white/40">{item.step}</span>
+                    <div>
+                      <h4 className="text-xs uppercase tracking-wider font-semibold text-white">{item.name}</h4>
+                      <p className="mt-1.5 text-xs font-light leading-relaxed text-white/60">{item.text}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>,
+            ]}
+          />
+
+          {/* Service 04: Free Recruitment Support for Companies */}
+          <ServiceSection
+            number="04"
+            flip
+            main={[
+              <p key="label" className="text-xs tracking-widest uppercase text-white/40">Service 04 · Zero Cost Employer Model</p>,
+              <h3 key="title" className="text-2xl font-display font-bold leading-snug text-white md:text-3xl">
+                Recruitment Support Without Employer Recruitment Fees
+              </h3>,
+              <p key="desc" className="text-xs md:text-sm font-light leading-relaxed text-white/60">
+                We aim to make recruitment more accessible for businesses seeking IT talent. By removing traditional placement consultancy fee barriers, we enable companies of all scales to source technical talent efficiently.
+              </p>,
+              <div key="cta" className="flex flex-col gap-3 sm:flex-row">
                 <button
                   type="button"
                   suppressHydrationWarning
-                  onClick={() => scrollToForm('IT Staff Augmentation')}
-                  className="px-5 py-2.5 border border-white/20 bg-white/5 text-white hover:bg-white hover:text-black transition-all rounded text-xs uppercase tracking-widest font-medium inline-flex items-center gap-2"
+                  onClick={() => scrollToForm()}
+                  className="flex items-center justify-center gap-2 rounded bg-white px-6 py-3.5 text-xs font-semibold uppercase tracking-widest text-black transition-all hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
                 >
-                  <span>Request Staff Augmentation</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <span>Share Your Requirement</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
                 </button>
-              </div>
-
-              <div className="lg:col-span-6 border-t lg:border-t-0 lg:border-l border-white/10 pt-6 lg:pt-0 lg:pl-8">
-                <span className="text-[10px] uppercase tracking-widest text-white/40 font-mono block mb-4">Included Capabilities</span>
-                <div className="space-y-2.5 mb-6">
-                  {[
-                    'Technical talent sourcing',
-                    'Project-based staffing support',
-                    'Fresher and experienced candidates',
-                    'Skills-based candidate matching',
-                    'Immediate and planned hiring support',
-                  ].map((item, idx) => (
-                    <div key={idx} className="flex items-center gap-2.5 text-[11px] text-white/70 font-light">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-white/40 shrink-0" />
-                      <span>{item}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="p-3.5 rounded border border-white/5 bg-white/[0.02] text-[11px] text-white/50 font-light leading-relaxed">
-                  <span className="text-white/80 font-medium">Notice on Availability:</span> Sourcing timelines and candidate readiness are aligned with role criteria and active talent pipelines. We tailor sourcing transparently to individual specifications.
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Service 02: Fresher & Experienced Talent Sourcing */}
-          <div className="glass-card rounded p-8 md:p-10 border border-white/10 group">
-            <div className="max-w-3xl mb-8">
-              <span className="px-2.5 py-0.5 border border-white/15 bg-white/5 rounded text-[9px] uppercase tracking-widest text-white/70 font-mono mb-3 inline-block">
-                Service 02
-              </span>
-              <h3 className="text-xl md:text-2xl font-display font-bold text-white mb-3">
-                Fresher & Experienced Talent Sourcing
-              </h3>
-              <p className="text-xs text-white/60 font-light leading-relaxed">
-                Access candidates across multiple IT domains, from entry-level talent to professionals with relevant industry experience. We work to match candidate skills, experience, and career interests with your company's requirements.
-              </p>
-            </div>
-
-            {/* Typographic Role Grid */}
-            <div className="mb-6">
-              <span className="text-[10px] uppercase tracking-widest text-white/40 font-mono block mb-4">
-                Supported Technical Specialisations
-              </span>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {ROLE_CATEGORIES.map((role, idx) => (
-                  <div
-                    key={idx}
-                    onClick={() => scrollToForm(role.name)}
-                    className="p-4 rounded border border-white/10 bg-white/[0.02] hover:bg-white/5 hover:border-white/30 transition-all cursor-pointer group/card flex flex-col justify-between"
-                  >
-                    <div>
-                      <div className="flex items-center justify-between mb-1.5">
-                        <span className="text-xs font-display font-bold text-white group-hover/card:text-white">
-                          {role.name}
-                        </span>
-                        <ArrowUpRight className="w-3.5 h-3.5 text-white/30 group-hover/card:text-white transition-colors" />
-                      </div>
-                      <p className="text-[11px] text-white/50 font-light leading-relaxed">
-                        {role.desc}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="p-3.5 rounded border border-white/5 bg-white/[0.02] text-[11px] text-white/50 font-light leading-relaxed">
-              <span className="text-white/80 font-medium">Important Note:</span> Candidate availability depends on the role, required skills, experience, and current talent pool. These represent technical domain competencies rather than pre-confirmed vacancies.
-            </div>
-          </div>
-
-          {/* Service 03: Requirement-Based Hiring & Training */}
-          <div className="glass-card rounded p-8 md:p-10 border border-white/10 group">
-            <div className="max-w-3xl mb-8">
-              <span className="px-2.5 py-0.5 border border-white/15 bg-white/5 rounded text-[9px] uppercase tracking-widest text-white/70 font-mono mb-3 inline-block">
-                Service 03
-              </span>
-              <h3 className="text-xl md:text-2xl font-display font-bold text-white mb-2">
-                Can't find candidates with the exact skills your team needs?
-              </h3>
-              <p className="text-xs uppercase tracking-widest font-semibold text-white/80 mb-3">
-                Requirement-Based Hiring & Training Coordination
-              </p>
-              <p className="text-xs text-white/60 font-light leading-relaxed">
-                Share your job description, technical requirements, and hiring timeline. Monarch Placements can help identify suitable candidates and, where feasible, coordinate focused training to address relevant skill gaps before candidates are presented for consideration.
-              </p>
-            </div>
-
-            {/* 6-step training workflow */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3.5 mb-6">
-              {[
-                { step: '01', name: 'Understand', text: 'Review the job description, skills, experience, and hiring timeline.' },
-                { step: '02', name: 'Source', text: 'Identify candidates who match the requirements.' },
-                { step: '03', name: 'Assess', text: 'Screen candidates against the agreed role criteria.' },
-                { step: '04', name: 'Train', text: 'Coordinate requirement-based training where needed and agreed.' },
-                { step: '05', name: 'Present', text: 'Share suitable profiles for review and interviews.' },
-                { step: '06', name: 'Support', text: 'Coordinate interview scheduling and hiring communication.' },
-              ].map((item, idx) => (
-                <div key={idx} className="p-4 rounded border border-white/10 bg-white/[0.02] flex flex-col justify-between">
-                  <div>
-                    <span className="text-[10px] text-white/40 font-mono tracking-widest block mb-2">PHASE {item.step}</span>
-                    <h4 className="text-xs uppercase tracking-wider font-semibold text-white mb-1.5">{item.name}</h4>
-                    <p className="text-[11px] text-white/50 font-light leading-relaxed">{item.text}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="p-3.5 rounded border border-white/5 bg-white/[0.02] text-[11px] text-white/50 font-light leading-relaxed">
-              <span className="text-white/80 font-medium">Training Terms:</span> Training plans and timelines are agreed according to the role, feasibility, and candidate readiness. Training coordination is conditional and structured per mutual agreement, not automatic or guaranteed.
-            </div>
-          </div>
-
-          {/* Service 04: Free Recruitment Support for Companies */}
-          <div className="glass-card rounded p-8 md:p-12 border border-white/15 flex flex-col lg:flex-row items-center justify-between gap-8">
-            <div className="max-w-2xl">
-              <span className="text-[10px] uppercase tracking-widest text-white/40 font-mono block mb-2">
-                Service 04 · Zero Cost Employer Model
-              </span>
-              <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-3">
-                Recruitment Support Without Employer Recruitment Fees
-              </h3>
-              <p className="text-xs text-white/60 font-light leading-relaxed mb-6">
-                We aim to make recruitment more accessible for businesses seeking IT talent. By removing traditional placement consultancy fee barriers, we enable companies of all scales to source technical talent efficiently.
-              </p>
-
-              <div className="space-y-2 mb-6">
+                <a
+                  href="#hiring-process"
+                  className="rounded border border-white/20 px-6 py-3.5 text-center text-xs font-semibold uppercase tracking-widest text-white transition-all hover:border-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                >
+                  View Hiring Process
+                </a>
+              </div>,
+            ]}
+            aside={[
+              <ul key="list" className="space-y-3">
                 {[
                   'No standard recruitment service fee for companies.',
                   'No candidate-sourcing charge.',
                   'Support for fresher and experienced hiring.',
                   'Requirement-based sourcing and training coordination.',
                   'Candidate profiles shared according to role suitability.',
-                ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2 text-xs text-white/80 font-light">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-white/60 shrink-0" />
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-xs font-light leading-relaxed text-white/80">
+                    <CheckCircle2 className="mt-1 h-3.5 w-3.5 shrink-0 text-white/50" />
                     <span>{item}</span>
-                  </div>
+                  </li>
                 ))}
-              </div>
-
-              <div className="p-3 rounded border border-white/10 bg-white/5 text-[11px] text-white/60 font-light leading-relaxed">
-                <span className="text-white font-medium">Transparent Disclaimer:</span> No recruitment service fee is charged to companies for our standard recruitment support. Any separately agreed training or additional bespoke services must be discussed transparently before work begins.
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-3 shrink-0 w-full sm:w-auto">
-              <button
-                type="button"
-                suppressHydrationWarning
-                onClick={() => scrollToForm()}
-                className="px-6 py-3.5 bg-white text-black text-xs uppercase tracking-widest font-semibold hover:bg-white/90 transition-all rounded flex items-center justify-center gap-2"
-              >
-                <span>Share Your Requirement</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-              <a
-                href="#hiring-process"
-                className="px-6 py-3.5 border border-white/20 text-white text-xs uppercase tracking-widest font-semibold hover:border-white transition-all rounded text-center"
-              >
-                View Hiring Process
-              </a>
-            </div>
-          </div>
+              </ul>,
+              <p key="note" className="border-l border-white/15 pl-4 text-xs font-light leading-relaxed text-white/60">
+                <span className="font-medium text-white">Transparent Disclaimer:</span> No recruitment service fee is charged to companies for our standard recruitment support. Any separately agreed training or additional bespoke services must be discussed transparently before work begins.
+              </p>,
+            ]}
+          />
         </div>
       </section>
 
@@ -625,8 +666,9 @@ export default function ITStaffingPage() {
 
         <RevealGrid className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {TARGET_AUDIENCES.map((audience, idx) => (
-            <SpotlightCard key={idx} className="p-6 flex flex-col justify-between border border-white/10 group">
-              <div>
+            <SpotlightCard key={idx} className="p-6 border border-white/10 group">
+              <div className="flex h-full flex-col">
+              <div className="flex-1">
                 <div className="flex justify-between items-start mb-4">
                   <div className="p-2 border border-white/10 bg-white/5 rounded text-white group-hover:scale-105 transition-transform">
                     {audience.icon}
@@ -651,6 +693,7 @@ export default function ITStaffingPage() {
                   <span>Discuss Requirement</span>
                   <ArrowRight className="w-3 h-3" />
                 </button>
+              </div>
               </div>
             </SpotlightCard>
           ))}
