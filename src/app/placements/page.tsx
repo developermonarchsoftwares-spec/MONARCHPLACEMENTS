@@ -1,5 +1,6 @@
 "use client"
 
+import { RevealSection } from '@/components/Reveal'
 import RevealGrid from '@/components/RevealGrid'
 import React from 'react'
 import Link from 'next/link'
@@ -69,7 +70,7 @@ export default function Placements() {
   ]
 
   return (
-    <div className="relative z-10 w-full">
+    <div className="relative z-10 w-full overflow-hidden">
       {/* Hero Section Container */}
       <div className="relative w-full min-h-screen overflow-hidden">
         {/* Ferrofluid Background component */}
@@ -111,7 +112,7 @@ export default function Placements() {
       </div>
 
       {/* Placement Process Journey */}
-      <section className="py-24 border-t border-white/5 bg-gradient-to-b from-black via-white/[0.01] to-black">
+      <RevealSection className="py-24 border-t border-white/5 bg-transparent">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">OUR PROCESS</span>
@@ -139,10 +140,10 @@ export default function Placements() {
             ))}
           </RevealGrid>
         </div>
-      </section>
+      </RevealSection>
 
       {/* Stats Section */}
-      <section className="py-24 border-t border-white/5">
+      <RevealSection className="py-24 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">PREPARATION STANDARDS</span>
@@ -165,42 +166,44 @@ export default function Placements() {
             ))}
           </RevealGrid>
         </div>
-      </section>
+      </RevealSection>
 
       {/* Trust & Transparency: Assistance vs Guarantee */}
-      <section className="py-20 px-6 max-w-5xl mx-auto border-t border-white/5">
-        <div className="glass-card p-8 rounded border border-white/15">
-          <div className="flex items-center gap-2 mb-4 text-white">
-            <ShieldCheck className="w-5 h-5 text-white/80" />
-            <h3 className="text-sm uppercase tracking-widest font-bold">Understanding Placement Assistance & Transparency</h3>
-          </div>
-          <div className="space-y-4 text-xs text-white/70 font-light leading-relaxed">
-            <p>
-              At Monarch Training & Placements, we are committed to complete transparency regarding our career services. We provide comprehensive interview preparation, ATS-compliant resume building, coding problem-solving drills, and recruitment opportunity alerts.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4 pt-2">
-              <div className="p-4 bg-white/[0.02] border border-white/10 rounded">
-                <span className="text-[10px] uppercase tracking-wider text-white font-mono block mb-1">What We Guarantee</span>
-                <p className="text-[11px] text-white/60">
-                  High-quality, hands-on instruction, real project portfolio builds, verified certificates upon completion, individual feedback on mock interviews, and dedicated career guidance.
-                </p>
-              </div>
-              <div className="p-4 bg-white/[0.02] border border-white/10 rounded">
-                <span className="text-[10px] uppercase tracking-wider text-white font-mono block mb-1">What We Do Not Guarantee</span>
-                <p className="text-[11px] text-white/60">
-                  We do not promise guaranteed jobs or fabricated hiring claims. Employment offers are strictly decided by recruiting companies based on individual merit, academic criteria, and technical interview performance.
-                </p>
-              </div>
+      <RevealSection className="py-20 border-t border-white/5 w-full bg-transparent">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="glass-card p-6 sm:p-8 rounded border border-white/15">
+            <div className="flex items-start sm:items-center gap-2.5 mb-4 text-white">
+              <ShieldCheck className="w-5 h-5 text-white/80 shrink-0 mt-0.5 sm:mt-0" />
+              <h3 className="text-sm uppercase tracking-widest font-bold">Understanding Placement Assistance & Transparency</h3>
             </div>
-            <p className="text-[11px] text-white/50 italic">
-              Our aim is to empower students with the technical depth and professional confidence required to compete effectively in modern tech hiring rounds.
-            </p>
+            <div className="space-y-4 text-xs text-white/70 font-light leading-relaxed">
+              <p>
+                At Monarch Training & Placements, we are committed to complete transparency regarding our career services. We provide comprehensive interview preparation, ATS-compliant resume building, coding problem-solving drills, and recruitment opportunity alerts.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4 pt-2">
+                <div className="p-4 bg-white/[0.02] border border-white/10 rounded">
+                  <span className="text-[10px] uppercase tracking-wider text-white font-mono block mb-1">What We Guarantee</span>
+                  <p className="text-[11px] text-white/60">
+                    High-quality, hands-on instruction, real project portfolio builds, verified certificates upon completion, individual feedback on mock interviews, and dedicated career guidance.
+                  </p>
+                </div>
+                <div className="p-4 bg-white/[0.02] border border-white/10 rounded">
+                  <span className="text-[10px] uppercase tracking-wider text-white font-mono block mb-1">What We Do Not Guarantee</span>
+                  <p className="text-[11px] text-white/60">
+                    We do not promise guaranteed jobs or fabricated hiring claims. Employment offers are strictly decided by recruiting companies based on individual merit, academic criteria, and technical interview performance.
+                  </p>
+                </div>
+              </div>
+              <p className="text-[11px] text-white/50 italic">
+                Our aim is to empower students with the technical depth and professional confidence required to compete effectively in modern tech hiring rounds.
+              </p>
+            </div>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* Companies Marquee */}
-      <section className="py-24 border-t border-white/5 overflow-hidden relative">
+      <RevealSection className="py-24 border-t border-white/5 overflow-hidden relative">
         <div className="max-w-7xl mx-auto px-6 mb-12 text-center">
           <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">TARGET RECRUITMENT PROFILES</span>
           <h2 className="text-2xl md:text-3xl font-display font-bold uppercase text-white">Target Tech Profiles</h2>
@@ -208,14 +211,14 @@ export default function Placements() {
 
         <div className="w-full flex flex-col gap-6 relative">
           <div className="flex gap-0 py-3 overflow-hidden select-none w-full relative">
-            <div className="flex gap-16 justify-around min-w-full shrink-0 animate-marquee flex-row">
+            <div className="flex gap-16 justify-around min-w-full shrink-0 animate-marquee flex-row pr-16">
               {partners.map((partner, idx) => (
                 <span key={idx} className="text-lg md:text-2xl font-display uppercase tracking-[0.2em] font-light text-white/20 hover:text-white/60 transition-colors duration-300 cursor-default">
                   {partner}
                 </span>
               ))}
             </div>
-            <div aria-hidden="true" className="flex gap-16 justify-around min-w-full shrink-0 animate-marquee flex-row">
+            <div aria-hidden="true" className="flex gap-16 justify-around min-w-full shrink-0 animate-marquee flex-row pr-16">
               {partners.map((partner, idx) => (
                 <span key={idx} className="text-lg md:text-2xl font-display uppercase tracking-[0.2em] font-light text-white/20 hover:text-white/60 transition-colors duration-300 cursor-default">
                   {partner}
@@ -224,10 +227,10 @@ export default function Placements() {
             </div>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* CTA Section */}
-      <section className="py-24 border-t border-white/5 relative overflow-hidden bg-black flex flex-col justify-center items-center">
+      <RevealSection className="py-24 border-t border-white/5 relative overflow-hidden bg-transparent flex flex-col justify-center items-center">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-3xl mx-auto text-center px-6 relative z-10">
           <h2 className="text-2xl md:text-4xl font-display font-bold uppercase text-white mb-4">Your Career Journey Starts Here</h2>
@@ -249,7 +252,7 @@ export default function Placements() {
             </Link>
           </div>
         </div>
-      </section>
+      </RevealSection>
     </div>
   )
 }

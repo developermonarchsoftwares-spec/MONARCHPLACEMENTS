@@ -131,9 +131,13 @@ export default function MagicRings({
     const mount = mountRef.current;
     if (!mount) return;
 
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl2');
+    if (!gl) return;
+
     let renderer: THREE.WebGLRenderer;
     try {
-      renderer = new THREE.WebGLRenderer({ alpha: true });
+      renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
     } catch {
       return;
     }

@@ -1,5 +1,6 @@
 "use client"
 
+import { RevealSection } from '@/components/Reveal'
 import RevealGrid from '@/components/RevealGrid'
 import React from 'react'
 import Link from 'next/link'
@@ -65,7 +66,7 @@ export default function Training() {
   ]
 
   return (
-    <div className="relative z-10 w-full">
+    <div className="relative z-10 w-full overflow-hidden">
       {/* Hero Section */}
       <div className="relative w-full min-h-screen overflow-hidden">
         {/* Interactive GridScan Background */}
@@ -108,7 +109,7 @@ export default function Training() {
       </div>
 
       {/* Learning Journey Timeline */}
-      <section className="py-24 border-t border-white/5 bg-gradient-to-b from-black via-white/[0.01] to-black px-6">
+      <RevealSection className="py-24 border-t border-white/5 bg-transparent px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">CURRICULUM</span>
@@ -137,8 +138,8 @@ export default function Training() {
                   <div className="hidden md:block w-1/2 px-12" />
 
                   {/* Content card */}
-                  <div className="w-full md:w-1/2 pl-16 md:pl-0 md:px-12">
-                    <div className="glass-card glass-card-hover rounded p-6 border-glow-white">
+                  <div className="w-full md:w-1/2 pl-12 sm:pl-16 md:pl-0 md:px-12">
+                    <div className="glass-card glass-card-hover rounded p-4 sm:p-6 border-glow-white">
                       <div className="flex items-center gap-2 mb-3">
                         <CheckCircle2 className="w-4.5 h-4.5 text-white/60" />
                         <h3 className="text-xs uppercase tracking-widest font-semibold text-white">{step.title}</h3>
@@ -151,10 +152,10 @@ export default function Training() {
             </div>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* Program Outcomes Section */}
-      <section className="py-24 border-t border-white/5">
+      <RevealSection className="py-24 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">OUTCOMES</span>
@@ -177,10 +178,10 @@ export default function Training() {
             ))}
           </RevealGrid>
         </div>
-      </section>
+      </RevealSection>
 
       {/* CTA Section */}
-      <section className="py-24 border-t border-white/5 relative overflow-hidden bg-black flex flex-col justify-center items-center">
+      <RevealSection className="py-24 border-t border-white/5 relative overflow-hidden bg-transparent flex flex-col justify-center items-center">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-3xl mx-auto text-center px-6 relative z-10">
           <h2 className="text-2xl md:text-4xl font-display font-bold uppercase text-white mb-4">Ready To Begin?</h2>
@@ -194,7 +195,7 @@ export default function Training() {
             Enroll Now
           </Link>
         </div>
-      </section>
+      </RevealSection>
     </div>
   )
 }

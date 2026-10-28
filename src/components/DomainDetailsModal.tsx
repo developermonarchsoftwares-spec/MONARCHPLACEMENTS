@@ -69,7 +69,7 @@ export default function DomainDetailsModal({ domain, onClose, onApply }: DomainD
   const focusRing = 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60'
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center px-3 pb-4 pt-24 sm:px-6 sm:pb-6 sm:pt-28">
+    <div className="fixed inset-0 z-50 flex items-center justify-center px-3 pb-4 pt-16 sm:px-6 sm:pb-6 sm:pt-24">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -112,6 +112,7 @@ export default function DomainDetailsModal({ domain, onClose, onApply }: DomainD
               onClick={onClose}
               aria-label="Close"
               className={`-mr-1 -mt-1 shrink-0 rounded-full p-2 text-white/50 transition-colors hover:bg-white/10 hover:text-white cursor-pointer ${focusRing}`}
+              suppressHydrationWarning
             >
               <X className="h-5 w-5" />
             </button>
@@ -183,6 +184,7 @@ export default function DomainDetailsModal({ domain, onClose, onApply }: DomainD
             type="button"
             onClick={onApply}
             className={`group/btn flex w-full items-center justify-center gap-2 rounded-lg border border-white bg-white px-6 py-3 text-xs font-semibold uppercase tracking-widest text-black transition-colors duration-300 hover:bg-black hover:text-white cursor-pointer sm:ml-auto sm:w-auto ${focusRing}`}
+            suppressHydrationWarning
           >
             <span>Apply for This Track</span>
             <ArrowUpRight className="h-4 w-4 transition-transform group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5" />

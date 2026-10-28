@@ -1,9 +1,10 @@
 "use client"
 
+import { RevealSection } from '@/components/Reveal'
 import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { motion, useInView } from 'framer-motion'
-import { Award, Users, BookOpen, Briefcase, GraduationCap, Building2, CheckCircle2, ArrowRight } from 'lucide-react'
+import { Award, Users, BookOpen, Briefcase, GraduationCap, Building2, CheckCircle2, ArrowRight, ChevronDown } from 'lucide-react'
 import SpotlightCard from '@/components/SpotlightCard'
 import Hero from '@/components/Hero'
 import dynamic from 'next/dynamic'
@@ -40,21 +41,32 @@ function Counter({ target, suffix = "" }: { target: number, suffix?: string }) {
   }, [isInView, target])
 
   return (
-    <span ref={ref} className="text-3xl md:text-4xl font-display font-bold text-white group-hover:text-glow transition-all">
+    <span ref={ref} className="text-xl sm:text-3xl md:text-4xl font-display font-bold text-white group-hover:text-glow transition-all">
       {count}{suffix}
     </span>
   )
 }
 
 export default function Home() {
-  const [loadSpline, setLoadSpline] = useState(false)
+  const [openCommitmentIndex, setOpenCommitmentIndex] = useState<number | null>(0)
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoadSpline(true)
-    }, 1500)
-    return () => clearTimeout(timer)
-  }, [])
+  const commitments = [
+    {
+      num: '01',
+      title: 'Hands-on Training vs Employment',
+      desc: 'We provide practical training, real project guidance, and intensive mock interviews. While we provide placement assistance and recruiter connection opportunities, hiring decisions rest solely with company recruiters based on candidate merit.',
+    },
+    {
+      num: '02',
+      title: 'Genuine Project Deliverables',
+      desc: 'Every internship candidate is required to complete code deliverables and submit working repositories. Certificate eligibility requires meeting attendance benchmarks and completing approved evaluation projects.',
+    },
+    {
+      num: '03',
+      title: 'Institutional Collaboration',
+      desc: 'We collaborate closely with colleges and academic departments to deliver syllabus-aligned technical workshops, bootcamps, and faculty-approved project evaluation.',
+    },
+  ]
 
   const containerVariants = {
     hidden: {},
@@ -216,66 +228,68 @@ export default function Home() {
   return (
     <div className="relative z-10 w-full overflow-hidden">
       {/* 1. ENTERPRISE HERO WITH 3D SPLINE SCENE */}
-      <section className="relative min-h-screen flex flex-col justify-center items-center pt-28 pb-16 px-6 max-w-7xl mx-auto overflow-hidden">
+      <section className="relative min-h-screen flex flex-col justify-center items-center pt-28 pb-16 w-full overflow-hidden">
         {/* Interactive Spline 3D Scene with Dark Gradient Masks to preserve text legibility */}
-        <div className="spline-container absolute inset-0 -z-10 overflow-hidden bg-black pointer-events-none">
-          {loadSpline && (
-            <iframe
-              src="https://my.spline.design/nexbotrobotcharacterconcept-kLwr8f6hgKgaa5gmU6oB00Si"
-              frameBorder="0"
-              width="100%"
-              height="100%"
-              id="aura-spline"
-              className="w-full h-full scale-[1.02] origin-center opacity-90 pointer-events-none"
-            ></iframe>
-          )}
+        <div className="spline-container absolute inset-x-0 top-16 h-[72svh] min-h-[480px] sm:top-12 sm:h-[82svh] md:inset-0 md:h-full md:min-h-0 -z-10 overflow-hidden bg-black pointer-events-none">
+          <iframe
+            src="https://my.spline.design/nexbotrobotcharacterconcept-kLwr8f6hgKgaa5gmU6oB00Si"
+            frameBorder="0"
+            width="100%"
+            height="100%"
+            id="aura-spline"
+            className="relative left-1/2 -top-[9%] -translate-x-1/2 w-[135%] h-[118%] scale-[0.86] sm:left-0 sm:top-0 sm:translate-x-0 sm:w-full sm:h-full sm:scale-95 md:scale-[1.02] origin-center opacity-70 sm:opacity-80 md:opacity-90 pointer-events-none"
+          ></iframe>
           {/* Black ambient masks to protect text contrast and blend iframe edges */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/20 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 md:via-black/20 to-transparent pointer-events-none" />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black pointer-events-none" />
         </div>
 
-        <Hero
-          title={
-            <>
-              Learn Skills. <br className="hidden md:inline" />{" "}
-              <span className="text-glow font-bold">
-                Build Projects. Get Industry-Ready.
-              </span>
-            </>
-          }
-          description="Practical training, project-based internships, and career guidance designed to help students connect what they learn with what the industry expects."
-          primaryCtaText="Explore Internships"
-          primaryCtaLink="/internships"
-          secondaryCtaText="College Partnerships"
-          secondaryCtaLink="/college-partnerships"
-          bgText=""
-        />
+        <div className="w-full max-w-7xl mx-auto px-0 md:px-6 flex flex-col items-center">
+          <Hero
+            title={
+              <>
+                Learn Skills. <br className="hidden md:inline" />{" "}
+                <span className="text-glow font-bold">
+                  Build Projects. Get Industry-Ready.
+                </span>
+              </>
+            }
+            description="Practical training, project-based internships, and career guidance designed to help students connect what they learn with what the industry expects."
+            primaryCtaText="Explore Internships"
+            primaryCtaLink="/internships"
+            secondaryCtaText="College Partnerships"
+            secondaryCtaLink="/college-partnerships"
+            bgText=""
+          />
+        </div>
 
-        {/* Hero Grid Stats using SpotlightCard */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full mt-12 border-t border-white/5 pt-12 relative z-10"
-        >
-          {stats.map((stat, idx) => (
-            <motion.div key={idx} variants={itemVariants} className="h-full">
-              <SpotlightCard className="p-6 h-full flex flex-col justify-between group">
-                <div className="flex justify-between items-start mb-3">
-                  <Counter target={stat.target} suffix={stat.suffix} />
-                  <div className="p-1.5 border border-white/10 rounded bg-white/5 group-hover:border-white/20 transition-all">{stat.icon}</div>
-                </div>
-                <p className="text-[10px] uppercase tracking-widest text-white/50 mb-2 font-medium">{stat.label}</p>
-                <p className="text-[10px] text-white/40 leading-relaxed font-light mt-1">{stat.desc}</p>
-              </SpotlightCard>
-            </motion.div>
-          ))}
-        </motion.div>
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
+          {/* Hero Grid Stats using SpotlightCard */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 w-full mt-8 sm:mt-12 pt-8 sm:pt-12 relative z-10"
+          >
+            {stats.map((stat, idx) => (
+              <motion.div key={idx} variants={itemVariants} className="h-full">
+                <SpotlightCard className="p-4 sm:p-6 h-full flex flex-col justify-between group">
+                  <div className="flex justify-between items-start mb-3">
+                    <Counter target={stat.target} suffix={stat.suffix} />
+                    <div className="p-1.5 border border-white/10 rounded bg-white/5 group-hover:border-white/20 transition-all">{stat.icon}</div>
+                  </div>
+                  <p className="text-[10px] uppercase tracking-widest text-white/50 mb-2 font-medium">{stat.label}</p>
+                  <p className="text-[10px] text-white/40 leading-relaxed font-light mt-1">{stat.desc}</p>
+                </SpotlightCard>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
       </section>
 
       {/* 2. ADMISSION & BATCH NOTICE */}
-      <section className="px-6 py-12 border-t border-b border-white/5 bg-gradient-to-b from-black via-white/[0.01] to-black relative">
+      <RevealSection className="px-6 py-12 border-t border-b border-white/5 bg-transparent relative">
         <div className="max-w-4xl mx-auto text-center relative z-10 flex flex-col items-center">
           <div className="flex flex-wrap items-center justify-center gap-3 mb-4">
             <div className="flex items-center gap-2 px-3 py-1 border border-white/10 bg-white/5 rounded-full text-[9px] tracking-widest uppercase text-white/70">
@@ -288,8 +302,8 @@ export default function Home() {
             Weekday and weekend batch admissions are actively enrolling across Full-Stack, Python, and AI tracks. Reserve your batch or consult our academic team.
           </p>
 
-          <div className="flex items-center gap-2 mb-6 text-[10px] tracking-wider text-white/40 uppercase font-light">
-            <span className="w-2 h-2 rounded-full border border-white/20 flex items-center justify-center">
+          <div className="block md:flex items-center gap-2 mb-6 text-[10px] tracking-wider text-white/40 uppercase font-light">
+            <span className="inline-flex md:flex w-2 h-2 rounded-full border border-white/20 items-center justify-center align-middle mr-2 md:mr-0 -translate-y-[1px] md:translate-y-0">
               <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
             </span>
             <span>Online, Offline (Coimbatore), & Hybrid Formats Available</span>
@@ -311,10 +325,10 @@ export default function Home() {
             </Link>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* 3. TWO AUDIENCE PATHWAYS: STUDENTS VS COLLEGES */}
-      <section className="py-20 px-6 max-w-7xl mx-auto relative">
+      <RevealSection className="py-20 px-6 max-w-7xl mx-auto relative">
         <div className="text-center mb-12">
           <span className="text-xs tracking-widest uppercase text-white/40 mb-2 block">TAILORED PATHWAYS</span>
           <h2 className="text-2xl md:text-4xl font-display font-bold uppercase text-white">Choose Your Journey</h2>
@@ -323,9 +337,9 @@ export default function Home() {
           </p>
         </div>
 
-        <RevealGrid className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <RevealGrid className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           {/* Pathway 1: For Students */}
-          <SpotlightCard className="p-8 flex flex-col justify-between border border-white/10 hover:border-white/30 transition-all group">
+          <SpotlightCard className="p-5 sm:p-8 flex flex-col justify-between border border-white/10 hover:border-white/30 transition-all group">
             <div>
               <div className="w-12 h-12 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center mb-6 text-white group-hover:scale-105 transition-transform">
                 <GraduationCap className="w-6 h-6" />
@@ -371,7 +385,7 @@ export default function Home() {
           </SpotlightCard>
 
           {/* Pathway 2: For Colleges */}
-          <SpotlightCard className="p-8 flex flex-col justify-between border border-white/10 hover:border-white/30 transition-all group">
+          <SpotlightCard className="p-5 sm:p-8 flex flex-col justify-between border border-white/10 hover:border-white/30 transition-all group">
             <div>
               <div className="w-12 h-12 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center mb-6 text-white group-hover:scale-105 transition-transform">
                 <Building2 className="w-6 h-6" />
@@ -416,61 +430,63 @@ export default function Home() {
             </div>
           </SpotlightCard>
         </RevealGrid>
-      </section>
+      </RevealSection>
 
       {/* 4. WHY MONARCH (PRESERVED CARDSWAP COMPONENT) */}
-      <section className="py-24 px-6 max-w-7xl mx-auto relative border-t border-white/5">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          {/* Left Text */}
-          <div className="lg:col-span-5 flex flex-col justify-center">
-            <span className="text-xs tracking-widest uppercase text-white/40 mb-3">WHY MONARCH</span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold uppercase text-white mb-8">
-              Why Choose Monarch?
-            </h2>
-            <div className="space-y-6 text-xs text-white/60 font-light leading-relaxed">
-              <p>At Monarch Training & Placements, we focus on bridging the gap between education and employment through industry-focused training, practical learning and placement support. Our programs are designed to help students and job seekers develop technical expertise, communication skills and professional confidence required to succeed in today&apos;s competitive job market.</p>
-              <p>With structured guidance, hands-on learning and career-oriented preparation, we empower individuals to become industry-ready professionals and achieve long-term career success.</p>
+      <RevealSection className="py-24 border-t border-white/5 relative w-full bg-transparent">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            {/* Left Text */}
+            <div className="lg:col-span-5 flex flex-col justify-center">
+              <span className="text-xs tracking-widest uppercase text-white/40 mb-3">WHY MONARCH</span>
+              <h2 className="text-3xl md:text-4xl font-display font-bold uppercase text-white mb-8">
+                Why Choose Monarch?
+              </h2>
+              <div className="space-y-6 text-xs text-white/60 font-light leading-relaxed">
+                <p>At Monarch Training & Placements, we focus on bridging the gap between education and employment through industry-focused training, practical learning and placement support. Our programs are designed to help students and job seekers develop technical expertise, communication skills and professional confidence required to succeed in today&apos;s competitive job market.</p>
+                <p>With structured guidance, hands-on learning and career-oriented preparation, we empower individuals to become industry-ready professionals and achieve long-term career success.</p>
+              </div>
+            </div>
+
+            {/* Right Cards stack using CardSwap */}
+            <div className="lg:col-span-7 flex justify-center items-center py-8 sm:py-12 md:py-24 relative overflow-hidden sm:overflow-visible min-h-[380px] sm:min-h-[500px] w-full max-w-full">
+              <CardSwap
+                width={420}
+                height={260}
+                cardDistance={24}
+                verticalDistance={28}
+                delay={3500}
+                pauseOnHover={true}
+              >
+                {features.map((feature, idx) => (
+                  <Card
+                    key={idx}
+                    className="p-8 flex flex-col justify-between select-none cursor-default border border-white/15"
+                  >
+                    <div>
+                      <h3 className="text-xs uppercase tracking-widest font-semibold text-white mb-3 tracking-[0.1em]">
+                        {feature.title}
+                      </h3>
+                      <p className="text-xs text-white/80 font-light leading-relaxed mb-4">
+                        {feature.brief}
+                      </p>
+                      <p className="text-[11px] text-white/55 font-light leading-relaxed">
+                        {feature.detail}
+                      </p>
+                    </div>
+                    <div className="text-[10px] text-white/45 font-display mt-4 tracking-widest">
+                      0{idx + 1}
+                    </div>
+                  </Card>
+                ))}
+              </CardSwap>
             </div>
           </div>
-
-          {/* Right Cards stack using CardSwap */}
-          <div className="lg:col-span-7 flex justify-center items-center py-12 md:py-24 relative overflow-visible min-h-[500px]">
-            <CardSwap
-              width={420}
-              height={260}
-              cardDistance={24}
-              verticalDistance={28}
-              delay={3500}
-              pauseOnHover={true}
-            >
-              {features.map((feature, idx) => (
-                <Card
-                  key={idx}
-                  className="p-8 flex flex-col justify-between select-none cursor-default border border-white/15"
-                >
-                  <div>
-                    <h3 className="text-xs uppercase tracking-widest font-semibold text-white mb-3 tracking-[0.1em]">
-                      {feature.title}
-                    </h3>
-                    <p className="text-xs text-white/80 font-light leading-relaxed mb-4">
-                      {feature.brief}
-                    </p>
-                    <p className="text-[11px] text-white/55 font-light leading-relaxed">
-                      {feature.detail}
-                    </p>
-                  </div>
-                  <div className="text-[10px] text-white/45 font-display mt-4 tracking-widest">
-                    0{idx + 1}
-                  </div>
-                </Card>
-              ))}
-            </CardSwap>
-          </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* 5. CURRICULUM */}
-      <section className="py-24 border-t border-white/5 bg-black/40">
+      <RevealSection className="py-24 border-t border-white/5 bg-transparent">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">CURRICULUM</span>
@@ -506,10 +522,10 @@ export default function Home() {
             ))}
           </RevealGrid>
         </div>
-      </section>
+      </RevealSection>
 
       {/* 6. TARGET TECH STANDARDS MARQUEE */}
-      <section className="py-24 border-t border-white/5 overflow-hidden relative">
+      <RevealSection className="py-24 border-t border-white/5 overflow-hidden relative">
         <div className="max-w-7xl mx-auto px-6 mb-8 text-center">
           <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">TARGET RECRUITMENT STANDARDS</span>
           <h2 className="text-2xl md:text-3xl font-display font-bold uppercase text-white">Prepared for Modern Enterprise Stacks</h2>
@@ -521,14 +537,14 @@ export default function Home() {
         {/* Typographic Infinite Scrolling Marquee */}
         <div className="w-full flex flex-col gap-6 relative">
           <div className="flex gap-0 py-3 overflow-hidden select-none w-full relative">
-            <div className="flex gap-16 justify-around min-w-full shrink-0 animate-marquee flex-row">
+            <div className="flex gap-16 justify-around min-w-full shrink-0 animate-marquee flex-row pr-16">
               {partners.map((partner, idx) => (
                 <span key={idx} className="text-lg md:text-2xl font-display uppercase tracking-[0.2em] font-light text-white/20 hover:text-white/60 transition-colors duration-300 cursor-default">
                   {partner}
                 </span>
               ))}
             </div>
-            <div aria-hidden="true" className="flex gap-16 justify-around min-w-full shrink-0 animate-marquee flex-row">
+            <div aria-hidden="true" className="flex gap-16 justify-around min-w-full shrink-0 animate-marquee flex-row pr-16">
               {partners.map((partner, idx) => (
                 <span key={idx} className="text-lg md:text-2xl font-display uppercase tracking-[0.2em] font-light text-white/20 hover:text-white/60 transition-colors duration-300 cursor-default">
                   {partner}
@@ -537,42 +553,79 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* 7. TRANSPARENCY & TRUST SECTION */}
-      <section className="py-20 px-6 max-w-7xl mx-auto border-t border-white/5">
-        <div className="text-center mb-12">
-          <span className="text-xs tracking-widest uppercase text-white/40 mb-2 block">TRANSPARENCY & INTEGRITY</span>
-          <h2 className="text-2xl md:text-3xl font-display font-bold uppercase text-white">Our Placement & Training Commitment</h2>
-          <p className="text-xs text-white/50 max-w-2xl mx-auto mt-2 font-light leading-relaxed">
-            We believe in honest communication regarding what we provide, what we require from students, and how recruitment works.
-          </p>
-        </div>
+      <RevealSection className="py-20 border-t border-white/5 w-full bg-transparent">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <span className="text-xs tracking-widest uppercase text-white/40 mb-2 block">TRANSPARENCY & INTEGRITY</span>
+            <h2 className="text-2xl md:text-3xl font-display font-bold uppercase text-white">Our Placement & Training Commitment</h2>
+            <p className="text-xs text-white/50 max-w-2xl mx-auto mt-2 font-light leading-relaxed">
+              We believe in honest communication regarding what we provide, what we require from students, and how recruitment works.
+            </p>
+          </div>
 
-        <RevealGrid hoverLift className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="glass-card p-6 rounded border border-white/10">
-            <h4 className="text-xs uppercase tracking-widest font-semibold text-white mb-2">1. Hands-on Training vs Employment</h4>
-            <p className="text-xs text-white/60 font-light leading-relaxed">
-              We provide practical training, real project guidance, and intensive mock interviews. While we provide placement assistance and recruiter connection opportunities, hiring decisions rest solely with company recruiters based on candidate merit.
-            </p>
+          {/* Numbered Minimalist Accordion */}
+          <div className="max-w-4xl mx-auto border-y border-white/10 divide-y divide-white/10">
+            {commitments.map((item, idx) => {
+              const isOpen = openCommitmentIndex === idx
+              return (
+                <div key={item.num} className="transition-colors duration-200">
+                  <button
+                    type="button"
+                    onClick={() => setOpenCommitmentIndex(isOpen ? null : idx)}
+                    aria-expanded={isOpen}
+                    suppressHydrationWarning
+                    className="w-full py-6 sm:py-7 flex items-center justify-between gap-4 text-left group cursor-pointer select-none"
+                  >
+                    <div className="flex items-center gap-5 sm:gap-8 min-w-0">
+                      <span className="font-mono text-sm sm:text-base text-white/40 tracking-wider group-hover:text-white/70 transition-colors shrink-0">
+                        {item.num}
+                      </span>
+                      <h3 className="text-sm sm:text-base md:text-lg font-display font-semibold uppercase tracking-wider text-white group-hover:text-white/90 transition-colors text-left break-words">
+                        {item.title}
+                      </h3>
+                    </div>
+
+                    <div
+                      className={`w-8 h-8 sm:w-9 sm:h-9 shrink-0 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                        isOpen
+                          ? 'border-white/40 bg-white/10 text-white'
+                          : 'border-white/15 bg-white/[0.02] text-white/60 group-hover:border-white/30 group-hover:text-white'
+                      }`}
+                      aria-hidden="true"
+                    >
+                      <ChevronDown
+                        className={`w-4 h-4 transition-transform duration-300 ${
+                          isOpen ? 'rotate-180' : 'rotate-0'
+                        }`}
+                      />
+                    </div>
+                  </button>
+
+                  <div
+                    className={`grid transition-all duration-300 ease-out ${
+                      isOpen
+                        ? 'grid-rows-[1fr] opacity-100 pb-7'
+                        : 'grid-rows-[0fr] opacity-0 pb-0 pointer-events-none'
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <p className="text-xs sm:text-sm text-white/60 font-light leading-relaxed pl-6 sm:pl-14 pr-2 sm:pr-14">
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
           </div>
-          <div className="glass-card p-6 rounded border border-white/10">
-            <h4 className="text-xs uppercase tracking-widest font-semibold text-white mb-2">2. Genuine Project Deliverables</h4>
-            <p className="text-xs text-white/60 font-light leading-relaxed">
-              Every internship candidate is required to complete code deliverables and submit working repositories. Certificate eligibility requires meeting attendance benchmarks and completing approved evaluation projects.
-            </p>
-          </div>
-          <div className="glass-card p-6 rounded border border-white/10">
-            <h4 className="text-xs uppercase tracking-widest font-semibold text-white mb-2">3. Institutional Collaboration</h4>
-            <p className="text-xs text-white/60 font-light leading-relaxed">
-              We collaborate closely with colleges and academic departments to deliver syllabus-aligned technical workshops, bootcamps, and faculty-approved project evaluation.
-            </p>
-          </div>
-        </RevealGrid>
-      </section>
+        </div>
+      </RevealSection>
 
       {/* 8. CTA SECTION */}
-      <section className="py-24 border-t border-white/5 relative overflow-hidden bg-black flex flex-col justify-center items-center">
+      <RevealSection className="py-24 border-t border-white/5 relative overflow-hidden bg-transparent flex flex-col justify-center items-center">
         <div className="max-w-3xl mx-auto text-center px-6 relative z-10">
           <h2 className="text-3xl md:text-5xl font-display font-bold uppercase text-glow text-white mb-6 leading-tight">Ready To Build Your Tech Career?</h2>
           <p className="text-xs md:text-sm text-white/60 font-light leading-relaxed max-w-xl mx-auto mb-10">
@@ -593,7 +646,7 @@ export default function Home() {
             </Link>
           </div>
         </div>
-      </section>
+      </RevealSection>
     </div>
   )
 }

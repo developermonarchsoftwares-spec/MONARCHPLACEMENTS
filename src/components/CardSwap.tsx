@@ -97,13 +97,28 @@ const CardSwap: React.FC<CardSwapProps> = ({
 
   useEffect(() => {
     const total = refs.length;
+    if (total === 0 || refs.some((r) => !r.current)) return;
+
     refs.forEach((r, i) => placeNow(r.current, makeSlot(i, cardDistance, verticalDistance, total), skewAmount));
+
+    const clearSwapInterval = () => {
+      if (intervalRef.current !== undefined) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = undefined;
+      }
+    };
 
     const swap = () => {
       if (order.current.length < 2) return;
 
       const [front, ...rest] = order.current;
-      const elFront = refs[front].current;
+      const elFront = refs[front]?.current;
+      if (!elFront || !elFront.isConnected) return;
+
+      const restEls = rest.map((idx) => refs[idx]?.current);
+      if (restEls.some((el) => !el || !el.isConnected)) return;
+
+      tlRef.current?.kill();
       const tl = gsap.timeline();
       tlRef.current = tl;
 
@@ -115,7 +130,8 @@ const CardSwap: React.FC<CardSwapProps> = ({
 
       tl.addLabel('promote', `-=${config.durDrop * config.promoteOverlap}`);
       rest.forEach((idx, i) => {
-        const el = refs[idx].current;
+        const el = refs[idx]?.current;
+        if (!el) return;
         const slot = makeSlot(i, cardDistance, verticalDistance, refs.length);
         tl.set(el, { zIndex: slot.zIndex }, 'promote');
         tl.to(
@@ -135,7 +151,9 @@ const CardSwap: React.FC<CardSwapProps> = ({
       tl.addLabel('return', `promote+=${config.durMove * config.returnDelay}`);
       tl.call(
         () => {
-          gsap.set(elFront, { zIndex: backSlot.zIndex });
+          if (elFront && elFront.isConnected) {
+            gsap.set(elFront, { zIndex: backSlot.zIndex });
+          }
         },
         undefined,
         'return'
@@ -157,30 +175,35 @@ const CardSwap: React.FC<CardSwapProps> = ({
       });
     };
 
+    clearSwapInterval();
     intervalRef.current = window.setInterval(swap, delay);
 
-    if (pauseOnHover) {
-      const node = container.current;
-      if (node) {
-        const pause = () => {
-          tlRef.current?.pause();
-          if (intervalRef.current) clearInterval(intervalRef.current);
-        };
-        const resume = () => {
-          tlRef.current?.play();
-          intervalRef.current = window.setInterval(swap, delay);
-        };
-        node.addEventListener('mouseenter', pause);
-        node.addEventListener('mouseleave', resume);
-        return () => {
-          node.removeEventListener('mouseenter', pause);
-          node.removeEventListener('mouseleave', resume);
-          if (intervalRef.current) clearInterval(intervalRef.current);
-        };
-      }
+    const node = container.current;
+    if (pauseOnHover && node) {
+      const pause = () => {
+        tlRef.current?.pause();
+        clearSwapInterval();
+      };
+      const resume = () => {
+        tlRef.current?.play();
+        clearSwapInterval();
+        intervalRef.current = window.setInterval(swap, delay);
+      };
+      node.addEventListener('mouseenter', pause);
+      node.addEventListener('mouseleave', resume);
+      return () => {
+        node.removeEventListener('mouseenter', pause);
+        node.removeEventListener('mouseleave', resume);
+        clearSwapInterval();
+        tlRef.current?.kill();
+        tlRef.current = null;
+      };
     }
+
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      clearSwapInterval();
+      tlRef.current?.kill();
+      tlRef.current = null;
     };
   }, [cardDistance, verticalDistance, delay, pauseOnHover, skewAmount, refs, config]);
 

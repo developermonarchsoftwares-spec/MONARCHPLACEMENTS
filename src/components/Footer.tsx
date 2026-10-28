@@ -1,30 +1,48 @@
-import React from 'react'
+"use client"
+
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { Reveal } from '@/components/Reveal'
+import PolicyModal, { PolicyModalType } from './PolicyModal'
 
 const headingClass = 'text-xs leading-5 uppercase tracking-widest font-semibold text-white/95'
 const linkClass = 'text-xs leading-5 text-white/60 hover:text-white transition-colors w-fit'
 
 export default function Footer() {
+  const [activePolicy, setActivePolicy] = useState<PolicyModalType>(null)
+
+  useEffect(() => {
+    const handleDocumentClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement)?.closest('[data-policy-trigger]')
+      if (target) {
+        e.preventDefault()
+        const policyType = target.getAttribute('data-policy-trigger') as PolicyModalType
+        if (policyType) setActivePolicy(policyType)
+      }
+    }
+    document.addEventListener('click', handleDocumentClick)
+    return () => document.removeEventListener('click', handleDocumentClick)
+  }, [])
   return (
-    <footer className="relative border-t border-white/5 bg-black pt-14 md:pt-16 pb-8 overflow-hidden">
+    <footer className="relative lg:border-t lg:border-white/5 bg-transparent pt-12 sm:pt-14 md:pt-16 pb-8 overflow-hidden">
       {/* Background radial glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-white/5 rounded-full blur-[140px] pointer-events-none" />
 
-      <div className="w-full px-6 relative z-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-[1.2fr_1fr_1.1fr_1.1fr_1.3fr] xl:grid-cols-[1.32fr_1.1fr_1.21fr_1fr_1.43fr] lg:pr-6 xl:pr-10 gap-10 lg:gap-8 xl:gap-12 mb-12 items-start">
+      <Reveal className="w-full px-4 sm:px-6 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1.1fr_1.1fr_1.3fr] xl:grid-cols-[1.32fr_1.1fr_1.21fr_1fr_1.43fr] lg:pr-6 xl:pr-10 gap-8 sm:gap-10 lg:gap-8 xl:gap-12 mb-10 lg:mb-12 items-start">
           {/* 1. Brand Info */}
-          <div className="flex flex-col gap-5">
-            <Link href="/" className="flex items-center group w-fit">
+          <div className="flex flex-col gap-5 sm:col-span-2 lg:col-span-1">
+            <Link href="/" className="flex items-center group w-fit -ml-2 sm:ml-0">
               <img
                 src="/logo.png"
                 alt="Monarch Placements Logo"
                 className="h-12 md:h-14 w-auto object-contain brightness-0 invert group-hover:opacity-80 transition-all duration-300"
               />
             </Link>
-            <p className="text-xs leading-5 text-white/60 max-w-[28ch] pl-5 md:pl-6">
+            <p className="text-xs leading-5 text-white/60 max-w-[28ch] pl-3 sm:pl-5 md:pl-6">
               Bridging the gap between education and employment.
             </p>
-            <div className="flex items-center gap-3 pl-5 md:pl-6">
+            <div className="flex items-center gap-3 pl-3 sm:pl-5 md:pl-6">
               <a 
                 href="https://www.linkedin.com/company/monarch-placements/" 
                 target="_blank" 
@@ -43,11 +61,30 @@ export default function Footer() {
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
               </a>
+              <a 
+                href="mailto:hr@monarchplacements.in" 
+                className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/30 hover:bg-white/5 transition-all duration-300"
+                aria-label="Email hr@monarchplacements.in"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                  <rect width="20" height="16" x="2" y="4" rx="2" />
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                </svg>
+              </a>
+              <a 
+                href="tel:+916385753874" 
+                className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/30 hover:bg-white/5 transition-all duration-300"
+                aria-label="Call +91 63857 53874"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+              </a>
             </div>
           </div>
 
           {/* 2. Quick Links */}
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-4 lg:gap-5 pl-3 sm:pl-5 md:pl-6 lg:pl-0">
             <h4 className={headingClass}>Quick Links</h4>
             <div className="flex flex-col gap-2">
               <Link href="/" className={linkClass}>Home</Link>
@@ -63,7 +100,7 @@ export default function Footer() {
           </div>
 
           {/* 3. Programs & Services */}
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-4 lg:gap-5 pl-3 sm:pl-5 md:pl-6 lg:pl-0">
             <h4 className={headingClass}>Programs & Services</h4>
             <div className="flex flex-col gap-2">
               <Link href="/it-staffing" className={linkClass}>IT Staff Augmentation</Link>
@@ -76,7 +113,7 @@ export default function Footer() {
           </div>
 
           {/* 4. Contact */}
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-4 lg:gap-5 pl-3 sm:pl-5 md:pl-6 lg:pl-0">
             <h4 className={headingClass}>Contact</h4>
             <div className="flex flex-col gap-2">
               <a href="mailto:hr@monarchplacements.in" className={linkClass}>hr@monarchplacements.in</a>
@@ -86,7 +123,7 @@ export default function Footer() {
           </div>
 
           {/* 5. Location (separate map column) */}
-          <div className="flex flex-col gap-5 sm:col-span-2 md:col-span-3 lg:col-span-1">
+          <div className="flex flex-col gap-4 lg:gap-5 pl-3 sm:pl-5 md:pl-6 lg:pl-0">
             <h4 className={headingClass}>Location</h4>
             <div className="flex flex-col gap-3">
               <div className="relative w-full h-36 rounded-lg overflow-hidden border border-white/10 bg-white/5 group">
@@ -116,14 +153,35 @@ export default function Footer() {
         </div>
 
         {/* Footer Bottom */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 pt-6 pr-0 sm:pr-20 border-t border-white/5 text-xs leading-5 text-white/50 tracking-wider">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 pt-2 lg:pt-6 pl-3 sm:pl-5 md:pl-6 lg:pl-0 pr-0 sm:pr-20 lg:border-t lg:border-white/5 text-xs leading-5 text-white/50 tracking-wider">
           <p>© 2026 <a href="https://www.monarchsoftwares.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors underline decoration-white/10 underline-offset-2">Monarch Softwares</a>. All Rights Reserved.</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <button
+              type="button"
+              onClick={() => setActivePolicy('privacy')}
+              className="hover:text-white transition-colors cursor-pointer text-xs leading-5 text-white/50 focus-visible:outline-none focus-visible:underline"
+              suppressHydrationWarning
+            >
+              Privacy Policy
+            </button>
+            <button
+              type="button"
+              onClick={() => setActivePolicy('terms')}
+              className="hover:text-white transition-colors cursor-pointer text-xs leading-5 text-white/50 focus-visible:outline-none focus-visible:underline"
+              suppressHydrationWarning
+            >
+              Terms of Service
+            </button>
           </div>
         </div>
-      </div>
+      </Reveal>
+
+      {/* Privacy Policy & Terms of Service Centered Modal */}
+      <PolicyModal
+        isOpen={activePolicy !== null}
+        type={activePolicy}
+        onClose={() => setActivePolicy(null)}
+      />
     </footer>
   )
 }

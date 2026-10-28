@@ -1,5 +1,6 @@
 "use client"
 
+import { RevealSection } from '@/components/Reveal'
 import React, { useState, useRef } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -211,8 +212,9 @@ export default function CollegePartnershipsPage() {
       </div>
 
       {/* 2. SERVICES OVERVIEW */}
-      <section id="overview" className="py-24 px-6 max-w-7xl mx-auto border-t border-white/5">
-        <div className="text-center mb-16">
+      <RevealSection id="overview" className="py-24 border-t border-white/5 w-full bg-transparent">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
           <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">COLLABORATIVE OFFERINGS</span>
           <h2 className="text-3xl md:text-5xl font-display font-bold uppercase text-white">Institutional Services</h2>
           <p className="text-xs text-white/50 max-w-2xl mx-auto mt-3 font-light leading-relaxed">
@@ -256,11 +258,13 @@ export default function CollegePartnershipsPage() {
             </SpotlightCard>
           ))}
         </RevealGrid>
-      </section>
+        </div>
+      </RevealSection>
 
       {/* 3. PROPOSAL OVERVIEW & DOWNLOAD CTA */}
-      <section className="py-20 px-6 max-w-7xl mx-auto border-t border-white/5">
-        <div className="glass-card rounded p-8 md:p-12 border border-white/15 flex flex-col lg:flex-row items-center justify-between gap-8">
+      <RevealSection className="py-20 border-t border-white/5 w-full bg-transparent">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="glass-card rounded p-6 sm:p-8 md:p-12 border border-white/15 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 sm:gap-8">
           <div className="max-w-2xl">
             <span className="text-[10px] uppercase tracking-widest text-white/40 font-mono block mb-2">Institutional Readiness</span>
             <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-3">Structured Training Proposal Framework</h3>
@@ -274,25 +278,26 @@ export default function CollegePartnershipsPage() {
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-3 sm:gap-4 w-full sm:w-auto">
             <button suppressHydrationWarning
               onClick={() => setShowProposalModal(true)}
-              className="px-6 py-3.5 bg-white text-black text-xs uppercase tracking-widest font-semibold hover:bg-white/90 transition-all rounded flex items-center gap-2"
+              className="w-full sm:w-auto justify-center px-6 py-3.5 bg-white text-black text-xs uppercase tracking-widest font-semibold hover:bg-white/90 transition-all rounded flex items-center gap-2"
             >
               <FileText className="w-4 h-4" /> View Proposal Spec
             </button>
             <a
               href="#proposal"
-              className="px-6 py-3.5 border border-white/20 text-white text-xs uppercase tracking-widest font-semibold hover:border-white transition-all rounded"
+              className="w-full sm:w-auto text-center px-6 py-3.5 border border-white/20 text-white text-xs uppercase tracking-widest font-semibold hover:border-white transition-all rounded"
             >
               Custom Enquiry
             </a>
           </div>
         </div>
-      </section>
+        </div>
+      </RevealSection>
 
       {/* 4. INSTITUTIONAL ENQUIRY FORM */}
-      <section ref={formRef} id="proposal" className="py-24 px-6 border-t border-white/5 bg-gradient-to-b from-black via-white/[0.01] to-black">
+      <RevealSection ref={formRef} id="proposal" className="py-24 px-6 border-t border-white/5 bg-transparent">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-10">
             <div className="inline-flex items-center gap-2 px-3 py-1 border border-white/10 bg-white/5 rounded-full text-[9px] tracking-widest uppercase text-white/70 mb-4">
@@ -304,7 +309,7 @@ export default function CollegePartnershipsPage() {
             </p>
           </div>
 
-          <div className="glass-card rounded p-8 border border-white/15">
+          <div className="glass-card rounded p-5 sm:p-8 border border-white/15">
             {status === 'success' ? (
               <div className="py-12 text-center flex flex-col items-center gap-4">
                 <CheckCircle2 className="w-14 h-14 text-white" />
@@ -546,7 +551,7 @@ export default function CollegePartnershipsPage() {
             )}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* 5. MODAL: TRAINING PROPOSAL SPECIFICATION */}
       <AnimatePresence>
@@ -561,14 +566,14 @@ export default function CollegePartnershipsPage() {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-black border border-white/20 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 relative shadow-2xl"
+              className="bg-black border border-white/20 rounded-lg max-w-4xl w-full max-h-[85vh] sm:max-h-[90vh] overflow-y-auto p-5 sm:p-8 relative shadow-2xl"
             >
-              <div className="flex justify-between items-start border-b border-white/10 pb-4 mb-6">
-                <div>
+              <div className="flex justify-between items-start gap-3 border-b border-white/10 pb-4 mb-6">
+                <div className="min-w-0">
                   <span className="text-[9px] uppercase tracking-widest font-mono text-white/50">Institutional Specification</span>
-                  <h3 className="text-lg font-display font-bold text-white mt-0.5">Monarch Academic Training Proposal Structure</h3>
+                  <h3 className="text-base sm:text-lg font-display font-bold text-white mt-0.5 break-words">Monarch Academic Training Proposal Structure</h3>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 shrink-0">
                   <button suppressHydrationWarning
                     onClick={handlePrintProposal}
                     className="p-2 border border-white/20 rounded hover:bg-white/10 text-white transition-colors"
@@ -626,8 +631,8 @@ export default function CollegePartnershipsPage() {
                 </div>
               </div>
 
-              <div className="mt-8 pt-6 border-t border-white/10 flex flex-wrap justify-between items-center gap-4">
-                <span className="text-[10px] text-white/40">
+              <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <span className="text-[10px] text-white/40 break-words">
                   Monarch Softwares • Kovilpalayam, Coimbatore • hr@monarchplacements.in
                 </span>
                 <button suppressHydrationWarning
@@ -635,7 +640,7 @@ export default function CollegePartnershipsPage() {
                     setShowProposalModal(false)
                     scrollToProposal()
                   }}
-                  className="px-5 py-2.5 bg-white text-black text-xs uppercase tracking-widest font-semibold rounded hover:bg-white/90"
+                  className="w-full sm:w-auto px-5 py-2.5 bg-white text-black text-xs uppercase tracking-widest font-semibold rounded hover:bg-white/90"
                 >
                   Proceed with Request
                 </button>

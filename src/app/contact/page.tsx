@@ -1,5 +1,6 @@
 "use client"
 
+import { RevealSection } from '@/components/Reveal'
 import React, { useRef, useState } from 'react'
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle2 } from 'lucide-react'
 import confetti from 'canvas-confetti'
@@ -58,7 +59,7 @@ export default function Contact() {
   }
 
   return (
-    <div className="relative z-10 w-full">
+    <div className="relative z-10 w-full overflow-hidden">
       {/* Hero Section Container */}
       <div className="relative w-full min-h-screen overflow-hidden">
         {/* FloatingLines Background component */}
@@ -98,11 +99,49 @@ export default function Contact() {
       </div>
 
       {/* Form & Details Section */}
-      <section ref={formRef} id="contactForm" className="py-16 border-t border-white/5 bg-gradient-to-b from-black via-white/[0.01] to-black">
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <RevealSection ref={formRef} id="contactForm" className="py-16 border-t border-white/5 bg-transparent">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           
-          {/* Left Form */}
-          <div className="lg:col-span-7 glass-card rounded p-8 border-glow-white">
+          {/* Left Info Details */}
+          <div className="lg:col-span-5 glass-card glass-card-hover rounded p-6 sm:p-8 border border-white/5 flex flex-col gap-6">
+            <h2 className="text-lg uppercase tracking-widest font-bold text-white">Get In Touch</h2>
+            <p className="text-xs text-white/50 font-light leading-relaxed">
+              Connect with Monarch Training & Placements for career guidance, training information, and placement opportunities.
+            </p>
+
+            <div className="space-y-5 border-t border-white/5 pt-6">
+              <div className="flex items-center gap-4 text-xs">
+                <div className="w-8 h-8 shrink-0 rounded border border-white/10 bg-white/5 flex items-center justify-center">
+                  <Phone className="w-3.5 h-3.5 text-white/70" />
+                </div>
+                <a href="tel:+916385753874" className="text-white/80 hover:text-white transition-colors">+91 63857 53874</a>
+              </div>
+
+              <div className="flex items-center gap-4 text-xs">
+                <div className="w-8 h-8 shrink-0 rounded border border-white/10 bg-white/5 flex items-center justify-center">
+                  <Mail className="w-3.5 h-3.5 text-white/70" />
+                </div>
+                <a href="mailto:hr@monarchplacements.in" className="text-white/80 hover:text-white transition-colors break-all sm:break-normal">hr@monarchplacements.in</a>
+              </div>
+
+              <div className="flex items-center gap-4 text-xs">
+                <div className="w-8 h-8 shrink-0 rounded border border-white/10 bg-white/5 flex items-center justify-center">
+                  <MapPin className="w-3.5 h-3.5 text-white/70" />
+                </div>
+                <span className="text-white/80">Kovilpalayam, Coimbatore</span>
+              </div>
+
+              <div className="flex items-center gap-4 text-xs">
+                <div className="w-8 h-8 shrink-0 rounded border border-white/10 bg-white/5 flex items-center justify-center">
+                  <Clock className="w-3.5 h-3.5 text-white/70" />
+                </div>
+                <span className="text-white/80">Mon - Sat: 9:00 AM - 6:00 PM</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Form */}
+          <div className="lg:col-span-7 glass-card rounded p-6 sm:p-8 border-glow-white">
             <h2 className="text-lg uppercase tracking-widest font-bold text-white mb-6">Send a Message</h2>
 
             {status === 'success' ? (
@@ -213,62 +252,11 @@ export default function Contact() {
               </form>
             )}
           </div>
-
-          {/* Right Info Details */}
-          <div className="lg:col-span-5 flex flex-col gap-8">
-            <div className="glass-card glass-card-hover rounded p-8 border border-white/5 flex flex-col gap-6">
-              <h2 className="text-lg uppercase tracking-widest font-bold text-white">Get In Touch</h2>
-              <p className="text-xs text-white/50 font-light leading-relaxed">
-                Connect with Monarch Training & Placements for career guidance, training information, and placement opportunities.
-              </p>
-
-              <div className="space-y-5 border-t border-white/5 pt-6">
-                <div className="flex items-center gap-4 text-xs">
-                  <div className="w-8 h-8 rounded border border-white/10 bg-white/5 flex items-center justify-center">
-                    <Phone className="w-3.5 h-3.5 text-white/70" />
-                  </div>
-                  <a href="tel:+916385753874" className="text-white/80 hover:text-white transition-colors">+91 63857 53874</a>
-                </div>
-
-                <div className="flex items-center gap-4 text-xs">
-                  <div className="w-8 h-8 rounded border border-white/10 bg-white/5 flex items-center justify-center">
-                    <Mail className="w-3.5 h-3.5 text-white/70" />
-                  </div>
-                  <a href="mailto:hr@monarchplacements.in" className="text-white/80 hover:text-white transition-colors">hr@monarchplacements.in</a>
-                </div>
-
-                <div className="flex items-center gap-4 text-xs">
-                  <div className="w-8 h-8 rounded border border-white/10 bg-white/5 flex items-center justify-center">
-                    <MapPin className="w-3.5 h-3.5 text-white/70" />
-                  </div>
-                  <span className="text-white/80">Kovilpalayam, Coimbatore</span>
-                </div>
-
-                <div className="flex items-center gap-4 text-xs">
-                  <div className="w-8 h-8 rounded border border-white/10 bg-white/5 flex items-center justify-center">
-                    <Clock className="w-3.5 h-3.5 text-white/70" />
-                  </div>
-                  <span className="text-white/80">Mon - Sat: 9:00 AM - 6:00 PM</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Embedded Google Map Frame */}
-            <div className="w-full h-[250px] border border-white/10 rounded overflow-hidden">
-              <iframe
-                title="Monarch Location Map"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3440.6448959079535!2d77.03282167437105!3d11.136501352450217!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba8582e17ff429f%3A0x3d61ded558dd04aa!2sKovilpalayam%20Police%20Station!5e1!3m2!1sen!2sin!4v1783666572766!5m2!1sen!2sin"
-                className="w-full h-full border-0 filter grayscale invert contrast-125 opacity-70"
-                loading="lazy"
-                referrerPolicy="strict-origin-when-cross-origin"
-              />
-            </div>
-          </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* CTA Section */}
-      <section className="py-24 border-t border-white/5 relative overflow-hidden bg-black flex flex-col justify-center items-center">
+      <RevealSection className="py-24 border-t border-white/5 relative overflow-hidden bg-transparent flex flex-col justify-center items-center">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-3xl mx-auto text-center px-6 relative z-10">
           <h2 className="text-2xl md:text-4xl font-display font-bold uppercase text-white mb-4">Ready To Start Your Career?</h2>
@@ -283,7 +271,7 @@ export default function Contact() {
             Enroll Today
           </a>
         </div>
-      </section>
+      </RevealSection>
     </div>
   )
 }

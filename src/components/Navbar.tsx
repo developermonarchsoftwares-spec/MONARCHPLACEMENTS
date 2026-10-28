@@ -53,9 +53,9 @@ export default function Navbar() {
             : 'bg-transparent py-6'
         }`}
       >
-        <div className="w-full px-6 flex justify-between items-center">
+        <div className="w-full px-4 sm:px-6 flex justify-between items-center">
           {/* Logo */}
-          <Link href="/" className="flex items-center group">
+          <Link href="/" className="flex items-center group -ml-2 sm:ml-0">
             <img
               src="/logo.png"
               alt="Monarch Placements Logo"
@@ -64,7 +64,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-2 lg:gap-4 xl:gap-6">
+          <nav className="hidden lg:flex items-center gap-3 xl:gap-6">
             {links.map((link) => {
               const isActive = pathname === link.path
               return (
@@ -89,7 +89,7 @@ export default function Navbar() {
           </nav>
 
           {/* CTA Button */}
-          <div className="hidden md:flex items-center">
+          <div className="hidden lg:flex items-center">
             <Link
               href="/contact"
               className="relative group overflow-hidden px-5 py-2.5 border border-white rounded text-xs uppercase tracking-widest text-black bg-white hover:text-white hover:bg-black transition-colors duration-500"
@@ -100,18 +100,19 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile Toggle */}
+          {/* Mobile & Tablet Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-white hover:text-white/80 transition-colors p-1"
+            className="lg:hidden text-white hover:text-white/80 transition-colors p-1"
             aria-label="Toggle Menu"
+            suppressHydrationWarning
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </header>
 
-      {/* Mobile Menu Drawer */}
+      {/* Mobile & Tablet Menu Drawer */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -119,12 +120,12 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-black flex flex-col justify-between p-8 pt-28 md:hidden"
+            className="fixed inset-0 z-40 bg-black flex flex-col justify-between p-6 sm:p-8 pt-24 sm:pt-28 overflow-y-auto max-h-screen lg:hidden"
           >
             {/* Background Grid Accent */}
             <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none" />
 
-            <nav className="flex flex-col gap-6">
+            <nav className="flex flex-col gap-3.5 sm:gap-5 my-auto">
               {links.map((link, idx) => {
                 const isActive = pathname === link.path
                 return (
@@ -132,12 +133,12 @@ export default function Navbar() {
                     key={link.path}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.05, duration: 0.4 }}
+                    transition={{ delay: idx * 0.04, duration: 0.3 }}
                   >
                     <Link
                       href={link.path}
                       onClick={() => setIsOpen(false)}
-                      className={`text-3xl font-display font-light tracking-wide block ${
+                      className={`text-xl sm:text-2xl md:text-3xl font-display font-light tracking-wide block ${
                         isActive ? 'text-white pl-4 border-l border-white' : 'text-white/55'
                       }`}
                     >
@@ -151,14 +152,14 @@ export default function Navbar() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="flex flex-col gap-6"
+              transition={{ delay: 0.25, duration: 0.4 }}
+              className="flex flex-col gap-4 mt-6 shrink-0"
             >
               <div className="h-[1px] bg-white/10" />
               <Link
                 href="/contact"
                 onClick={() => setIsOpen(false)}
-                className="w-full text-center py-4 border border-white bg-white text-black uppercase tracking-widest text-xs font-semibold hover:bg-transparent hover:text-white transition-colors duration-300"
+                className="w-full text-center py-3.5 sm:py-4 border border-white bg-white text-black uppercase tracking-widest text-xs font-semibold hover:bg-transparent hover:text-white transition-colors duration-300"
               >
                 Enroll Now
               </Link>

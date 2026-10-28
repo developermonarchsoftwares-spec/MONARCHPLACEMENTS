@@ -246,13 +246,20 @@ const Ferrofluid = ({
     const container = containerRef.current;
     if (!container) return;
 
-    const renderer = new Renderer({
-      dpr: dpr ?? (typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1),
-      alpha: true,
-      antialias: true
-    });
+    let renderer: Renderer;
+    try {
+      renderer = new Renderer({
+        dpr: dpr ?? (typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1),
+        alpha: true,
+        antialias: true
+      });
+    } catch (e) {
+      console.warn('WebGL context could not be created for Ferrofluid:', e);
+      return;
+    }
     rendererRef.current = renderer;
     const gl = renderer.gl;
+    if (!gl) return;
     const canvas = gl.canvas;
     gl.clearColor(0, 0, 0, 0);
     canvas.style.width = '100%';

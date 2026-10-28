@@ -1,5 +1,6 @@
 "use client"
 
+import { RevealSection } from '@/components/Reveal'
 import RevealGrid from '@/components/RevealGrid'
 import React, { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
@@ -31,6 +32,7 @@ import dynamic from 'next/dynamic'
 import { trackEvent } from '@/lib/analytics'
 
 const FloatingLines = dynamic(() => import('@/components/FloatingLines'), { ssr: false })
+const FLOATING_WAVES = ['middle', 'bottom', 'top']
 
 export interface DomainItem {
   id: string
@@ -541,7 +543,7 @@ export default function InternshipsPage() {
       <div className="relative w-full min-h-screen overflow-hidden">
         <div className="absolute inset-0 -z-10">
           <FloatingLines 
-            enabledWaves={["middle","bottom","top"]}
+            enabledWaves={FLOATING_WAVES}
             lineCount={5}
             lineDistance={10}
             bendRadius={8}
@@ -575,7 +577,7 @@ export default function InternshipsPage() {
       </div>
 
       {/* 2. DURATION OPTIONS (15 Days to 6 Months) */}
-      <section id="durations" className="py-24 w-full border-t border-white/5 relative overflow-hidden">
+      <RevealSection id="durations" className="py-24 w-full border-t border-white/5 relative overflow-hidden">
         <div className="text-center mb-16 px-6 max-w-7xl mx-auto">
           <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">FLEXIBLE TIMELINES</span>
           <h2 className="text-3xl md:text-5xl font-display font-bold uppercase text-white">Choose Your Duration</h2>
@@ -585,22 +587,22 @@ export default function InternshipsPage() {
         </div>
 
         {/* Carousel Outer Wrapper with Left and Right Circular Arrows - Full Width */}
-        <div className="relative flex items-center justify-between w-full px-2 sm:px-4 md:px-6">
-          {/* Circular Left Arrow Button outside the card track */}
+        <div className="relative flex items-center w-full">
+          {/* Circular Left Arrow Button */}
           <button suppressHydrationWarning
             type="button"
             onClick={() => scrollByCard('left')}
             disabled={!canScrollLeft}
             aria-label="Previous internship card"
-            className="shrink-0 mr-1 sm:mr-2 w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full border border-white/20 bg-black/80 backdrop-blur-sm hover:bg-white/10 hover:border-white/60 text-white flex items-center justify-center transition-all duration-200 disabled:opacity-20 disabled:cursor-not-allowed hover:shadow-[0_0_15px_rgba(255,255,255,0.25)] focus:outline-none focus:ring-1 focus:ring-white/40 z-20 cursor-pointer"
+            className="absolute left-2 sm:left-4 md:left-6 w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-md hover:bg-white/[0.07] hover:border-white/25 text-white/60 hover:text-white/85 flex items-center justify-center transition-all duration-200 disabled:opacity-15 disabled:cursor-not-allowed hover:shadow-[0_0_10px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-1 focus:ring-white/20 z-20 cursor-pointer"
           >
-            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-current" />
           </button>
 
           {/* Single-Row Horizontal Scrolling Container */}
           <div
             ref={scrollContainerRef}
-            className="flex-1 overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing py-4 select-none"
+            className="w-full overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing py-4 select-none"
             style={{
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
@@ -613,12 +615,12 @@ export default function InternshipsPage() {
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
-            <div className="flex flex-row gap-6 w-max">
+            <div className="flex flex-row gap-6 w-max px-4 sm:px-6 md:px-8">
               {durationOptions.map((opt, idx) => (
                 <div
                   key={idx}
                   data-duration-card
-                  className="w-[360px] sm:w-[385px] md:w-[394px] shrink-0 flex flex-col"
+                  className="w-[calc(100vw-5.5rem)] max-w-[394px] sm:w-[385px] md:w-[394px] shrink-0 flex flex-col"
                 >
                   <LiquidGlassCard
                     selected={selectedDuration === opt.title}
@@ -683,22 +685,23 @@ export default function InternshipsPage() {
             </div>
           </div>
 
-          {/* Circular Right Arrow Button outside the card track */}
+          {/* Circular Right Arrow Button */}
           <button suppressHydrationWarning
             type="button"
             onClick={() => scrollByCard('right')}
             disabled={!canScrollRight}
             aria-label="Next internship card"
-            className="shrink-0 ml-2 sm:ml-4 w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full border border-white/20 bg-black/80 backdrop-blur-sm hover:bg-white/10 hover:border-white/60 text-white flex items-center justify-center transition-all duration-200 disabled:opacity-20 disabled:cursor-not-allowed hover:shadow-[0_0_15px_rgba(255,255,255,0.25)] focus:outline-none focus:ring-1 focus:ring-white/40 z-20 cursor-pointer"
+            className="absolute right-2 sm:right-4 md:right-6 w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-md hover:bg-white/[0.07] hover:border-white/25 text-white/60 hover:text-white/85 flex items-center justify-center transition-all duration-200 disabled:opacity-15 disabled:cursor-not-allowed hover:shadow-[0_0_10px_rgba(255,255,255,0.1)] focus:outline-none focus:ring-1 focus:ring-white/20 z-20 cursor-pointer"
           >
-            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-current" />
           </button>
         </div>
-      </section>
+      </RevealSection>
 
       {/* 3. AVAILABLE DOMAINS & CURRICULUM */}
-      <section className="py-24 px-4 sm:px-6 md:px-8 max-w-7xl mx-auto border-t border-white/5">
-        <div className="text-center mb-16">
+      <RevealSection className="py-24 border-t border-white/5 w-full bg-transparent">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+          <div className="text-center mb-16">
           <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block font-mono">
             SPECIALIZED DOMAINS
           </span>
@@ -710,14 +713,14 @@ export default function InternshipsPage() {
           </p>
         </div>
 
-        {/* Five Domain Cards: Single Horizontal Row with Styled Icons */}
-        <RevealGrid hoverLift itemClassName="shrink-0 lg:shrink" className="flex overflow-x-auto lg:overflow-visible no-scrollbar gap-4 px-1 pt-4 pb-4 lg:grid lg:grid-cols-5 lg:gap-5 select-none">
+        {/* Five Domain Cards: Responsive Grid across Mobile/Tablet, Single Row on Desktop */}
+        <RevealGrid hoverLift className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-4 xl:gap-5 pt-4 pb-4 select-none">
           {domains.map((dom) => {
             const IconComponent = dom.icon
             return (
               <div
                 key={dom.id}
-                className="w-[260px] sm:w-[280px] lg:w-auto shrink-0 lg:shrink flex flex-col justify-between glass-card p-5 rounded-xl border border-white/10 hover:border-white/40 bg-black/40 hover:bg-white/[0.04] transition-all duration-300 group hover:shadow-[0_0_20px_rgba(255,255,255,0.08)] min-h-[290px]"
+                className="w-full flex flex-col justify-between glass-card p-5 lg:p-4 xl:p-5 rounded-xl border border-white/10 hover:border-white/40 bg-black/40 hover:bg-white/[0.04] transition-all duration-300 group hover:shadow-[0_0_20px_rgba(255,255,255,0.08)] min-h-[260px] sm:min-h-[290px]"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
@@ -757,7 +760,8 @@ export default function InternshipsPage() {
             )
           })}
         </RevealGrid>
-      </section>
+        </div>
+      </RevealSection>
 
       {/* DOMAIN DETAILS MODAL (shared by every domain) */}
       <AnimatePresence>
@@ -778,8 +782,9 @@ export default function InternshipsPage() {
       <EditorialInternshipExperience />
 
       {/* 5. MENTORSHIP & INDUSTRY SESSIONS */}
-      <section className="py-20 px-6 max-w-7xl mx-auto border-t border-white/5">
-        <div className="text-center mb-12">
+      <RevealSection className="py-20 border-t border-white/5 w-full bg-transparent">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-12">
           <span className="text-xs tracking-widest uppercase text-white/40 mb-2 block">FACULTY & GUEST MENTORS</span>
           <h2 className="text-2xl md:text-3xl font-display font-bold uppercase text-white">Mentorship & Guidance</h2>
         </div>
@@ -807,10 +812,11 @@ export default function InternshipsPage() {
             </p>
           </div>
         </RevealGrid>
-      </section>
+        </div>
+      </RevealSection>
 
       {/* 6. INTERNSHIP APPLICATION FORM */}
-      <section ref={formRef} id="apply" className="py-24 px-6 border-t border-white/5 bg-gradient-to-b from-black via-white/[0.01] to-black">
+      <RevealSection ref={formRef} id="apply" className="py-24 px-6 border-t border-white/5 bg-transparent">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-10">
             <div className="inline-flex items-center gap-2 px-3 py-1 border border-white/10 bg-white/5 rounded-full text-[9px] tracking-widest uppercase text-white/70 mb-4">
@@ -822,7 +828,7 @@ export default function InternshipsPage() {
             </p>
           </div>
 
-          <div className="glass-card rounded p-8 border border-white/15">
+          <div className="glass-card rounded p-5 sm:p-8 border border-white/15">
             {status === 'success' ? (
               <div className="py-12 text-center flex flex-col items-center gap-4">
                 <CheckCircle2 className="w-14 h-14 text-white" />
@@ -1048,11 +1054,12 @@ export default function InternshipsPage() {
             )}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* 7. FREQUENTLY ASKED QUESTIONS */}
-      <section className="py-20 px-6 max-w-5xl mx-auto border-t border-white/5">
-        <div className="text-center mb-12">
+      <RevealSection className="py-20 border-t border-white/5 w-full bg-transparent">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-12">
             <span className="text-xs tracking-widest uppercase text-white/40 mb-2 block">INTERNSHIP FAQS</span>
             <h2 className="text-2xl md:text-3xl font-display font-bold uppercase text-white">Common Questions</h2>
           </div>
@@ -1127,7 +1134,8 @@ export default function InternshipsPage() {
             )
           })}
         </div>
-      </section>
+        </div>
+      </RevealSection>
     </div>
   )
 }

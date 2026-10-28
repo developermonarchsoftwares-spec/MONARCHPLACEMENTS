@@ -226,13 +226,20 @@ const Lightfall = ({
     const container = containerRef.current;
     if (!container) return;
 
-    const renderer = new Renderer({
-      dpr: dpr ?? (typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1),
-      alpha: true,
-      antialias: true
-    });
+    let renderer: Renderer;
+    try {
+      renderer = new Renderer({
+        dpr: dpr ?? (typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1),
+        alpha: true,
+        antialias: true
+      });
+    } catch (e) {
+      console.warn('WebGL context could not be created for Lightfall:', e);
+      return;
+    }
     rendererRef.current = renderer;
     const gl = renderer.gl;
+    if (!gl) return;
     const canvas = gl.canvas;
 
     canvas.style.width = '100%';

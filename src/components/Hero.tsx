@@ -30,7 +30,7 @@ export default function Hero({
 }: HeroProps) {
   return (
     <section
-      className="relative z-10 max-w-7xl mx-auto px-6 pt-36 pb-16 min-h-screen flex items-center overflow-hidden"
+      className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-28 sm:pt-32 md:pt-36 pb-12 sm:pb-16 min-h-screen flex items-center overflow-hidden"
     >
       {/* Background layers */}
       <div className="absolute inset-0 overflow-hidden -z-10">
@@ -55,7 +55,7 @@ export default function Hero({
       <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 items-center w-full z-10">
         {/* Left: Headline */}
         <div className="lg:col-span-7 flex flex-col justify-center">
-          <h1 className="text-[40px] sm:text-6xl md:text-7xl leading-[1.05] font-light text-zinc-100 tracking-tighter animate-fadeInLeft animation-delay-300">
+          <h1 className="text-[30px] sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08] font-light text-zinc-100 tracking-tighter animate-fadeInLeft animation-delay-300 break-words">
             {title}
           </h1>
         </div>

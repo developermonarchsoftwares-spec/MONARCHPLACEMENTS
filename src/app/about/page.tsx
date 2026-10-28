@@ -1,5 +1,6 @@
 "use client"
 
+import { RevealSection } from '@/components/Reveal'
 import React from 'react'
 import Link from 'next/link'
 import { Target, Eye, Quote } from 'lucide-react'
@@ -34,7 +35,7 @@ export default function About() {
   ]
 
   return (
-    <div className="relative z-10 w-full">
+    <div className="relative z-10 w-full overflow-hidden">
       {/* Hero Section Container */}
       <div className="relative w-full min-h-screen overflow-hidden">
         {/* Lightfall Background component */}
@@ -77,7 +78,7 @@ export default function About() {
       </div>
 
       {/* Who We Are */}
-      <section className="py-24 px-6 border-t border-white/5 bg-gradient-to-b from-black via-white/[0.01] to-black">
+      <RevealSection className="py-24 px-6 border-t border-white/5 bg-transparent">
         <div className="max-w-4xl mx-auto text-center">
           <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">WHO WE ARE</span>
           <h2 className="text-2xl md:text-3xl font-display font-bold uppercase text-white mb-6">
@@ -87,10 +88,10 @@ export default function About() {
             Monarch Training & Placements bridges the gap between education and employment through practical training, career guidance and placement support.
           </p>
         </div>
-      </section>
+      </RevealSection>
 
       {/* Showcase Cards with Modern High-End Layout */}
-      <section className="py-24 max-w-7xl mx-auto px-6">
+      <RevealSection className="py-24 max-w-7xl mx-auto px-6">
         <div className="flex flex-col gap-16">
           {showcases.map((show, idx) => (
             <div
@@ -133,14 +134,14 @@ export default function About() {
             </div>
           ))}
         </div>
-      </section>
+      </RevealSection>
 
       {/* Mission & Vision Section */}
-      <section className="py-24 border-t border-white/5 bg-black/40">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12">
+      <RevealSection className="py-24 border-t border-white/5 bg-transparent">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
           {/* Mission */}
-          <div className="glass-card glass-card-hover rounded p-8 relative overflow-hidden group border-glow-white">
-            <div className="absolute -right-4 -bottom-4 text-white/[0.02] font-display font-bold text-8xl pointer-events-none group-hover:text-white/[0.04] transition-colors duration-500">
+          <div className="glass-card glass-card-hover rounded p-6 sm:p-8 relative overflow-hidden group border-glow-white">
+            <div className="absolute -right-4 -bottom-4 text-white/[0.02] font-display font-bold text-6xl sm:text-8xl pointer-events-none group-hover:text-white/[0.04] transition-colors duration-500">
               MISSION
             </div>
             <div className="flex items-center gap-3 mb-6">
@@ -156,8 +157,8 @@ export default function About() {
           </div>
 
           {/* Vision */}
-          <div className="glass-card glass-card-hover rounded p-8 relative overflow-hidden group border-glow-white">
-            <div className="absolute -right-4 -bottom-4 text-white/[0.02] font-display font-bold text-8xl pointer-events-none group-hover:text-white/[0.04] transition-colors duration-500">
+          <div className="glass-card glass-card-hover rounded p-6 sm:p-8 relative overflow-hidden group border-glow-white">
+            <div className="absolute -right-4 -bottom-4 text-white/[0.02] font-display font-bold text-6xl sm:text-8xl pointer-events-none group-hover:text-white/[0.04] transition-colors duration-500">
               VISION
             </div>
             <div className="flex items-center gap-3 mb-6">
@@ -172,21 +173,21 @@ export default function About() {
             </p>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* Quote */}
-      <section className="py-28 px-6 text-center max-w-4xl mx-auto border-t border-white/5 relative">
+      <RevealSection className="py-28 px-6 text-center max-w-4xl mx-auto border-t border-white/5 relative">
         <div className="absolute top-12 left-1/2 -translate-x-1/2 text-white/[0.02] pointer-events-none">
           <Quote className="w-20 h-20" />
         </div>
-        <h2 className="text-3xl md:text-5xl font-display font-bold uppercase text-glow text-white tracking-wider relative z-10 leading-tight">
+        <h2 className="text-2xl sm:text-3xl md:text-5xl font-display font-bold uppercase text-glow text-white tracking-wider relative z-10 leading-tight break-words">
           Building Careers. <br />
           <span className="text-white/40">Creating Opportunities.</span>
         </h2>
-      </section>
+      </RevealSection>
 
       {/* CTA Section */}
-      <section className="py-24 border-t border-white/5 relative overflow-hidden bg-black flex flex-col justify-center items-center">
+      <RevealSection className="py-24 border-t border-white/5 relative overflow-hidden bg-transparent flex flex-col justify-center items-center">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-3xl mx-auto text-center px-6 relative z-10">
           <h2 className="text-2xl md:text-4xl font-display font-bold uppercase text-white mb-4">Start Your Career Journey Today</h2>
@@ -200,7 +201,7 @@ export default function About() {
             Contact Us
           </Link>
         </div>
-      </section>
+      </RevealSection>
     </div>
   )
 }

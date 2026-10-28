@@ -1,5 +1,6 @@
 "use client"
 
+import { RevealSection } from '@/components/Reveal'
 import RevealGrid from '@/components/RevealGrid'
 import React from 'react'
 import Link from 'next/link'
@@ -50,7 +51,7 @@ export default function Roadmap() {
   ]
 
   return (
-    <div className="relative z-10 w-full">
+    <div className="relative z-10 w-full overflow-hidden">
       {/* Hero Section Container */}
       <div className="relative w-full min-h-screen overflow-hidden">
         {/* MagicRings Background component */}
@@ -99,18 +100,18 @@ export default function Roadmap() {
       </div>
 
       {/* Timeline Grid Section */}
-      <section className="py-24 border-t border-white/5 bg-gradient-to-b from-black via-white/[0.01] to-black px-6">
+      <RevealSection className="py-24 border-t border-white/5 bg-transparent px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">TIMELINE</span>
             <h2 className="text-2xl md:text-4xl font-display font-bold uppercase text-white">Training Timeline</h2>
           </div>
 
-          <RevealGrid hoverLift className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <RevealGrid hoverLift className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
             {months.map((month, idx) => (
               <div 
                 key={idx}
-                className="glass-card glass-card-hover rounded p-8 flex flex-col justify-between border-glow-white relative overflow-hidden group"
+                className="glass-card glass-card-hover rounded p-6 sm:p-8 flex flex-col justify-between border-glow-white relative overflow-hidden group"
               >
                 {/* Accent Watermark */}
                 <div className="absolute -right-6 -bottom-6 text-white/[0.01] font-display font-bold text-9xl pointer-events-none group-hover:text-white/[0.02] transition-colors duration-500">
@@ -141,10 +142,10 @@ export default function Roadmap() {
             ))}
           </RevealGrid>
         </div>
-      </section>
+      </RevealSection>
 
       {/* CTA Section */}
-      <section className="py-24 border-t border-white/5 relative overflow-hidden bg-black flex flex-col justify-center items-center">
+      <RevealSection className="py-24 border-t border-white/5 relative overflow-hidden bg-transparent flex flex-col justify-center items-center">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-3xl mx-auto text-center px-6 relative z-10">
           <h2 className="text-2xl md:text-4xl font-display font-bold uppercase text-white mb-4">Start Your Journey Today</h2>
@@ -159,7 +160,7 @@ export default function Roadmap() {
             Enroll Now
           </Link>
         </div>
-      </section>
+      </RevealSection>
     </div>
   )
 }

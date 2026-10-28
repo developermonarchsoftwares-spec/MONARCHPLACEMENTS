@@ -1,5 +1,6 @@
 "use client"
 
+import { RevealSection } from '@/components/Reveal'
 import React, { useState, useRef } from 'react'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
@@ -349,7 +350,7 @@ export default function ITStaffingPage() {
   }
 
   return (
-    <div className="relative z-10 w-full min-h-screen bg-black text-white" suppressHydrationWarning>
+    <div className="relative z-10 w-full min-h-screen overflow-hidden bg-transparent text-white" suppressHydrationWarning>
       {/* JSON-LD Schema */}
       <script
         type="application/ld+json"
@@ -424,11 +425,12 @@ export default function ITStaffingPage() {
       {/* ========================================================================= */}
       {/* SECTION 2: HIRING SOLUTIONS                                               */}
       {/* ========================================================================= */}
-      <section
+      <RevealSection
         id="hiring-solutions"
         ref={solutionsRef}
-        className="py-24 px-6 max-w-7xl mx-auto border-t border-white/5 scroll-mt-24"
+        className="py-24 border-t border-white/5 w-full bg-transparent scroll-mt-24"
       >
+        <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-14">
           <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">COLLABORATIVE HIRING</span>
           <h2 className="text-3xl md:text-5xl font-display font-bold uppercase text-white">
@@ -505,6 +507,7 @@ export default function ITStaffingPage() {
                     <button
                       type="button"
                       onClick={() => scrollToForm(role.name)}
+                      suppressHydrationWarning
                       className="group/role flex w-full items-start justify-between gap-3 py-3.5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
                     >
                       <span>
@@ -610,12 +613,13 @@ export default function ITStaffingPage() {
             ]}
           />
         </div>
-      </section>
+        </div>
+      </RevealSection>
 
       {/* ========================================================================= */}
       {/* SECTION 3: HIRING PROCESS                                                 */}
       {/* ========================================================================= */}
-      <section id="hiring-process" className="py-24 border-t border-white/5 bg-gradient-to-b from-black via-white/[0.01] to-black scroll-mt-24">
+      <RevealSection id="hiring-process" className="py-24 border-t border-white/5 bg-transparent scroll-mt-24">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">HOW IT WORKS</span>
@@ -648,13 +652,14 @@ export default function ITStaffingPage() {
             ))}
           </RevealGrid>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ========================================================================= */}
       {/* SECTION 4: WHO WE WORK WITH                                               */}
       {/* ========================================================================= */}
-      <section className="py-24 px-6 max-w-7xl mx-auto border-t border-white/5">
-        <div className="text-center mb-16">
+      <RevealSection className="py-24 border-t border-white/5 w-full bg-transparent">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
           <span className="text-xs tracking-widest uppercase text-white/40 mb-3 block">COLLABORATIVE ECOSYSTEM</span>
           <h2 className="text-2xl md:text-4xl font-display font-bold uppercase text-white">
             Built for Businesses That Need IT Talent
@@ -698,12 +703,13 @@ export default function ITStaffingPage() {
             </SpotlightCard>
           ))}
         </RevealGrid>
-      </section>
+        </div>
+      </RevealSection>
 
       {/* ========================================================================= */}
       {/* SECTION 5: HIRING REQUIREMENT FORM (PRIMARY CONVERSION)                   */}
       {/* ========================================================================= */}
-      <section ref={formRef} id="hiring-form" className="py-24 px-6 border-t border-white/5 bg-gradient-to-b from-black via-white/[0.01] to-black scroll-mt-24">
+      <RevealSection ref={formRef} id="hiring-form" className="py-24 px-6 border-t border-white/5 bg-transparent scroll-mt-24">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-10">
             <div className="inline-flex items-center gap-2 px-3 py-1 border border-white/10 bg-white/5 rounded-full text-[9px] tracking-widest uppercase text-white/70 mb-4 font-mono">
@@ -938,14 +944,14 @@ export default function ITStaffingPage() {
                       <label className="text-[10px] uppercase tracking-widest text-white/60 font-semibold">
                         Candidate Preference <span className="text-white">*</span>
                       </label>
-                      <div className="grid grid-cols-3 gap-2">
+                      <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
                         {(['Fresher', 'Experienced', 'Both'] as const).map(pref => (
                           <button
                             key={pref}
                             type="button"
                             suppressHydrationWarning
                             onClick={() => setFormData(prev => ({ ...prev, candidatePreference: pref }))}
-                            className={`py-2.5 px-2 rounded text-[11px] uppercase tracking-wider font-medium border transition-all text-center ${
+                            className={`py-2.5 px-1.5 sm:px-2 rounded text-[10px] sm:text-[11px] uppercase tracking-normal sm:tracking-wider font-medium border transition-all text-center truncate ${
                               formData.candidatePreference === pref
                                 ? 'border-white bg-white text-black font-semibold'
                                 : 'border-white/10 bg-black/60 text-white/60 hover:border-white/30 hover:text-white'
@@ -1004,14 +1010,14 @@ export default function ITStaffingPage() {
                       <label className="text-[10px] uppercase tracking-widest text-white/60 font-semibold">
                         Work Mode <span className="text-white">*</span>
                       </label>
-                      <div className="grid grid-cols-3 gap-2">
+                      <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
                         {(['On-site', 'Hybrid', 'Remote'] as const).map(mode => (
                           <button
                             key={mode}
                             type="button"
                             suppressHydrationWarning
                             onClick={() => setFormData(prev => ({ ...prev, workMode: mode }))}
-                            className={`py-2.5 px-2 rounded text-[11px] uppercase tracking-wider font-medium border transition-all text-center ${
+                            className={`py-2.5 px-1.5 sm:px-2 rounded text-[10px] sm:text-[11px] uppercase tracking-normal sm:tracking-wider font-medium border transition-all text-center truncate ${
                               formData.workMode === mode
                                 ? 'border-white bg-white text-black font-semibold'
                                 : 'border-white/10 bg-black/60 text-white/60 hover:border-white/30 hover:text-white'
@@ -1128,13 +1134,13 @@ export default function ITStaffingPage() {
             )}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* ========================================================================= */}
       {/* SECTION 6: FINAL CTA                                                      */}
       {/* ========================================================================= */}
-      <section className="py-24 px-6 border-t border-white/5 bg-gradient-to-b from-black via-white/[0.02] to-black">
-        <div className="max-w-5xl mx-auto glass-card rounded p-8 md:p-14 border border-white/15 text-center">
+      <RevealSection className="py-24 px-6 border-t border-white/5 bg-transparent">
+        <div className="max-w-5xl mx-auto glass-card rounded p-6 sm:p-8 md:p-14 border border-white/15 text-center">
           <span className="text-[10px] uppercase tracking-widest text-white/40 font-mono block mb-3">GET STARTED</span>
           <h2 className="text-2xl md:text-4xl font-display font-bold uppercase text-white mb-4">
             Your Next Hire Starts With a Conversation.
@@ -1143,19 +1149,19 @@ export default function ITStaffingPage() {
             Share your technical hiring requirements with Monarch Placements. We'll review the details and discuss suitable sourcing and training options based on your needs.
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 mb-10">
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-10">
             <button
               type="button"
               suppressHydrationWarning
               onClick={() => scrollToForm()}
-              className="px-8 py-3.5 bg-white text-black text-xs uppercase tracking-widest font-semibold hover:bg-black hover:text-white border border-white transition-all duration-300 rounded flex items-center gap-2"
+              className="w-full sm:w-auto justify-center px-6 sm:px-8 py-3.5 bg-white text-black text-xs uppercase tracking-widest font-semibold hover:bg-black hover:text-white border border-white transition-all duration-300 rounded flex items-center gap-2"
             >
               <span>Share Your Hiring Requirement</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-3.5 h-3.5 shrink-0" />
             </button>
             <Link
               href="/contact"
-              className="px-8 py-3.5 border border-white/20 text-white text-xs uppercase tracking-widest font-semibold hover:border-white transition-all duration-300 rounded"
+              className="w-full sm:w-auto text-center px-6 sm:px-8 py-3.5 border border-white/20 text-white text-xs uppercase tracking-widest font-semibold hover:border-white transition-all duration-300 rounded"
             >
               Contact Our Office
             </Link>
@@ -1177,7 +1183,7 @@ export default function ITStaffingPage() {
             </div>
           </div>
         </div>
-      </section>
+      </RevealSection>
     </div>
   )
 }

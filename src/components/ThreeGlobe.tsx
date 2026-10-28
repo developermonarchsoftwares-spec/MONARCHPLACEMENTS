@@ -18,7 +18,18 @@ export default function ThreeGlobe() {
     camera.position.z = 15
 
     // Renderer
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+    const canvas = document.createElement('canvas')
+    const gl = canvas.getContext('webgl2') || canvas.getContext('webgl')
+    if (!gl) {
+      return
+    }
+
+    let renderer: THREE.WebGLRenderer
+    try {
+      renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true })
+    } catch {
+      return
+    }
     renderer.setSize(width, height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     containerRef.current.appendChild(renderer.domElement)
@@ -197,10 +208,14 @@ export default function ThreeGlobe() {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('resize', handleResize)
-      if (containerRef.current && renderer.domElement) {
+      if (containerRef.current && renderer?.domElement && containerRef.current.contains(renderer.domElement)) {
         containerRef.current.removeChild(renderer.domElement)
       }
-      renderer.dispose()
+      if (renderer) {
+        try {
+          renderer.dispose()
+        } catch {}
+      }
     }
   }, [])
 

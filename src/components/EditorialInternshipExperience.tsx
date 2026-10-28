@@ -56,7 +56,7 @@ export default function EditorialInternshipExperience() {
       {/* Stars */}
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none" style={{ backgroundImage: stars }} />
 
-      <div className="relative z-10 max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 py-24 md:py-32 flex flex-col md:flex-row gap-16 md:gap-12 lg:gap-20">
+      <div className="relative z-10 max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-24 py-16 sm:py-24 md:py-32 flex flex-col md:flex-row gap-12 sm:gap-16 md:gap-12 lg:gap-20">
         {/* Left: branding (~45%) */}
         <div className="md:w-[45%] flex flex-col justify-center">
           <span className="text-xs tracking-widest uppercase text-white/40 mb-4">
@@ -79,19 +79,19 @@ export default function EditorialInternshipExperience() {
         </div>
 
         {/* Right: vertical timeline (~55%) */}
-        <ol className="relative md:w-[55%] flex flex-col justify-center gap-14 lg:gap-16">
-          {/* Thin grey connecting line, centered on the 56px icon column */}
-          <span aria-hidden="true" className="absolute left-7 top-7 bottom-7 w-px bg-white/15" />
+        <ol className="relative md:w-[55%] flex flex-col justify-center gap-10 sm:gap-14 lg:gap-16">
+          {/* Thin grey connecting line, centered on the icon column */}
+          <span aria-hidden="true" className="absolute left-6 sm:left-7 top-6 sm:top-7 bottom-6 sm:bottom-7 w-px bg-white/15" />
           {timelineItems.map(({ num, title, Icon, description }) => (
-            <li key={num} className="group relative flex items-start gap-6 lg:gap-8">
-              <span className="relative z-10 shrink-0 w-14 h-14 rounded-full border border-white/25 bg-black flex items-center justify-center transition-colors duration-300 group-hover:border-white/70">
+            <li key={num} className="group relative flex items-start gap-4 sm:gap-6 lg:gap-8">
+              <span className="relative z-10 shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-full border border-white/25 bg-black flex items-center justify-center transition-colors duration-300 group-hover:border-white/70">
                 <Icon className="w-5 h-5 text-white" strokeWidth={1.5} />
               </span>
               <div className="flex-1 min-w-0 pt-1">
                 <span className="block text-xs tracking-widest text-white/40 mb-1">
                   {num}
                 </span>
-                <h3 className="text-lg md:text-xl uppercase tracking-widest font-bold text-white mb-3">
+                <h3 className="text-base sm:text-lg md:text-xl uppercase tracking-widest font-bold text-white mb-2 sm:mb-3 break-words">
                   {title}
                 </h3>
                 <p className="text-xs md:text-sm text-white/60 font-light leading-relaxed max-w-md">

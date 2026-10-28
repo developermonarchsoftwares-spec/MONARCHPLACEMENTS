@@ -222,3 +222,56 @@ h1, h2, h3, h4, h5, h6 {
   display: flex !important;
   animation: marquee 25s linear infinite !important;
 }
+
+/* Ensure background star particles remain consistently visible across all sections */
+section.bg-black,
+footer.bg-black,
+div.bg-black.min-h-screen,
+.spline-container.bg-black,
+section[class*="bg-black/"] {
+  background-color: transparent !important;
+}
+
+section.bg-gradient-to-b {
+  background-color: transparent !important;
+  background-image: linear-gradient(to bottom, transparent 0%, rgba(255, 255, 255, 0.012) 50%, transparent 100%) !important;
+}
+
+/* White buttons hover effect:
+   Transforms into a black background with a thin white outline and white text.
+   Maintains existing dimensions, border radius, typography, and icon positioning with smooth transition. */
+a.bg-white,
+button.bg-white {
+  border: 1px solid #ffffff !important;
+  transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              stroke 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+a.bg-white *,
+button.bg-white * {
+  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              stroke 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+a.bg-white:hover,
+button.bg-white:not(:disabled):hover {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+a.bg-white:hover *,
+button.bg-white:not(:disabled):hover * {
+  color: #ffffff !important;
+}
+
+a.bg-white:hover svg,
+button.bg-white:not(:disabled):hover svg {
+  stroke: #ffffff !important;
+  color: #ffffff !important;
+}
+

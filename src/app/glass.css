@@ -89,3 +89,15 @@
   }
 }
 
+/* Gentle hover lift for the uppercase CTA buttons/links inside page sections (not the hero buttons). */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  section button.uppercase:not(:disabled),
+  section a.uppercase {
+    transition-property: transform, background-color, color, border-color, opacity;
+  }
+
+  section button.uppercase:not(:disabled):hover,
+  section a.uppercase:hover {
+    transform: translateY(-2px);
+  }
+}

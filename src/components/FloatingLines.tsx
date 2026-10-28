@@ -316,22 +316,48 @@ export default function FloatingLines({
   const middleLineDistance = enabledWaves.includes('middle') ? getLineDistance('middle') * 0.01 : 0.01;
   const bottomLineDistance = enabledWaves.includes('bottom') ? getLineDistance('bottom') * 0.01 : 0.01;
 
+  const enabledWavesKey = Array.isArray(enabledWaves) ? enabledWaves.join(',') : '';
+  const topWaveKey = JSON.stringify(topWavePosition);
+  const middleWaveKey = JSON.stringify(middleWavePosition);
+  const bottomWaveKey = JSON.stringify(bottomWavePosition);
+  const lineCountKey = typeof lineCount === 'object' ? JSON.stringify(lineCount) : String(lineCount);
+  const lineDistanceKey = typeof lineDistance === 'object' ? JSON.stringify(lineDistance) : String(lineDistance);
+
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
     let active = true;
 
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+    if (!gl) {
+      return;
+    }
+
+    let renderer: WebGLRenderer;
+    try {
+      renderer = new WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: 'default' });
+    } catch {
+      return;
+    }
+
     const scene = new Scene();
 
     const camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
     camera.position.z = 1;
 
-    const renderer = new WebGLRenderer({ antialias: true, alpha: false });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.domElement.style.width = '100%';
     renderer.domElement.style.height = '100%';
     container.appendChild(renderer.domElement);
+
+    const handleContextLost = (e: Event) => {
+      e.preventDefault();
+      active = false;
+      cancelAnimationFrame(raf);
+    };
+    renderer.domElement.addEventListener('webglcontextlost', handleContextLost, false);
 
     const uniforms = {
       iTime: { value: 0 },
@@ -491,26 +517,33 @@ export default function FloatingLines({
 
       if (ro) ro.disconnect();
 
-      if (interactive) {
-        renderer.domElement.removeEventListener('pointermove', handlePointerMove);
-        renderer.domElement.removeEventListener('pointerleave', handlePointerLeave);
+      if (renderer?.domElement) {
+        if (interactive) {
+          renderer.domElement.removeEventListener('pointermove', handlePointerMove);
+          renderer.domElement.removeEventListener('pointerleave', handlePointerLeave);
+        }
+        renderer.domElement.removeEventListener('webglcontextlost', handleContextLost);
       }
 
       geometry.dispose();
       material.dispose();
-      renderer.dispose();
-      if (renderer.domElement.parentElement) {
-        renderer.domElement.parentElement.removeChild(renderer.domElement);
+      if (renderer) {
+        try {
+          renderer.dispose();
+        } catch {}
+        if (renderer.domElement?.parentElement) {
+          renderer.domElement.parentElement.removeChild(renderer.domElement);
+        }
       }
     };
   }, [
     resolvedGradient,
-    enabledWaves,
-    lineCount,
-    lineDistance,
-    topWavePosition,
-    middleWavePosition,
-    bottomWavePosition,
+    enabledWavesKey,
+    lineCountKey,
+    lineDistanceKey,
+    topWaveKey,
+    middleWaveKey,
+    bottomWaveKey,
     animationSpeed,
     interactive,
     bendRadius,
