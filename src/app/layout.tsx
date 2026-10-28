@@ -31,13 +31,7 @@ export const metadata: Metadata = {
   description: 'Join Monarch Training & Placements. Get 3 months of comprehensive training in technical skills, aptitude development, communication enhancement, mock interviews and placement support.',
   keywords: 'Monarch Placements, Technical Training, Aptitude Skills, Soft Skills Training, Coimbatore Placements, Software Development Courses, Job Placements',
   icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon-48x48.png', sizes: '48x48', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-    ],
+    icon: [{ url: '/favicon.ico', sizes: 'any' }],
     apple: [
       { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
     ],
@@ -51,14 +45,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${sora.variable} ${inter.variable} h-full antialiased`} suppressHydrationWarning>
-      <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-      </head>
       <body className="min-h-full flex flex-col justify-between overflow-x-hidden selection:bg-white selection:text-black bg-black text-white" suppressHydrationWarning>
         <BackgroundEffects />
         <Navbar />
