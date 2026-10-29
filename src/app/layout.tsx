@@ -30,12 +30,61 @@ export const metadata: Metadata = {
   title: 'Monarch Training & Placements - Career Transformation Program',
   description: 'Join Monarch Training & Placements. Get 3 months of comprehensive training in technical skills, aptitude development, communication enhancement, mock interviews and placement support.',
   keywords: 'Monarch Placements, Technical Training, Aptitude Skills, Soft Skills Training, Coimbatore Placements, Software Development Courses, Job Placements',
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    siteName: 'Monarch Placements',
+    url: '/',
+    title: 'Monarch Training & Placements - Career Transformation Program',
+    description: 'Join Monarch Training & Placements. Get 3 months of comprehensive training in technical skills, aptitude development, communication enhancement, mock interviews and placement support.',
+    images: [{ url: '/logo.png', width: 800, height: 600, alt: 'Monarch Placements' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Monarch Training & Placements - Career Transformation Program',
+    description: 'Join Monarch Training & Placements. Get 3 months of comprehensive training in technical skills, aptitude development, communication enhancement, mock interviews and placement support.',
+    images: ['/logo.png'],
+  },
   icons: {
     icon: [{ url: '/favicon.ico', sizes: 'any' }],
     apple: [
       { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
     ],
   },
+}
+
+const siteSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://www.monarchplacements.in/#organization',
+      name: 'Monarch Placements',
+      url: 'https://www.monarchplacements.in',
+      logo: 'https://www.monarchplacements.in/logo.png',
+      email: 'hr@monarchplacements.in',
+      telephone: '+916385753874',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Monarch Softwares, Kovilpalayam',
+        addressLocality: 'Coimbatore',
+        addressCountry: 'IN',
+      },
+      sameAs: [
+        'https://www.linkedin.com/company/monarch-placements/',
+        'https://www.instagram.com/monarchplacements',
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://www.monarchplacements.in/#website',
+      url: 'https://www.monarchplacements.in',
+      name: 'Monarch Placements',
+      publisher: { '@id': 'https://www.monarchplacements.in/#organization' },
+    },
+  ],
 }
 
 export default function RootLayout({
@@ -46,6 +95,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${sora.variable} ${inter.variable} h-full antialiased`} suppressHydrationWarning>
       <body className="min-h-full flex flex-col justify-between overflow-x-hidden selection:bg-white selection:text-black bg-black text-white" suppressHydrationWarning>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteSchema) }}
+        />
         <BackgroundEffects />
         <Navbar />
         <main className="flex-grow relative z-10">
